@@ -102,10 +102,9 @@
     text-transform:uppercase;letter-spacing:.05em;padding:4px 10px;border-radius:999px;
     margin-bottom:10px;
   }
-  .tag-Power-Script{background:rgba(232,136,62,.15);color:var(--amber);}
-  .tag-Méthode-ACE{background:rgba(177,140,255,.15);color:var(--violet);}
-  .tag-Méthode-Miyagi{background:rgba(239,125,143,.15);color:var(--rose);}
-  .tag-Métaphore{background:rgba(111,195,228,.15);color:var(--sky);}
+  .tag-Comparaison-{background:rgba(232,136,62,.15);color:var(--amber);}
+  .tag-Question{background:rgba(177,140,255,.15);color:var(--violet);}
+  .tag-Argumentaire{background:rgba(232,136,62,.15);color:var(--amber);}
   .tag-Barrage{background:rgba(232,136,62,.15);color:var(--amber);}
 
   .response-body{font-size:14.5px;line-height:1.65;color:var(--text);}
@@ -114,6 +113,41 @@
     display:block;margin:6px 0 6px 4px;padding-left:14px;border-left:2px solid var(--border);
     color:var(--text-dim);font-size:14px;
   }
+
+  /* Styles pour les titres Comparaison et Question */
+  .title-comparaison {
+    font-size:18px;
+    font-weight:700;
+    color:var(--amber);
+    margin:16px 0 8px 0;
+    padding-bottom:4px;
+    border-bottom:1px solid var(--border);
+    font-family:'Space Grotesk',system-ui,sans-serif;
+  }
+  .title-question {
+    font-size:16px;
+    font-weight:600;
+    color:var(--violet);
+    margin:16px 0 8px 0;
+    padding-bottom:4px;
+    border-bottom:1px solid var(--border);
+    font-family:'Space Grotesk',system-ui,sans-serif;
+  }
+  .response-body .title-comparaison:first-child {
+    margin-top:0;
+  }
+  .response-body .title-question:first-child {
+    margin-top:0;
+  }
+
+  .response-body .bullet-item {
+    display:block;
+    margin:4px 0 4px 20px;
+    padding-left:8px;
+    border-left:2px solid var(--border);
+    color:var(--text-dim);
+  }
+
   .card-actions{display:flex;justify-content:flex-end;margin-top:10px;}
   .copy-btn{
     background:transparent;border:1px solid var(--border);color:var(--text-dim);
@@ -502,6 +536,8 @@
     .script-controls .speed-display { font-size:11px; min-width:40px; }
     .script-text { padding:14px 16px; font-size:14px; }
     .response-panel.open { padding:12px; }
+    .title-comparaison { font-size:16px; }
+    .title-question { font-size:14px; }
   }
 
   @media print{
@@ -673,80 +709,163 @@
 
 const BASE_OBJECTIONS = [
   {
-    label: "Je n'ai pas le temps / je suis occupé",
+    label: "1. JE N'AI PAS LE TEMPS / JE SUIS OCCUPÉ",
     responses: [
       {
-        method: "Power Script",
-        text: "« Oh, c'est de ma faute, je m'en excuse, je sais ce que c'est d'être interrompu en pleine semaine de pipeline. Écoutez, juste pour que personne de mon équipe ne vous recontacte pour rien... est-ce que je vous ai appelé au pire moment possible, ou est-ce que sécuriser vos prochains recrutements commerciaux n'est tout simplement pas une priorité pour vous cette année ? »"
-      },
-      {
-        method: "Méthode ACE",
-        text: "**Accept :** « Je comprends, entre les recrutements en cours et le pilotage des équipes, je me doute que les journées sont pleines. »\n**Consent :** « Est-ce que je peux vous poser une question franche avant de raccrocher ? »\n**Explore :** « Est-ce vraiment une question de temps, ou est-ce que sécuriser vos recrutements commerciaux n'est juste pas le sujet du moment ? »\n→ Si la réponse arrive instantanément, sans réflexion (« pas le temps, point ») : traitez-la comme un brushoff, enchaînez directement par une question qui dédramatise plutôt que par un Accept formel.\n→ Si la réponse est argumentée (planning serré, période de clôture...) : déroulez le cadre ACE complet ci-dessus."
-      },
-      {
-        method: "Métaphore",
-        text: "« Si je vous disais qu'un de vos prochains commerciaux recrutés a 84% de chances de ne pas atteindre ses objectifs, vous seriez toujours trop occupé pour en parler 5 minutes ? Pourtant, c'est le taux d'échec moyen observé sur les commerciaux en France selon Salesforce.\nNe pas prendre 15 minutes pour fiabiliser un recrutement, c'est comme ignorer une fuite d'eau sous l'évier parce qu'on est pressé. Chaque mois qui passe, la fuite s'aggrave : le commercial mal recruté coûte en salaire, en formation, en mauvais résultats, parfois en mauvaise ambiance dans l'équipe. Ce qui aurait pris 15 minutes à corriger au départ finit par coûter des semaines de recrutement et plusieurs milliers d'euros.\nLa question n'est donc pas si vous avez 15 minutes aujourd'hui, mais combien de semaines et d'euros vous êtes prêt à perdre sur votre prochain recrutement. »"
+        method: "Argumentaire",
+        text: `**Comparaison :**
+
+- Dire que vous n'avez pas le temps de réparer une fuite parce que vous êtes trop occupé à vider les seaux, c'est accepter de passer votre journée trempé alors que cinq minutes avec un plombier régleraient le problème pour de bon.
+
+- Refuser de prendre quelques minutes aujourd'hui pour gagner des semaines dans les mois qui viennent, c'est comme refuser de s'arrêter à la station service parce que vous êtes en retard. Vous arrivez encore plus en retard si vous tombez en panne d'essence.
+
+- Continuer à recruter sans tester vos candidats en situation réelle parce que vous n'avez pas le temps, c'est comme continuer à conduire avec des freins usés parce que vous n'avez pas le temps de passer au garage. Vous gagnez du temps aujourd'hui, jusqu'au jour où vous ne pouvez plus freiner.
+
+**Question :**
+
+- Qu'est-ce qui pèse le plus dans votre semaine type : le temps que vous consacrez à faire grandir vos commerciaux performants, ou le temps que vous consacrez à gérer les conséquences de ceux qui n'ont pas tenu leurs promesses ?
+
+- Comment est-ce que vous expliqueriez à un associé / votre directeur que vous n'avez pas dix minutes pour examiner un outil qui réduit votre temps de recrutement, alors que vous consacrez des dizaines d'heures chaque années à ces mêmes recrutements ?
+
+- Si on additionnait toutes les heures que vous avez investies cette année dans des recrutements qui n'ont pas tenu leurs objectifs, à combien de semaines de travail pur sur votre stratégie commerciale cela équivaudrait-il ?`
       }
     ]
   },
   {
-    label: "Envoyez-moi un e-mail / une brochure",
+    label: "2. ENVOYEZ-MOI UN EMAIL",
     responses: [
       {
-        method: "Power Script",
-        text: "« Je serais ravi de vous envoyer une synthèse de la façon dont notre IA débusque les « faux bons vendeurs » en entretien. Mais souvent, quand j'envoie ça à froid, ça finit à la corbeille. Faisons plutôt ceci : je vous pose juste deux petites questions pour voir si notre outil a du sens pour vos futurs recrutements. Si c'est le cas, je vous envoie des infos ultra-ciblées. Si ce n'est pas le cas, on en reste là. Ça vous semble juste ? »"
-      },
-      {
-        method: "Méthode ACE",
-        text: "**Accept :** « Je comprends, vous n'avez pas forcément envie de perdre du temps au téléphone avec quelqu'un que vous ne connaissez pas encore. »\n**Consent :** « Est-ce que je peux vous poser une dernière question avant de vous laisser ? »\n**Explore :** « Est-ce une façon polie de me dire de passer mon chemin, ou avez-vous une vraie question sur la manière d'évaluer un commercial avant de le recruter ? »\n→ Si la demande tombe très vite, sans aucune précision : traitez-la en brushoff avec la variante taquine : « Est-ce parce que votre boîte mail se sent un peu seule et qu'elle manque de plaquettes commerciales ? »\n→ Si la personne précise une vraie attente (« j'aimerais voir des références avant ») : déroulez le cadre ACE complet."
+        method: "Argumentaire",
+        text: `**Comparaison :**
+
+- Demander un email pour évaluer un simulateur de vente, c'est comme demander la photo d'un plat pour savoir s'il est bon. Vous pouvez regarder l'image aussi longtemps que vous voulez, vous ne saurez jamais ce que ça vaut avant de le goûter.
+
+- Demander un email pour juger un outil immersif, c'est comme exiger la fiche technique d'une voiture au lieu de faire un essai sur route. Vous pouvez lire les chevaux fiscaux, vous ne saurez jamais comment elle tient la route avant d'avoir tourné le volant.
+
+- Demander un email pour évaluer un test de vente en conditions réelles, c'est comme demander le mode d'emploi d'un parachute au lieu de tester le déclenchement. Le jour où vous en aurez besoin, le PDF ne vous rassurera pas.
+
+**Question :**
+
+- Qu'est-ce qui a le plus d'impact sur vos décisions de recrutement : un document que vous avez lu, ou une situation concrète que vous avez vécue avec un commercial qui n'a pas tenu ses promesses ?
+
+- Quand avez-vous pris une décision stratégique de recrutement en lisant un PDF, et quand avez-vous changé de méthode après avoir vu un candidat échouer concrètement sur le terrain ?
+
+- Si je vous envoie un email maintenant, honnêtement, est-ce que vous le lirez aujourd'hui, ou est-ce qu'il finira dans le dossier "à regarder plus tard" avec les autres ?`
       }
     ]
   },
   {
-    label: "Pas intéressé",
+    label: "3. JE NE SUIS PAS INTÉRESSÉ / JE N'AI BESOIN DE RIEN",
     responses: [
       {
-        method: "Power Script",
-        text: "→ Brushoff (réaction réflexe, ultra rapide, sans réflexion) : défiez avec humour plutôt que de chercher un consentement formel.\n« C'est ma faute, mon pitch était sans doute trop court. Est-ce que c'est parce que vous avez déjà un moyen fiable de vérifier le niveau d'un commercial avant de l'embaucher, ou est-ce que vous détestez juste les appels à froid ? »"
-      },
-      {
-        method: "Méthode ACE",
-        text: "→ Vraie objection (réponse plus élaborée, après un peu d'échange) : déroulez le cadre ACE complet.\n**Accept :** « Je comprends tout à fait votre réaction. On ne se connaît pas, et vous vous demandez sans doute si ce n'est pas encore un prestataire qui promet beaucoup et tient peu. »\n**Consent :** « Si ça peut déjà vous rassurer, [mention presse / référence client]. Est-ce que je peux vous poser une question rapide ? »\n**Explore :** « Si vous pensez n'avoir besoin de rien, c'est sans doute parce qu'aujourd'hui vos recrutements se passent à peu près. Mais si le prochain commercial que vous recrutez fait partie des 36% qui partent avant un an, ça reste vraiment sans intérêt pour vous ? »"
+        method: "Argumentaire",
+        text: `**Comparaison :**
+
+- Dire "pas intéressé" avant de savoir comment démasquer un mauvais vendeur en entretien, c'est comme fermer son parapluie avant de sortir sous l'orage parce qu'on n'aime pas la couleur. Vous restez au sec jusqu'à ce que la première goutte tombe, et là vous êtes déjà trempé.
+
+- Affirmer que vous n'avez besoin de rien parce que votre processus suffit, c'est comme un pilote qui refuse ses instruments de bord parce qu'il a toujours atterri jusqu'ici. Il a raison, jusqu'au jour où la brume tombe et qu'il ne voit plus la piste.
+
+- Dire que vous n'avez pas besoin d'auditer vos recrutements parce que ça marche globalement, c'est comme un capitaine qui refuse la carte maritime parce qu'il connaît la côte. Il a raison par beau temps, mais le jour où le brouillard tombe, c'est trop tard pour aller chercher la carte.
+
+**Question :**
+
+- Sur vos dix dernières recrues, est-ce que leurs résultats sur le terrain ont toujours correspondu exactement à ce que vous aviez perçu en entretien ?
+
+- Si vous deviez noter sur dix la fiabilité de votre méthode actuelle pour prédire la performance réelle d'un candidat face à un client difficile, vous mettriez combien ? Et si ce n'est pas dix, qu'est-ce qui vous empêche de chercher ce qui comblerait l'écart ?
+
+- Qu'est-ce qui vous fait dire que ce n'est pas un sujet prioritaire aujourd'hui : la situation que vous jugez réellement satisfaisante, ou l'absence de métriques qui vous diraient objectivement le contraire ?`
       }
     ]
   },
   {
-    label: "Je n'ai besoin de rien / ça ne m'intéresse pas",
+    label: "4. ON EST SATISFAIT DE NOTRE PROCESS",
     responses: [
       {
-        method: "Métaphore",
-        text: "« Je comprends votre point de vue. Mais si votre comptable découvrait que vous payez deux fois plus d'impôts que ce que vous devriez, vous diriez encore que vous n'avez besoin de rien ?\nPenser qu'on peut continuer à recruter des commerciaux comme avant, en subissant chaque année son lot de départs et de sous-performance, ce n'est pas réaliste. C'est comme courir un marathon, mais où, tous les 5 km, on vous ajoute un sac à dos avec 10 kilos de pierres : un commercial qui part, un autre qui n'atteint pas ses objectifs, le temps perdu à re-recruter.\nAvec ce poids sur les épaules, vous pensez avoir plus de chances de finir la course, ou de vous écrouler au bord de la route ? »"
+        method: "Argumentaire",
+        text: `**Comparaison :**
+
+- Avoir un process qui fonctionne à la perfection sauf sur le résultat final, c'est comme avoir une excellente alarme incendie qui ne se déclenche qu'une fois que la maison a entièrement brûlé. L'alarme est très sophistiquée, elle arrive juste trop tard pour sauver quoi que ce soit.
+
+- Se satisfaire d'un process qui filtre les CV mais pas la vraie vente, c'est comme un médecin qui prescrit des antidouleurs pour une fracture. La douleur disparaît, la fracture est toujours là, et un jour l'os ne tient plus.
+
+- Se reposer sur un process qui teste la présentation mais pas la performance, c'est comme un directeur financier qui vérifie que ses comptes sont globalement bons sans regarder les détails. Globalement, oui. Mais ce sont les détails qu'on ne voit pas qui font saigner l'entreprise.
+
+**Question :**
+
+- Votre process actuel évalue comment le candidat se vend en entretien, ou comment il vend votre produit face à un prospect réticent ?
+
+- Si votre process est parfait, comment expliquez-vous que certains commerciaux passent tous vos filtres pour plafonner une fois face à vos clients ?
+
+- Qu'est-ce que votre process vous révèle sur un candidat avant que vous ne le signiez : qui il est en entretien, ou qui il sera face à votre premier client difficile ?`
       }
     ]
   },
   {
-    label: "On a déjà un prestataire / un process qui marche",
+    label: "5. ON TRAVAILLE AVEC UN CABINET DE RECRUTEMENT",
     responses: [
       {
-        method: "Méthode ACE",
-        text: "**Accept :** « Je serais très surpris que vous n'ayez pas déjà un process en place, sinon vous ne recruteriez plus personne depuis longtemps. »\n**Consent :** « Est-ce que je peux vous poser une question franche à ce sujet ? »\n**Explore :** « Sur vos 3 derniers recrutements commerciaux, êtes-vous certain à 100% d'avoir fait le bon choix à chaque fois ? »"
-      },
-      {
-        method: "Métaphore",
-        text: "« Je comprends parfaitement. D'ailleurs, je ne vous propose pas de changer votre process, juste de vérifier s'il laisse passer des commerciaux qui savent surtout se vendre en entretien plutôt que vendre sur le terrain.\nNe pas vouloir vérifier ça parce qu'on pense avoir un bon process, c'est comme refuser de passer le contrôle technique parce que la voiture roule bien. La question n'est pas « pourquoi changer », mais « pourquoi continuer à payer le prix d'un mauvais recrutement pour la même méthode » ?\nUn de nos experts peut vérifier ça avec vous en 15 minutes. Vous êtes plutôt disponible cet après-midi ou demain ? »"
+        method: "Argumentaire",
+        text: `**Comparaison :**
+
+- Faire confiance à un cabinet de recrutement pour tester la vraie capacité de vente de vos candidats, c'est comme faire appel à un traiteur pour vérifier si votre chef sait vraiment cuisiner. Le traiteur vous livre de bons plats, mais il ne vous dit pas si votre chef saurait les refaire seul derrière les fourneaux.
+
+- Payer un cabinet pour dénicher des profils sans vérifier ce qu'ils valent en situation de vente réelle, c'est comme payer un détective pour retrouver votre voiture volée sans vérifier si le moteur tient la route. Vous retrouvez la voiture, mais elle ne vous mène pas plus loin que le garage.
+
+- Déléguer le recrutement à un cabinet sans tester vous-même la capacité de vente des candidats, c'est comme confier la sélection de vos pilotes à une agence de placement sans leur faire passer un simulateur de vol. L'agence vérifie le CV, elle ne vérifie pas si le pilote sait atterrir par temps de brouillard.
+
+**Question :**
+
+- Qu'est-ce que votre cabinet de recrutement vous garantit exactement : qu'il vous présente des candidats qui brillent en entretien, ou qu'il vous présente des candidats qui convertissent réellement face à vos clients ?
+
+- Si votre cabinet résout vraiment le problème, pourquoi continuez-vous à recruter des commerciaux qui ne performent pas comme attendu une fois sur le terrain ?
+
+- Quand votre cabinet vous présente un candidat, est-ce que vous savez concrètement comment il gère une objection complexe, ou est-ce que vous savez seulement qu'il a su vous convaincre dans un bureau ?`
       }
     ]
   },
   {
-    label: "C'est trop cher",
+    label: "6. C'EST TROP CHER",
     responses: [
       {
-        method: "Méthode Miyagi",
-        text: "**Accepter :** « Je comprends, il est déjà difficile de tenir son budget recrutement actuel, alors en ajouter un nouveau poste... »\n**Inciter à la conversation :** « Juste pour que personne ne vous rappelle pour rien, est-ce une question de moment dans votre cycle budgétaire, ou est-ce que c'est une bataille à chaque fois que vous voulez investir sur le recrutement ? »\n**Vendre l'essai :** « Vous n'allez probablement pas vous engager tout de suite, mais seriez-vous contre l'idée de voir comment ça fonctionnerait sur votre prochain recrutement, à titre de test ? »"
-      },
+        method: "Argumentaire",
+        text: `**Comparaison :**
+
+- Trouver que fiabiliser un recrutement est trop cher, c'est comme refuser de payer l'assurance de sa voiture de sport pour faire quelques économies. Le jour où l'accident arrive, l'économie du départ coûte 100 fois plus cher. Un mauvais recrutement, c'est un crash industriel pour votre pipeline.
+
+- Économiser sur le filtre, c'est comme économiser sur les freins. Ça ne coûte rien... jusqu'au moment où l'accident arrive. Et là, l'économie du départ coûte 100 fois plus cher.
+
+- Économiser sur la prévention d'un mauvais recrutement, c'est comme un propriétaire qui refuse d'installer une alarme parce que le coût mensuel est trop élevé, alors que le cambriolage qu'il prévient coûte 200 fois le prix de l'abonnement. Le problème n'est pas le prix. C'est qu'on ne voit pas le cambriolage avant qu'il n'arrive.
+
+**Question :**
+
+- Trop cher par rapport à quoi ? Avez-vous déjà calculé le coût réel d'un "faux bon commercial" qui reste 8 mois dans votre équipe sans ramener de chiffre d'affaires, entre son salaire, le temps de formation et les leads qu'il a brûlés ?
+
+- Quand vous dites "trop cher", c'est le prix absolu qui vous pose problème, ou le fait que vous n'avez jamais calculé ce que coûte réellement un recrutement qui ne fonctionne pas dans votre entreprise ?
+
+- Si on faisait le calcul ensemble : un commercial qui reste 8 mois sans atteindre ses objectifs, entre salaire, formation et opportunités manquées, à quoi est-ce que vous arrivez ? Et si notre outil empêchait un seul de ces recrutements, est-ce que le coût serait encore supérieur ?`
+      }
+    ]
+  },
+  {
+    label: "7. JE NE SUIS PAS CONVAINCU",
+    responses: [
       {
-        method: "Méthode ACE",
-        text: "**Accept :** « Je comprends, c'est un budget en plus, et personne n'a un budget recrutement illimité. »\n**Consent :** « Est-ce que je peux vous poser une dernière question avant de raccrocher ? »\n**Explore :** « Est-ce que ça veut dire que le prix est votre priorité absolue, même si ça vous expose à un recrutement qui peut coûter 10 fois plus cher en cas d'erreur ? »"
+        method: "Argumentaire",
+        text: `**Comparaison :**
+
+- Dire "je ne suis pas convaincu" avant d'avoir entendu un seul candidat réel échouer face à notre IA, c'est comme refuser d'acheter une voiture sans l'avoir essayée tout en affirmant qu'elle ne tient pas la route. Vous ne manquez pas d'arguments, vous manquez de données.
+
+- Avoir du scepticisme parce que vous avez déjà payé pour des solutions qui n'ont pas tenu leurs promesses, c'est comme avoir été brûlé par un poêle et vouloir vérifier la température avant d'y poser la main. C'est intelligent. Mais refuser de vérifier la température parce que vous avez déjà été brûlé, c'est vous priver de la chaleur pour le reste de l'hiver.
+
+- Dire "je ne suis pas convaincu" sans me dire ce qui vous convaincrait, c'est comme dire à un médecin que vous ne vous sentez pas bien sans lui expliquer où ça fait mal. Il a les compétences, mais sans symptôme précis, il ne peut pas vous soigner. Et vous, vous repartez avec la maladie.
+
+**Question :**
+
+- Qu'est-ce qui vous a convaincu la dernière fois que vous avez changé d'outil ou de méthode : une promesse sur papier, ou une preuve que vous avez vue de vos propres yeux ?
+
+- Si on mettait de côté tout ce que je viens de vous dire, et que vous jugiez uniquement sur l'audio d'une vraie simulation où un candidat se fait démonter par notre IA, est-ce que ce serait suffisant pour vous faire votre propre opinion ?
+
+- Si on devait se mettre d'accord sur un seul critère qui, s'il était démontré, vous ferait dire "là, je vois la différence", ce serait quoi ?`
       }
     ]
   }
@@ -839,7 +958,7 @@ const BARRAGE_CATEGORIES = [
   }
 ];
 
-/* ============================ SCRIPT DE BASE (NOUVEAU) ============================ */
+/* ============================ SCRIPT DE BASE ============================ */
 
 const BASE_SCRIPT = `Bonjour [Prénom], je viens de voir l'annonce que vous avez publiée sur Indeed pour recruter des commerciaux. Je vais être tout à fait honnête avec vous : est-ce que je vais gâcher votre journée si je vous dis que c'est un appel de prospection, ou vous m'accordez 30 secondes pour vous expliquer pourquoi votre annonce m'a poussé à vous appeler vous, spécifiquement ? Et si ce n'est pas pertinent, vous n'entendrez plus jamais parler de moi — vous pourrez même me raccrocher au nez sans aucune rancune. Ça vous parait juste ?
 
@@ -906,11 +1025,10 @@ const state = {
   tokenTimer: 0,
   // Objection ouverte
   openObjectionIdx: null,
-  openBarrageCategory: null,
   openBarrageItemIdx: null,
   wasPlayingBeforeObjection: false,
   // Barrage ou Objections ?
-  listMode: 'objections' // 'objections' | 'barrage'
+  listMode: 'objections'
 };
 
 /* ============================ PERSISTANCE DES CLÉS API ============================ */
@@ -939,9 +1057,31 @@ function formatText(raw){
   const escaped = escapeHtml(raw);
   const lines = escaped.split('\n');
   return lines.map(line=>{
-    let l = line.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+    let l = line;
+    // Détecter les titres Comparaison et Question
+    const compMatch = l.match(/\*\*Comparaison :\*\*/);
+    const questMatch = l.match(/\*\*Question :\*\*/);
+    if (compMatch) {
+      // Titre Comparaison
+      let clean = l.replace(/\*\*/g, '');
+      return '<div class="title-comparaison">'+clean+'</div>';
+    } else if (questMatch) {
+      // Titre Question
+      let clean = l.replace(/\*\*/g, '');
+      return '<div class="title-question">'+clean+'</div>';
+    }
+    // Sinon traitement normal
+    l = l.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+    // Détecter les puces (lignes commençant par -)
+    if (l.trim().startsWith('-')) {
+      return '<span class="bullet-item">'+l+'</span>';
+    }
     if(l.trim().startsWith('→')){
       return '<span class="branch-line">'+l+'</span>';
+    }
+    // Lignes vides -> retour à la ligne
+    if (l.trim() === '') {
+      return '<br>';
     }
     return '<p style="margin:0 0 8px;">'+l+'</p>';
   }).join('');
@@ -1774,16 +1914,12 @@ function openObjection(idx) {
 function openBarrage(idx) {
   // Trouver l'item correspondant à l'index global
   let itemFound = null;
-  let catIdx = 0;
-  let itemIdx = 0;
   let globalIdx = 0;
   for (let c = 0; c < BARRAGE_CATEGORIES.length; c++) {
     const cat = BARRAGE_CATEGORIES[c];
     for (let i = 0; i < cat.items.length; i++) {
       if (globalIdx === idx) {
         itemFound = cat.items[i];
-        catIdx = c;
-        itemIdx = i;
         break;
       }
       globalIdx++;
