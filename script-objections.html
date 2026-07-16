@@ -1,0 +1,1893 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boîte à objections — managez-vos-commerciaux.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#15171c;
+    --bg-soft:#1b1e25;
+    --card:#1f222a;
+    --card-hover:#262a34;
+    --border:#2c2f3a;
+    --text:#ece9e4;
+    --text-dim:#9a9ca8;
+    --text-faint:#6b6e7a;
+    --amber:#e8883e;
+    --violet:#b18cff;
+    --rose:#ef7d8f;
+    --sky:#6fc3e4;
+    --claude:#8b8ff0;
+    --gemini:#6fcf97;
+    --danger:#ff6b6b;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+  h1,h2,h3,.tab,.brand-mark,button{font-family:'Space Grotesk',system-ui,sans-serif;}
+  .hidden{display:none !important;}
+
+  /* ---------- topbar ---------- */
+  .topbar{
+    display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;
+    padding:18px 28px;border-bottom:1px solid var(--border);
+    background:var(--bg-soft);position:sticky;top:0;z-index:20;flex-shrink:0;
+  }
+  .brand{display:flex;align-items:center;gap:12px;}
+  .brand-mark{
+    font-size:22px;width:38px;height:38px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--amber),var(--rose));border-radius:10px;flex-shrink:0;
+  }
+  .brand h1{font-size:17px;margin:0;letter-spacing:.2px;}
+  .brand p{font-size:12px;margin:2px 0 0;color:var(--text-dim);}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;}
+  .tab{
+    background:transparent;border:1px solid var(--border);color:var(--text-dim);
+    padding:9px 14px;border-radius:999px;font-size:13px;cursor:pointer;
+    transition:.15s ease;display:flex;align-items:center;gap:6px;
+  }
+  .tab:hover{color:var(--text);border-color:var(--text-faint);}
+  .tab.active{background:var(--text);color:var(--bg);border-color:var(--text);}
+  .tab-new{border-color:var(--amber);color:var(--amber);}
+  .tab-new:hover{background:var(--amber);color:#15171c;}
+  .count-badge{
+    background:var(--violet);color:#15171c;border-radius:999px;font-size:11px;
+    padding:1px 7px;font-family:'Inter',sans-serif;font-weight:600;
+  }
+  button:focus-visible, .tab:focus-visible, .obj-btn:focus-visible, .import-btn:focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 2px;
+  }
+
+  main{flex:1;display:flex;flex-direction:column;max-width:1180px;margin:0 auto;padding:20px 20px 20px;width:100%;}
+  main > section { flex:1; display:flex; flex-direction:column; min-height:0; }
+
+  /* ---------- objection view (socle / ICP) ---------- */
+  .objection-view{display:grid;grid-template-columns:280px 1fr;gap:20px;align-items:start;flex:1;}
+  .objection-list{
+    background:var(--bg-soft);border:1px solid var(--border);border-radius:var(--radius);
+    padding:10px;display:flex;flex-direction:column;gap:6px;position:sticky;top:90px;
+    max-height:calc(100vh - 180px);overflow-y:auto;
+  }
+  .obj-btn{
+    text-align:left;background:transparent;border:1px solid transparent;color:var(--text-dim);
+    padding:12px 14px;border-radius:10px;font-size:14px;cursor:pointer;font-family:'Inter',sans-serif;
+    line-height:1.35;transition:.12s ease;
+  }
+  .obj-btn:hover{background:var(--card-hover);color:var(--text);}
+  .obj-btn.active{background:var(--card);color:var(--text);border-color:var(--border);font-weight:600;}
+  .obj-list-title{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-faint);padding:8px 14px 2px;}
+
+  .objection-detail{display:flex;flex-direction:column;gap:14px;}
+  .detail-header h2{font-size:22px;margin:0 0 4px;}
+  .detail-header p{margin:0;color:var(--text-dim);font-size:13px;}
+
+  .response-card{
+    background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+    padding:18px 20px;
+  }
+  .response-card .tag{
+    display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;
+    text-transform:uppercase;letter-spacing:.05em;padding:4px 10px;border-radius:999px;
+    margin-bottom:10px;
+  }
+  .tag-Power-Script{background:rgba(232,136,62,.15);color:var(--amber);}
+  .tag-Méthode-ACE{background:rgba(177,140,255,.15);color:var(--violet);}
+  .tag-Méthode-Miyagi{background:rgba(239,125,143,.15);color:var(--rose);}
+  .tag-Métaphore{background:rgba(111,195,228,.15);color:var(--sky);}
+  .tag-Barrage{background:rgba(232,136,62,.15);color:var(--amber);}
+
+  .response-body{font-size:14.5px;line-height:1.65;color:var(--text);}
+  .response-body strong{color:var(--text);}
+  .branch-line{
+    display:block;margin:6px 0 6px 4px;padding-left:14px;border-left:2px solid var(--border);
+    color:var(--text-dim);font-size:14px;
+  }
+  .card-actions{display:flex;justify-content:flex-end;margin-top:10px;}
+  .copy-btn{
+    background:transparent;border:1px solid var(--border);color:var(--text-dim);
+    font-size:12px;padding:5px 10px;border-radius:8px;cursor:pointer;font-family:'Inter',sans-serif;
+  }
+  .copy-btn:hover{color:var(--text);border-color:var(--text-faint);}
+
+  /* ---------- ICPs list view ---------- */
+  .icps-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:20px;}
+  .icp-card{
+    background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+    padding:16px 18px;cursor:pointer;transition:.12s ease;
+  }
+  .icp-card:hover{border-color:var(--text-faint);}
+  .icp-card h3{margin:0 0 4px;font-size:15px;}
+  .icp-card p{margin:0;font-size:12px;color:var(--text-dim);}
+  .icp-source{
+    display:inline-block;margin-top:8px;font-size:10px;text-transform:uppercase;
+    letter-spacing:.06em;padding:2px 8px;border-radius:999px;
+  }
+  .icp-source.claude{background:rgba(139,143,240,.18);color:var(--claude);}
+  .icp-source.gemini{background:rgba(111,207,151,.18);color:var(--gemini);}
+  .empty-state{color:var(--text-faint);font-size:14px;margin:30px 0;}
+  .import-btn{
+    display:inline-flex;align-items:center;gap:8px;background:var(--bg-soft);border:1px dashed var(--border);
+    color:var(--text-dim);padding:11px 16px;border-radius:10px;font-size:13px;cursor:pointer;
+  }
+  .import-btn:hover{color:var(--text);border-color:var(--text-faint);}
+  .import-btn input{display:none;}
+
+  /* ---------- new ICP form ---------- */
+  .new-view h2{font-size:20px;margin:0 0 4px;}
+  .new-view > p.lead{color:var(--text-dim);font-size:13px;margin:0 0 22px;}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px;}
+  .field{display:flex;flex-direction:column;gap:6px;}
+  .field.full{grid-column:1/-1;}
+  .field label{font-size:12.5px;color:var(--text-dim);font-weight:500;}
+  .field input,.field textarea,.field select{
+    background:var(--bg-soft);border:1px solid var(--border);color:var(--text);
+    border-radius:9px;padding:10px 12px;font-size:13.5px;font-family:'Inter',sans-serif;resize:vertical;
+  }
+  .field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--text-faint);}
+  .field small{color:var(--text-faint);font-size:11px;}
+
+  .engine-block{
+    background:var(--bg-soft);border:1px solid var(--border);border-radius:var(--radius);
+    padding:16px 18px;margin-bottom:14px;
+  }
+  .engine-block h4{margin:0 0 10px;font-size:14px;display:flex;align-items:center;gap:8px;}
+  .dot{width:8px;height:8px;border-radius:50%;display:inline-block;}
+  .dot-claude{background:var(--claude);}
+  .dot-gemini{background:var(--gemini);}
+  .engine-row{display:grid;grid-template-columns:1.4fr 1fr;gap:10px;}
+  .security-note{
+    font-size:12px;color:var(--text-faint);display:flex;gap:8px;align-items:flex-start;
+    background:var(--bg-soft);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:18px;
+  }
+
+  .generate-btn{
+    background:linear-gradient(135deg,var(--amber),var(--rose));color:#15171c;border:none;
+    padding:13px 22px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif;
+  }
+  .generate-btn:disabled{opacity:.4;cursor:not-allowed;}
+  .generate-hint{font-size:12px;color:var(--text-faint);margin-top:8px;}
+
+  .gen-results{margin-top:30px;}
+  .gen-columns{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  @media (max-width:760px){.gen-columns{grid-template-columns:1fr;}}
+  .gen-col{border-radius:var(--radius);border:1px solid var(--border);padding:16px;background:var(--card);}
+  .gen-col.claude-col{border-top:3px solid var(--claude);}
+  .gen-col.gemini-col{border-top:3px solid var(--gemini);}
+  .gen-col h4{margin:0 0 12px;font-size:14px;}
+  .gen-obj-block{margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+  .gen-obj-block:last-child{border-bottom:none;}
+  .gen-obj-block h5{margin:0 0 8px;font-size:13.5px;color:var(--text);}
+  .use-version-btn{
+    margin-top:14px;width:100%;background:transparent;border:1px solid var(--text-faint);color:var(--text);
+    padding:10px;border-radius:9px;cursor:pointer;font-size:13px;font-family:'Space Grotesk',sans-serif;
+  }
+  .use-version-btn:hover{background:var(--card-hover);}
+  .loader{font-size:13px;color:var(--text-dim);padding:14px 0;}
+  .error-box{
+    background:rgba(255,107,107,.1);border:1px solid var(--danger);color:#ffb3b3;
+    padding:10px 14px;border-radius:9px;font-size:13px;margin-top:10px;
+  }
+  .gen-status{
+    font-size:14px; padding:8px 12px; border-radius:8px; margin-bottom:14px;
+    background:var(--bg-soft); border:1px solid var(--border);
+  }
+
+  .icp-toolbar{display:flex;gap:10px;margin:18px 0;flex-wrap:wrap;}
+  .icp-toolbar button{
+    background:var(--bg-soft);border:1px solid var(--border);color:var(--text);
+    padding:9px 14px;border-radius:9px;font-size:13px;cursor:pointer;font-family:'Space Grotesk',sans-serif;
+  }
+  .icp-toolbar button:hover{border-color:var(--text-faint);}
+
+  /* ========== SCRIPT VIEW ========== */
+  #scriptView {
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap:0;
+    min-height:0;
+  }
+  .script-layout {
+    display:flex;
+    flex:1;
+    gap:20px;
+    min-height:0;
+  }
+  .script-objections {
+    flex:0 0 280px;
+    background:var(--bg-soft);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:10px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    overflow-y:auto;
+  }
+  .script-objections .obj-btn {
+    margin:0;
+  }
+
+  /* Barrage selector tabs */
+  .list-tabs {
+    display:flex;
+    gap:4px;
+    padding:0 0 6px 0;
+    border-bottom:1px solid var(--border);
+    margin-bottom:6px;
+    flex-shrink:0;
+  }
+  .list-tabs .ltab {
+    background:transparent;
+    border:none;
+    color:var(--text-dim);
+    padding:6px 14px;
+    border-radius:999px;
+    font-size:12px;
+    cursor:pointer;
+    font-family:'Inter',sans-serif;
+    transition:.15s;
+  }
+  .list-tabs .ltab:hover {
+    color:var(--text);
+    background:var(--card-hover);
+  }
+  .list-tabs .ltab.active {
+    background:var(--text);
+    color:var(--bg);
+  }
+
+  /* Styles pour la hiérarchie des catégories barrage */
+  .barrage-category {
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--amber);
+    padding:10px 14px 4px 14px;
+    font-weight:600;
+    border-bottom:1px solid var(--border);
+    margin-top:4px;
+  }
+  .barrage-sub {
+    padding-left:14px;
+    font-size:12px;
+    color:var(--text-faint);
+    font-weight:500;
+    padding-top:4px;
+    padding-bottom:2px;
+  }
+  .script-objections .obj-btn.barrage-item {
+    padding-left:28px;
+    font-size:13px;
+  }
+
+  .script-col {
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    background:var(--bg-soft);
+    overflow:hidden;
+  }
+
+  .script-controls {
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:10px 16px;
+    background:var(--bg-soft);
+    border-bottom:1px solid var(--border);
+    flex-wrap:wrap;
+  }
+  .script-controls .btn-icon {
+    background:transparent;
+    border:1px solid var(--border);
+    color:var(--text);
+    border-radius:8px;
+    padding:6px 12px;
+    cursor:pointer;
+    font-size:18px;
+    line-height:1;
+    transition:.15s;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-family:'Inter',sans-serif;
+  }
+  .script-controls .btn-icon:hover {
+    background:var(--card-hover);
+    border-color:var(--text-faint);
+  }
+  .script-controls .btn-icon.small {
+    font-size:13px;
+    padding:4px 10px;
+  }
+  .script-controls .speed-display {
+    font-size:13px;
+    color:var(--text-dim);
+    background:var(--card);
+    padding:4px 10px;
+    border-radius:6px;
+    border:1px solid var(--border);
+    min-width:50px;
+    text-align:center;
+    font-weight:600;
+  }
+  .script-controls .progress-bar {
+    flex:1;
+    height:6px;
+    background:var(--card);
+    border-radius:999px;
+    overflow:hidden;
+    min-width:80px;
+    position:relative;
+  }
+  .script-controls .progress-bar .fill {
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,var(--amber),var(--rose));
+    border-radius:999px;
+    transition:width .2s;
+  }
+  .script-controls .phase-label {
+    font-size:11px;
+    color:var(--text-faint);
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    white-space:nowrap;
+  }
+  .script-controls select.speed-select {
+    background:var(--bg);
+    border:1px solid var(--border);
+    color:var(--text);
+    border-radius:6px;
+    padding:4px 8px;
+    font-size:13px;
+    font-family:'Inter',sans-serif;
+    cursor:pointer;
+  }
+  .script-controls select.speed-select:focus {
+    outline:none;
+    border-color:var(--text-faint);
+  }
+
+  .script-scroll-wrap {
+    flex:1 1 0;
+    overflow-y:auto;
+    background:var(--bg);
+    transition:flex .35s ease;
+    min-height:0;
+    position:relative;
+  }
+
+  .script-text {
+    padding:20px 24px;
+    font-family:'Inter',system-ui,sans-serif;
+    font-size:15px;
+    line-height:1.8;
+    color:var(--text);
+    white-space:pre-wrap;
+    word-wrap:break-word;
+  }
+  .script-text .line {
+    display:block;
+    margin:0;
+    padding:0;
+  }
+  .script-text .token {
+    transition:background .3s ease;
+    border-radius:0;
+    padding:0;
+  }
+  .script-text .token.highlight {
+    background:rgba(232,136,62,0.25);
+  }
+
+  /* Panneau de réponse (bas) */
+  .response-panel {
+    flex:0 0 0;
+    overflow:hidden;
+    transition:flex .35s cubic-bezier(.4,0,.2,1), padding .35s ease, max-height .35s ease;
+    background:var(--card);
+    border-top:1px solid var(--border);
+    padding:0 20px;
+    max-height:0;
+  }
+  .response-panel.open {
+    flex:1 1 0;
+    max-height:none;
+    padding:16px 20px;
+  }
+  .response-panel .response-header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
+  }
+  .response-panel .response-header h4 {
+    margin:0;
+    font-size:14px;
+    color:var(--text-dim);
+    font-weight:500;
+  }
+  .response-panel .response-header .close-btn {
+    background:transparent;
+    border:none;
+    color:var(--text-faint);
+    font-size:20px;
+    cursor:pointer;
+    padding:4px 8px;
+    border-radius:6px;
+    transition:.15s;
+    line-height:1;
+  }
+  .response-panel .response-header .close-btn:hover {
+    background:var(--bg-soft);
+    color:var(--text);
+  }
+  .response-panel .response-content {
+    overflow-y:auto;
+    max-height:100%;
+    padding-right:4px;
+  }
+  .response-panel .response-content .response-card {
+    background:var(--bg-soft);
+    border-color:var(--border);
+    margin-bottom:8px;
+  }
+  .response-panel .response-content .response-card:last-child {
+    margin-bottom:0;
+  }
+
+  @media (max-width:820px){
+    .script-layout {
+      flex-direction:column;
+    }
+    .script-objections {
+      flex:0 0 auto;
+      flex-direction:row;
+      overflow-x:auto;
+      padding:8px;
+      gap:4px;
+    }
+    .script-objections .obj-btn {
+      white-space:nowrap;
+      padding:8px 14px;
+      flex-shrink:0;
+    }
+    .script-objections .obj-list-title { display:none; }
+    .script-controls .phase-label { display:none; }
+    .list-tabs { padding:0 4px 4px 4px; }
+    .barrage-category { font-size:10px; padding:6px 10px 2px 10px; }
+    .script-objections .obj-btn.barrage-item { padding-left:16px; font-size:12px; }
+  }
+  @media (max-width:600px){
+    .script-controls { gap:8px; padding:8px 12px; }
+    .script-controls .btn-icon { font-size:15px; padding:4px 8px; }
+    .script-controls .speed-display { font-size:11px; min-width:40px; }
+    .script-text { padding:14px 16px; font-size:14px; }
+    .response-panel.open { padding:12px; }
+  }
+
+  @media print{
+    .topbar,.icp-toolbar,.objection-list{display:none !important;}
+    body{background:#fff;color:#000;}
+    .response-card{border:1px solid #ccc;background:#fff;color:#000;}
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">⚡</span>
+    <div>
+      <h1>Boîte à objections</h1>
+      <p>managez-vos-commerciaux.com — outil d'aide à la vente</p>
+    </div>
+  </div>
+  <nav class="tabs">
+    <button class="tab active" data-view="script">📜 Script</button>
+    <button class="tab" data-view="icps">Mes ICP <span class="count-badge" id="icpCount">0</span></button>
+    <button class="tab tab-new" data-view="new">+ Nouvel ICP (génération IA)</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- VUE SCRIPT (par défaut) -->
+  <section id="scriptView">
+    <div class="script-layout">
+      <!-- Objections à gauche -->
+      <aside class="script-objections" id="scriptObjections"></aside>
+      <!-- Colonne script + réponse -->
+      <div class="script-col">
+        <div class="script-controls">
+          <button class="btn-icon" id="playBtn" title="Play / Pause (Espace)">▶</button>
+          <select class="speed-select" id="speedSelect">
+            <option value="0.5">0.5x</option>
+            <option value="0.75">0.75x</option>
+            <option value="1.0" selected>1x</option>
+            <option value="1.25">1.25x</option>
+            <option value="1.5">1.5x</option>
+            <option value="2.0">2x</option>
+          </select>
+          <span class="speed-display" id="speedDisplay">1.0x</span>
+          <div class="progress-bar"><div class="fill" id="progressFill"></div></div>
+          <span class="phase-label" id="phaseLabel">Phase 1/4</span>
+        </div>
+        <div class="script-scroll-wrap" id="scriptScrollWrap">
+          <div class="script-text" id="scriptText"></div>
+        </div>
+        <div class="response-panel" id="responsePanel">
+          <div class="response-header">
+            <h4 id="responseTitle">Réponse</h4>
+            <button class="close-btn" id="closeResponseBtn" title="Fermer et reprendre">✕</button>
+          </div>
+          <div class="response-content" id="responseContent"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VUE OBJECTIONS (socle / ICP) - conservée pour compatibilité -->
+  <section id="objectionView" class="objection-view hidden">
+    <aside class="objection-list" id="objectionList"></aside>
+    <article class="objection-detail" id="objectionDetail"></article>
+  </section>
+
+  <!-- VUE MES ICP -->
+  <section id="icpsView" class="icps-view hidden">
+    <div class="icp-toolbar">
+      <label class="import-btn">📂 Importer un ICP (.json)
+        <input type="file" id="importInput" accept="application/json">
+      </label>
+    </div>
+    <div class="icps-grid" id="icpsGrid"></div>
+    <p class="empty-state hidden" id="icpsEmpty">Aucun ICP enregistré pour l'instant dans cette session. Importez un fichier .json déjà généré, ou créez-en un nouveau.</p>
+  </section>
+
+  <!-- VUE NOUVEL ICP -->
+  <section id="newView" class="new-view hidden">
+    <h2>Générer les objections pour un nouvel ICP</h2>
+    <p class="lead">Décrivez le contexte ci-dessous. Le socle managez-vos-commerciaux.com reste affiché sans IA — cette génération sert à adapter les mêmes objections et méthodes à un nouveau persona, une nouvelle offre, ou un nouveau marché.</p>
+
+    <form id="icpForm">
+      <div class="form-grid">
+        <div class="field full">
+          <label>Nom de l'ICP / du persona</label>
+          <input type="text" id="icpName" placeholder="Ex : Directeur commercial SaaS, 50-100 commerciaux" required>
+        </div>
+        <div class="field full">
+          <label>Problème(s) principal(aux) de ce persona</label>
+          <textarea id="icpProblem" rows="2" placeholder="Ex : turnover commercial élevé, recrutements qui ne tiennent pas leurs promesses sur le terrain"></textarea>
+        </div>
+        <div class="field full">
+          <label>Constat marché</label>
+          <textarea id="icpMarket" rows="2" placeholder="Ex : 84% des commerciaux n'atteignent pas leurs objectifs, 36% partent avant 12 mois (Salesforce)">84% des commerciaux n'atteignent pas leurs objectifs annuels et 36% des contrats sont rompus dès la première année d'exercice. L'entretien de recrutement classique évalue surtout la capacité à se mettre en valeur face à un recruteur, pas la capacité réelle à vendre sur le terrain.</textarea>
+        </div>
+        <div class="field full">
+          <label>Notre solution</label>
+          <textarea id="icpSolution" rows="2" placeholder="Ex : simulateur vocal IA qui teste le candidat avant l'embauche">Plateforme SaaS qui remplace l'évaluation subjective par une simulation vocale dynamique, en conditions réelles, pour évaluer avant l'embauche le niveau de l'argumentaire, les réflexes et la gestion des objections du candidat. S'appuie sur une base d'1 million de cas de vente réels, dont 50 000 annotés à la main, et inclut un volet de formation continue après le recrutement.</textarea>
+        </div>
+        <div class="field full">
+          <label>Avantages clés pour cet ICP</label>
+          <textarea id="icpAdvantages" rows="2" placeholder="Ex : moins d'erreurs de casting, recrutements sécurisés, montée en compétence continue"></textarea>
+        </div>
+      </div>
+
+      <div class="security-note">🔒 Vos clés API restent uniquement dans votre navigateur, pour cette session. Elles ne sont jamais enregistrées dans les fichiers exportés, ni envoyées ailleurs qu'à Anthropic ou Google.</div>
+
+      <div class="engine-block">
+        <h4><span class="dot dot-claude"></span> Claude (Anthropic)</h4>
+        <div class="engine-row">
+          <div class="field">
+            <label>Clé API Anthropic</label>
+            <input type="password" id="claudeKey" placeholder="sk-ant-...">
+          </div>
+          <div class="field">
+            <label>Modèle</label>
+            <select id="claudeModelSelect">
+              <option value="claude-sonnet-4-6">claude-sonnet-4-6 (recommandé)</option>
+              <option value="claude-opus-4-7">claude-opus-4-7</option>
+              <option value="claude-opus-4-8">claude-opus-4-8</option>
+              <option value="claude-haiku-4-5-20251001">claude-haiku-4-5-20251001</option>
+              <option value="__custom__">Autre (identifiant personnalisé)</option>
+            </select>
+            <input type="text" id="claudeModelCustom" placeholder="ex : claude-sonnet-4-6" class="hidden">
+            <small>Vérifiez les identifiants à jour sur platform.claude.com/docs si besoin.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="engine-block">
+        <h4><span class="dot dot-gemini"></span> Gemini (Google)</h4>
+        <div class="engine-row">
+          <div class="field">
+            <label>Clé API Gemini</label>
+            <input type="password" id="geminiKey" placeholder="AIza...">
+          </div>
+          <div class="field">
+            <label>Modèle</label>
+            <select id="geminiModelSelect">
+              <option value="gemini-2.5-flash">gemini-2.5-flash (recommandé)</option>
+              <option value="gemini-3.5-flash">gemini-3.5-flash</option>
+              <option value="gemini-2.5-pro">gemini-2.5-pro</option>
+              <option value="__custom__">Autre (identifiant personnalisé)</option>
+            </select>
+            <input type="text" id="geminiModelCustom" placeholder="ex : gemini-2.5-flash" class="hidden">
+            <small>Vérifiez les identifiants à jour sur ai.google.dev si besoin.</small>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="generate-btn" id="generateBtn">Générer les objections</button>
+      <div class="generate-hint">Renseignez au moins une clé API (Claude et/ou Gemini) pour activer la génération. Les deux peuvent être utilisées en même temps pour comparer.</div>
+    </form>
+
+    <div class="gen-results hidden" id="genResults">
+      <div id="genStatus" class="gen-status hidden"></div>
+      <div class="gen-columns" id="genColumns"></div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+/* ============================ DONNÉES DE BASE ============================ */
+
+const BASE_OBJECTIONS = [
+  {
+    label: "Je n'ai pas le temps / je suis occupé",
+    responses: [
+      {
+        method: "Power Script",
+        text: "« Oh, c'est de ma faute, je m'en excuse, je sais ce que c'est d'être interrompu en pleine semaine de pipeline. Écoutez, juste pour que personne de mon équipe ne vous recontacte pour rien... est-ce que je vous ai appelé au pire moment possible, ou est-ce que sécuriser vos prochains recrutements commerciaux n'est tout simplement pas une priorité pour vous cette année ? »"
+      },
+      {
+        method: "Méthode ACE",
+        text: "**Accept :** « Je comprends, entre les recrutements en cours et le pilotage des équipes, je me doute que les journées sont pleines. »\n**Consent :** « Est-ce que je peux vous poser une question franche avant de raccrocher ? »\n**Explore :** « Est-ce vraiment une question de temps, ou est-ce que sécuriser vos recrutements commerciaux n'est juste pas le sujet du moment ? »\n→ Si la réponse arrive instantanément, sans réflexion (« pas le temps, point ») : traitez-la comme un brushoff, enchaînez directement par une question qui dédramatise plutôt que par un Accept formel.\n→ Si la réponse est argumentée (planning serré, période de clôture...) : déroulez le cadre ACE complet ci-dessus."
+      },
+      {
+        method: "Métaphore",
+        text: "« Si je vous disais qu'un de vos prochains commerciaux recrutés a 84% de chances de ne pas atteindre ses objectifs, vous seriez toujours trop occupé pour en parler 5 minutes ? Pourtant, c'est le taux d'échec moyen observé sur les commerciaux en France selon Salesforce.\nNe pas prendre 15 minutes pour fiabiliser un recrutement, c'est comme ignorer une fuite d'eau sous l'évier parce qu'on est pressé. Chaque mois qui passe, la fuite s'aggrave : le commercial mal recruté coûte en salaire, en formation, en mauvais résultats, parfois en mauvaise ambiance dans l'équipe. Ce qui aurait pris 15 minutes à corriger au départ finit par coûter des semaines de recrutement et plusieurs milliers d'euros.\nLa question n'est donc pas si vous avez 15 minutes aujourd'hui, mais combien de semaines et d'euros vous êtes prêt à perdre sur votre prochain recrutement. »"
+      }
+    ]
+  },
+  {
+    label: "Envoyez-moi un e-mail / une brochure",
+    responses: [
+      {
+        method: "Power Script",
+        text: "« Je serais ravi de vous envoyer une synthèse de la façon dont notre IA débusque les « faux bons vendeurs » en entretien. Mais souvent, quand j'envoie ça à froid, ça finit à la corbeille. Faisons plutôt ceci : je vous pose juste deux petites questions pour voir si notre outil a du sens pour vos futurs recrutements. Si c'est le cas, je vous envoie des infos ultra-ciblées. Si ce n'est pas le cas, on en reste là. Ça vous semble juste ? »"
+      },
+      {
+        method: "Méthode ACE",
+        text: "**Accept :** « Je comprends, vous n'avez pas forcément envie de perdre du temps au téléphone avec quelqu'un que vous ne connaissez pas encore. »\n**Consent :** « Est-ce que je peux vous poser une dernière question avant de vous laisser ? »\n**Explore :** « Est-ce une façon polie de me dire de passer mon chemin, ou avez-vous une vraie question sur la manière d'évaluer un commercial avant de le recruter ? »\n→ Si la demande tombe très vite, sans aucune précision : traitez-la en brushoff avec la variante taquine : « Est-ce parce que votre boîte mail se sent un peu seule et qu'elle manque de plaquettes commerciales ? »\n→ Si la personne précise une vraie attente (« j'aimerais voir des références avant ») : déroulez le cadre ACE complet."
+      }
+    ]
+  },
+  {
+    label: "Pas intéressé",
+    responses: [
+      {
+        method: "Power Script",
+        text: "→ Brushoff (réaction réflexe, ultra rapide, sans réflexion) : défiez avec humour plutôt que de chercher un consentement formel.\n« C'est ma faute, mon pitch était sans doute trop court. Est-ce que c'est parce que vous avez déjà un moyen fiable de vérifier le niveau d'un commercial avant de l'embaucher, ou est-ce que vous détestez juste les appels à froid ? »"
+      },
+      {
+        method: "Méthode ACE",
+        text: "→ Vraie objection (réponse plus élaborée, après un peu d'échange) : déroulez le cadre ACE complet.\n**Accept :** « Je comprends tout à fait votre réaction. On ne se connaît pas, et vous vous demandez sans doute si ce n'est pas encore un prestataire qui promet beaucoup et tient peu. »\n**Consent :** « Si ça peut déjà vous rassurer, [mention presse / référence client]. Est-ce que je peux vous poser une question rapide ? »\n**Explore :** « Si vous pensez n'avoir besoin de rien, c'est sans doute parce qu'aujourd'hui vos recrutements se passent à peu près. Mais si le prochain commercial que vous recrutez fait partie des 36% qui partent avant un an, ça reste vraiment sans intérêt pour vous ? »"
+      }
+    ]
+  },
+  {
+    label: "Je n'ai besoin de rien / ça ne m'intéresse pas",
+    responses: [
+      {
+        method: "Métaphore",
+        text: "« Je comprends votre point de vue. Mais si votre comptable découvrait que vous payez deux fois plus d'impôts que ce que vous devriez, vous diriez encore que vous n'avez besoin de rien ?\nPenser qu'on peut continuer à recruter des commerciaux comme avant, en subissant chaque année son lot de départs et de sous-performance, ce n'est pas réaliste. C'est comme courir un marathon, mais où, tous les 5 km, on vous ajoute un sac à dos avec 10 kilos de pierres : un commercial qui part, un autre qui n'atteint pas ses objectifs, le temps perdu à re-recruter.\nAvec ce poids sur les épaules, vous pensez avoir plus de chances de finir la course, ou de vous écrouler au bord de la route ? »"
+      }
+    ]
+  },
+  {
+    label: "On a déjà un prestataire / un process qui marche",
+    responses: [
+      {
+        method: "Méthode ACE",
+        text: "**Accept :** « Je serais très surpris que vous n'ayez pas déjà un process en place, sinon vous ne recruteriez plus personne depuis longtemps. »\n**Consent :** « Est-ce que je peux vous poser une question franche à ce sujet ? »\n**Explore :** « Sur vos 3 derniers recrutements commerciaux, êtes-vous certain à 100% d'avoir fait le bon choix à chaque fois ? »"
+      },
+      {
+        method: "Métaphore",
+        text: "« Je comprends parfaitement. D'ailleurs, je ne vous propose pas de changer votre process, juste de vérifier s'il laisse passer des commerciaux qui savent surtout se vendre en entretien plutôt que vendre sur le terrain.\nNe pas vouloir vérifier ça parce qu'on pense avoir un bon process, c'est comme refuser de passer le contrôle technique parce que la voiture roule bien. La question n'est pas « pourquoi changer », mais « pourquoi continuer à payer le prix d'un mauvais recrutement pour la même méthode » ?\nUn de nos experts peut vérifier ça avec vous en 15 minutes. Vous êtes plutôt disponible cet après-midi ou demain ? »"
+      }
+    ]
+  },
+  {
+    label: "C'est trop cher",
+    responses: [
+      {
+        method: "Méthode Miyagi",
+        text: "**Accepter :** « Je comprends, il est déjà difficile de tenir son budget recrutement actuel, alors en ajouter un nouveau poste... »\n**Inciter à la conversation :** « Juste pour que personne ne vous rappelle pour rien, est-ce une question de moment dans votre cycle budgétaire, ou est-ce que c'est une bataille à chaque fois que vous voulez investir sur le recrutement ? »\n**Vendre l'essai :** « Vous n'allez probablement pas vous engager tout de suite, mais seriez-vous contre l'idée de voir comment ça fonctionnerait sur votre prochain recrutement, à titre de test ? »"
+      },
+      {
+        method: "Méthode ACE",
+        text: "**Accept :** « Je comprends, c'est un budget en plus, et personne n'a un budget recrutement illimité. »\n**Consent :** « Est-ce que je peux vous poser une dernière question avant de raccrocher ? »\n**Explore :** « Est-ce que ça veut dire que le prix est votre priorité absolue, même si ça vous expose à un recrutement qui peut coûter 10 fois plus cher en cas d'erreur ? »"
+      }
+    ]
+  }
+];
+
+/* ============================ BARRAGE SECRÉTAIRE (HIÉRARCHISÉ) ============================ */
+
+const BARRAGE_CATEGORIES = [
+  {
+    name: "## ANGLE DU \"Mec qui est rentré !\"",
+    items: [
+      {
+        label: "1. Rupture de Schéma (Problème Brut)",
+        responses: [
+          {
+            method: "Barrage",
+            text: "**Le Concept :** La secrétaire attend un pitch, un nom d'entreprise ou une demande de rendez-vous. À la place, tu lui balances une information de crise opérationnelle tellement brute et technique qu'elle n'a aucun script prévu pour y répondre. Tu ne demandes pas la permission, tu signales une anomalie.\n\n**Le Dialogue :**\n\n- **La secrétaire :** *Société Horizon, bonjour.*\n- **Toi (ton calme, direct, sans salutations fioritures) :** Oui bonjour, j'ai une alerte sur le taux d'abandon de vos nouveaux commerciaux là. C'est [Prénom du Décideur] qui gère le turn-over en direct ou son bras droit ?\n- **La secrétaire (prise de court) :** *Euh... c'est Monsieur [Nom], mais de quoi s'agit-il exactement ?*\n- **Toi (pressé mais posé) :** C'est par rapport aux deux derniers recrutements qui ne sortent aucun chiffre et qui sont en train de couler le pipe du trimestre. J'ai la data sous les yeux, il me faut juste son arbitrage pour couper la perte de cash. Passez-le-moi deux secondes."
+          }
+        ]
+      },
+      {
+        label: "2. Consultation Inversée",
+        responses: [
+          {
+            method: "Barrage",
+            text: "**Le Concept :** Au lieu de traiter la secrétaire comme un obstacle, tu la traites comme l'experte interne de la situation. C'est une technique d'anti-vente ultra-puissante. Les commerciaux lui mentent toute la journée ; toi, tu lui balances une vérité crue sur les coulisses de sa boîte. Elle baisse sa garde instantanément.\n\n**Le Dialogue :**\n\n- **La secrétaire :** *Société Horizon, bonjour.*\n- **Toi :** Bonjour. Je voulais vous poser une question rapide avant de déranger [Prénom du Décideur]. Ses nouveaux commerciaux, ils tiennent le coup ou ça ghoste pas mal en ce moment chez vous ?\n- **La secrétaire (surprise par la franchise) :** *Ah... je ne peux pas vous dire, mais pourquoi cette question ?*\n- **Toi (sur un ton de confidence professionnelle) :** Parce qu'avec manager-vos-commerciaux.com, on voit passer les chiffres de tout le secteur, et en ce moment, l'onboarding des recrues est un carnage financier. Je ne veux pas lui faire perdre son temps s'il a déjà stabilisé son équipe. S'ils galèrent encore à atteindre leurs quotas, dites-le-moi, je lui passe un coup de fil direct. Qu'est-ce que vous en pensez ?"
+          }
+        ]
+      },
+      {
+        label: "3. Piège de l'Événement",
+        responses: [
+          {
+            method: "Barrage",
+            text: "**Le Concept :** Tu t'appuies sur un fait réel (une offre d'emploi, un recrutement récent) mais tu l'annonces avec une concision si extrême que la secrétaire pense que tu fais partie du processus ou que tu es un fournisseur stratégique déjà validé. Less is more.\n\n**Le Dialogue :**\n\n- **La secrétaire :** *Société Horizon, bonjour.*\n- **Toi :** Bonjour. Par rapport à vos derniers recrutements de commerciaux. [Prénom du Décideur] est dispo deux secondes ou il est en plein onboarding ?\n- **La secrétaire :** *C'est à quel sujet ? Vous avez postulé ?*\n- **Toi (un peu las) :** Non, pas du tout. C'est pour le correctif sur le ramp-up des recrues. Le processus est bloqué sur les premiers quotas. Passez-le-moi, on va régler ça tout de suite."
+          }
+        ]
+      },
+      {
+        label: "4. Destruction du Mur de Béton",
+        responses: [
+          {
+            method: "Barrage",
+            text: "**Le Concept :** Quand la secrétaire refuse obstinément en disant *\"Pas d'appel non sollicité\"*, l'amateur insiste. L'expert du top 0.1 % valide le refus, crée un grand vide, puis pose une question qui rend le blocage absurde vis-à-vis des intérêts profonds du boss.\n\n**Le Dialogue :**\n\n- **La secrétaire :** *Désolée, je ne passe aucun appel de ce genre, c'est la règle.*\n- **Toi (silence de 2 secondes... puis voix très calme) :** Je comprends parfaitement. C'est votre job. Juste une dernière question pour ma gouverne : si vos commerciaux arrêtent de bosser demain et que la boîte perd 50k€, la règle c'est aussi de ne pas l'avertir ?\n- **La secrétaire (déstabilisée ou défensive) :** *Mais ce n'est pas la même chose...*\n- **Toi :** C'est exactement la même chose. C'est ce qu'on règle tous les jours sur managermescommerciaux.com. Je ne l'appelle pas pour lui vendre un énième CRM. Je l'appelle parce que son équipe actuelle fuit de l'argent. Prenez le risque de me passer, ou prenez le risque qu'il l'apprenne trop tard. On tente les 30 secondes maintenant ?"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    name: "## ANGLE DU \"Mec qui veut rentrer\"",
+    items: [
+      {
+        label: "5. Asymétrie d'Autorité",
+        responses: [
+          {
+            method: "Barrage",
+            text: "**Le Concept :** C'est adopter instantanément le ton de la haute direction pour neutraliser le filtre de la secrétaire.\n\n**Le Dialogue :**\n\n- **La secrétaire :** *Société Horizon, bonjour.*\n- **Toi :** Bonjour. C'est Olivier pour Thomas.\n- **La secrétaire :** *C'est de la part de quelle société ?*\n- **Toi :** Managez-vos-commerciaux.com. Passez-le-moi je vous prie.\n- **La secrétaire :** *C'est à quel sujet ?*\n- **Toi :** C'est concernant l'audit sur la dérive des quotas et l'activation des nouveaux commerciaux ce trimestre."
+          }
+        ]
+      },
+      {
+        label: "6. Brouillard Cognitif",
+        responses: [
+          {
+            method: "Barrage",
+            text: "**Le Concept :** C'est évoquer un problème technique et macro-économique urgent pour que la secrétaire transfère le risque à son patron.\n\n**Le Dialogue :**\n\n- **La secrétaire :** *Monsieur le Directeur est très occupé, vous pouvez m'en dire plus ?*\n- **Toi :** C'est au sujet de l'asymétrie de performance sur vos recrutements de commerciaux à distance. Il y a une fuite de rentabilité critique sur les lancements de ce mois-ci, et il me manque son arbitrage pour valider le correctif. Le sujet est trop urgent. Il est sur son poste ou je tente son mobile ?"
+          }
+        ]
+      },
+      {
+        label: "7. Refus de l'Email",
+        responses: [
+          {
+            method: "Barrage",
+            text: "**Le Concept :** C'est briser le script automatique de la secrétaire par un refus net, suivi d'une image forte qui disqualifie le support écrit.\n\n**Le Dialogue :**\n\n- **La secrétaire :** *Envoyez-moi une présentation par email, et je lui ferai suivre.*\n- **Toi :** Non, ça ne marchera pas.\n- **La secrétaire :** *Ah bon ? Pourquoi ?*\n- **Toi :** Parce que ce que l'on fait sur managermescommerciaux.com est purement structurel. Essayer d'expliquer une réarchitecture des comportements de vente par un simple email, c'est comme essayer de piloter un avion de ligne à travers l'écran d'une montre connectée. On passe complètement à côté de l'essentiel. J'ai juste besoin de 60 secondes avec lui. On se bloque ce point à 14h ou 16h ?"
+          }
+        ]
+      },
+      {
+        label: "8. Honnêteté Chirurgicale",
+        responses: [
+          {
+            method: "Barrage",
+            text: "**Le Concept :** C'est désarmer le barrage en valorisant son travail, tout en inversant la pression de la responsabilité.\n\n**Le Dialogue :**\n\n- **La secrétaire :** *C'est impossible, je ne passe aucun appel sans rendez-vous.*\n- **Toi :** Je vais être totalement transparent avec vous. Je n'ai pas de rendez-vous. Mon métier avec managermescommerciaux.com est de réparer les pipelines de vente qui fuient. Le vôtre est de protéger son agenda. Vous faites votre travail à la perfection. Mais si je ne lui parle pas de cette anomalie sur ses coûts de recrutement aujourd'hui, c'est lui qui viendra vous demander pourquoi une solution a été bloquée à l'accueil. Comment fait-on pour que je lui pose ma question en 30 secondes chrono sans vous mettre en porte-à-faux ?"
+          }
+        ]
+      }
+    ]
+  }
+];
+
+/* ============================ SCRIPT DE BASE (NOUVEAU) ============================ */
+
+const BASE_SCRIPT = `Bonjour [Prénom], je viens de voir l'annonce que vous avez publiée sur Indeed pour recruter des commerciaux. Je vais être tout à fait honnête avec vous : est-ce que je vais gâcher votre journée si je vous dis que c'est un appel de prospection, ou vous m'accordez 30 secondes pour vous expliquer pourquoi votre annonce m'a poussé à vous appeler vous, spécifiquement ? Et si ce n'est pas pertinent, vous n'entendrez plus jamais parler de moi — vous pourrez même me raccrocher au nez sans aucune rancune. Ça vous parait juste ?
+
+La plupart des Directeurs Commerciaux d'entreprises comme Engie, Qonto, Payfit, avec qui j'ai pu discuter me disent qu'ils vivent un vrai cauchemar avec le recrutement : ils embauchent des profils qui excellent en entretien, mais qui, une fois sur le terrain, ont du mal à conclure. Et cela finit par leur coûter cher en salaires fixes, en leads et en opportunités gâchées.
+
+Mais bon, vous allez sûrement/peut-etre me dire que chez vous, ce n'est pas le cas, que vos commerciaux explosent leurs objectifs, et que je me trompe totalement de numéro, ou alors est-ce que c'est une problématique que vous rencontrez également ?
+
+[Si le prospect admet que ce n'est pas parfait] Je comprends. Est-ce que vous avez accepté que ça soit une sorte de loterie coûteuse, ou c'est quelque chose que vous aimeriez vraiment changer ?
+
+Justement, pour éviter ça, on a développé une application qui s'appuie sur trois piliers : le savoir-faire des meilleurs commerciaux d'Europe et des États-Unis, des études scientifiques sur la psychologie comportementale, et l'analyse d'1 million d'appels de vente et de prise de rdv, pour identifier ce qui fonctionne et ce qui mène à l'échec.
+
+Ce savoir-faire est intégré à une IA qui 
+1 - interroge vos candidats à l'oral sur leurs connaissances théoriques;
+2 - révèle leurs traits de personnalité;
+Et 3, prend le rôle du prospect dans une simulation de rendez-vous de vente face à eux.
+
+Ça permet de voir qui sait vraiment vendre, et qui sait surtout se vendre en entretien.
+Pour chaque candidat, vous recevez les audios des tests, et une fiche avec : son niveau théorique et pratique, son profil comportemental avec des conseils pour le manager, et une recommandation claire — à recruter, à écarter, ou à recruter sous conditions. Vous restez bien sûr totalement libre de votre décision finale.
+Résultat : moins de temps perdu en entretiens inutiles, moins d'erreurs de casting, et uniquement des tops performers qui rejoignent votre équipe.
+Sans aucun engagement, seriez-vous ouvert à jeter un œil à comment ça fonctionne, un jour où je ne vous appelle pas à l'improviste ? Et si ça ne vous convainc pas, on en reste là, promis.
+
+[Si le prospect insiste que tout est déjà parfait] Tant mieux pour vous, ça n'arrive pas à tout le monde. Les Directeurs Commerciaux avec qui j'échange m'expliquent que leur problème, c'est soit 
+
+- 1. la difficulté à recruter les bons profils et éviter les moyens, 
+- soit 2. de former les nouvelles recrues pour qu'elles soient rapidement opérationnelles,
+- ou alors 3. d'améliorer les performances de leurs commerciaux en place.
+
+Si vous aviez une baguette magique, vous préféreriez améliorer votre recrutement, former vos nouvelles recrues, ou améliorer les performances de votre équipe ?
+
+Justement, pour éviter ça, on a développé une application qui s'appuie sur trois piliers : le savoir-faire des meilleurs commerciaux d'Europe et des États-Unis, des études scientifiques sur la psychologie comportementale, et l'analyse d'1 million d'appels de vente et de prise de rdv, pour identifier ce qui fonctionne et ce qui mène à l'échec.
+
+Ce savoir-faire est intégré à une IA qui 
+1 - interroge vos candidats à l'oral sur leurs connaissances théoriques;
+2 - révèle leurs traits de personnalité;
+Et 3, prend le rôle du prospect dans une simulation de rendez-vous de vente face à eux.
+
+SI RECRUTER et FORMER LES NOUVEAUX 
+Ça permet de voir qui sait vraiment vendre, et qui sait surtout se vendre en entretien.
+Pour chaque candidat, vous recevez les audios des tests, et une fiche avec : son niveau théorique et pratique, son profil comportemental avec des conseils pour le manager, et une recommandation claire — à recruter, à écarter, ou à recruter sous conditions. Vous restez bien sûr totalement libre de votre décision finale.
+Résultat : moins de temps perdu en entretiens inutiles, moins d'erreurs de casting, et uniquement des tops performers qui rejoignent votre équipe.
+Sans aucun engagement, seriez-vous ouvert à jeter un œil à comment ça fonctionne, un jour où je ne vous appelle pas à l'improviste ? Et si ça ne vous convainc pas, on en reste là, promis.
+
+SI AMÉLIORER LES PERFORMANCES DE CEUX QUI SONT EN POSTE
+Ça permet de voir où est-ce qu'ils sont bons et ou est-ce qu'ils ont des lacunes, et de créer des exercices personnalisés en fonction de leur niveau et de leur psychologie.
+Pour chaque commercial, vous recevez les audios des simulations, et une fiche avec : leur niveau théorique et pratique, leur profil comportemental avec des conseils pour le manager, et des exercices personnalisés qu'ils feront avec l'IA vocal en fonction de leur niveau et de leur psychologie.
+Résultat : Cela permet d'améliorer significativement leur niveau, tout en vous permettant de vous concentrer sur le coaching de vos troupes, et pas la formation 1 to 1. Au final, vous allez transformer de bon vendeurs en top performers en moins de 28 jours.
+
+Sans aucun engagement, seriez-vous ouvert à jeter un œil à comment ça fonctionne, un jour où je ne vous appelle pas à l'improviste ? Et si ça ne vous convainc pas, on en reste là, promis.`;
+
+/* ============================ ÉTAT GLOBAL ============================ */
+
+const state = {
+  currentView: 'script',
+  currentICPId: null,
+  icps: [],
+  selectedIndex: 0,
+  pendingGeneration: null,
+  // Script
+  tokens: [],
+  currentTokenIndex: 0,
+  isPlaying: false,
+  speed: 1.0,
+  timerInterval: null,
+  tokenTimer: 0,
+  // Objection ouverte
+  openObjectionIdx: null,
+  openBarrageCategory: null,
+  openBarrageItemIdx: null,
+  wasPlayingBeforeObjection: false,
+  // Barrage ou Objections ?
+  listMode: 'objections' // 'objections' | 'barrage'
+};
+
+/* ============================ PERSISTANCE DES CLÉS API ============================ */
+
+function saveApiKeys() {
+  sessionStorage.setItem('claudeKey', document.getElementById('claudeKey').value);
+  sessionStorage.setItem('geminiKey', document.getElementById('geminiKey').value);
+}
+function loadApiKeys() {
+  const ck = sessionStorage.getItem('claudeKey');
+  if(ck) document.getElementById('claudeKey').value = ck;
+  const gk = sessionStorage.getItem('geminiKey');
+  if(gk) document.getElementById('geminiKey').value = gk;
+}
+document.getElementById('claudeKey').addEventListener('input', saveApiKeys);
+document.getElementById('geminiKey').addEventListener('input', saveApiKeys);
+loadApiKeys();
+
+/* ============================ UTILITAIRES GÉNÉRAUX ============================ */
+
+function escapeHtml(str){
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function formatText(raw){
+  const escaped = escapeHtml(raw);
+  const lines = escaped.split('\n');
+  return lines.map(line=>{
+    let l = line.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+    if(l.trim().startsWith('→')){
+      return '<span class="branch-line">'+l+'</span>';
+    }
+    return '<p style="margin:0 0 8px;">'+l+'</p>';
+  }).join('');
+}
+
+function tagClass(method){
+  return 'tag-'+method.replace(/\s+/g,'-');
+}
+
+function copyToClipboard(text, btn){
+  navigator.clipboard.writeText(text).then(()=>{
+    const old = btn.textContent;
+    btn.textContent = 'Copié ✓';
+    setTimeout(()=>{btn.textContent = old;}, 1400);
+  }).catch(()=>{
+    btn.textContent = 'Erreur copie';
+  });
+}
+
+/* ============================ EXTRACTION JSON ============================ */
+
+function extractJsonFromResponse(text) {
+  let cleaned = text.replace(/```json/gi,'').replace(/```/g,'').trim();
+  const firstBrace = cleaned.indexOf('{');
+  const lastBrace = cleaned.lastIndexOf('}');
+  if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+    cleaned = cleaned.substring(firstBrace, lastBrace + 1);
+  }
+  return JSON.parse(cleaned);
+}
+function validateObjectionsArray(data) {
+  if (!data || !Array.isArray(data.objections)) {
+    throw new Error('La réponse ne contient pas un tableau "objections".');
+  }
+  for (const obj of data.objections) {
+    if (!obj.label || !Array.isArray(obj.responses)) {
+      throw new Error('Une objection est mal formée.');
+    }
+  }
+  return data.objections;
+}
+
+/* ============================ VUE OBJECTIONS (SOCLE) ============================ */
+
+function getActiveObjections(){
+  if(state.currentICPId){
+    const icp = state.icps.find(i=>i.id===state.currentICPId);
+    return icp ? icp.objections : BASE_OBJECTIONS;
+  }
+  return BASE_OBJECTIONS;
+}
+
+function renderObjectionView(){
+  const objections = getActiveObjections();
+  const listEl = document.getElementById('objectionList');
+  const title = state.currentICPId
+    ? (state.icps.find(i=>i.id===state.currentICPId)||{}).name
+    : 'Socle managez-vos-commerciaux.com';
+
+  const existingButtons = listEl.querySelectorAll('.obj-btn');
+  const labelsMatch = existingButtons.length === objections.length &&
+    Array.from(existingButtons).every((btn, i) => btn.textContent === objections[i].label);
+
+  if (!labelsMatch) {
+    listEl.innerHTML = '<div class="obj-list-title">'+escapeHtml(title)+'</div>' +
+      objections.map((o,idx)=>
+        '<button class="obj-btn" data-idx="'+idx+'">'+escapeHtml(o.label)+'</button>'
+      ).join('');
+  } else {
+    const titleEl = listEl.querySelector('.obj-list-title');
+    if (titleEl) titleEl.textContent = title;
+  }
+
+  listEl.querySelectorAll('.obj-btn').forEach((btn, idx) => {
+    btn.classList.toggle('active', idx === state.selectedIndex);
+    if (!btn.dataset.listenerAttached) {
+      btn.addEventListener('click', () => {
+        state.selectedIndex = parseInt(btn.dataset.idx,10);
+        renderObjectionView();
+      });
+      btn.dataset.listenerAttached = '1';
+    }
+  });
+
+  renderObjectionDetail(objections[state.selectedIndex] || objections[0]);
+}
+
+function renderObjectionDetail(objection){
+  const detailEl = document.getElementById('objectionDetail');
+  if(!objection){
+    detailEl.innerHTML = '<p class="empty-state">Aucune objection à afficher.</p>';
+    return;
+  }
+  detailEl.innerHTML =
+    '<div class="detail-header"><h2>'+escapeHtml(objection.label)+'</h2><p>'+objection.responses.length+' façon(s) d\'y répondre</p></div>' +
+    objection.responses.map(r=>
+      '<div class="response-card">' +
+        '<span class="tag '+tagClass(r.method)+'">'+escapeHtml(r.method)+'</span>' +
+        '<div class="response-body">'+formatText(r.text)+'</div>' +
+        '<div class="card-actions"><button class="copy-btn">Copier</button></div>' +
+      '</div>'
+    ).join('');
+
+  detailEl.querySelectorAll('.response-card').forEach((card,i)=>{
+    const btn = card.querySelector('.copy-btn');
+    btn.addEventListener('click', ()=> copyToClipboard(objection.responses[i].text, btn));
+  });
+}
+
+/* ============================ NAVIGATION ============================ */
+
+function switchView(view){
+  state.currentView = view;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.view===view));
+  document.getElementById('scriptView').classList.toggle('hidden', view!=='script');
+  document.getElementById('objectionView').classList.toggle('hidden', view!=='base' && view!=='icp-detail');
+  document.getElementById('icpsView').classList.toggle('hidden', view!=='icps');
+  document.getElementById('newView').classList.toggle('hidden', view!=='new');
+
+  if (view !== 'script') {
+    if (state.isPlaying) pauseScript();
+  } else {
+    restoreScriptState();
+  }
+
+  if(view==='base'){
+    state.currentICPId = null;
+    state.selectedIndex = 0;
+    renderObjectionView();
+  }
+  if(view==='icps'){
+    renderICPsList();
+  }
+}
+
+document.querySelectorAll('.tab').forEach(tab=>{
+  tab.addEventListener('click', ()=> switchView(tab.dataset.view));
+});
+
+/* ============================ VUE ICP ============================ */
+
+function renderICPsList(){
+  const grid = document.getElementById('icpsGrid');
+  const empty = document.getElementById('icpsEmpty');
+  document.getElementById('icpCount').textContent = state.icps.length;
+
+  if(state.icps.length===0){
+    grid.innerHTML='';
+    empty.classList.remove('hidden');
+    return;
+  }
+  empty.classList.add('hidden');
+  grid.innerHTML = state.icps.map(icp=>
+    '<div class="icp-card" data-id="'+icp.id+'">' +
+      '<h3>'+escapeHtml(icp.name)+'</h3>' +
+      '<p>'+icp.objections.length+' objections — '+new Date(icp.createdAt).toLocaleDateString('fr-FR')+'</p>' +
+      '<span class="icp-source '+icp.source+'">'+icp.source+' · '+escapeHtml(icp.sourceModel||'')+'</span>' +
+      '<div class="icp-toolbar">' +
+        '<button class="open-icp">Ouvrir</button>' +
+        '<button class="download-icp">Télécharger</button>' +
+      '</div>' +
+    '</div>'
+  ).join('');
+
+  grid.querySelectorAll('.icp-card').forEach(card=>{
+    const id = card.dataset.id;
+    card.querySelector('.open-icp').addEventListener('click', (e)=>{
+      e.stopPropagation();
+      state.currentICPId = id;
+      state.selectedIndex = 0;
+      switchView('base');
+    });
+    card.querySelector('.download-icp').addEventListener('click', (e)=>{
+      e.stopPropagation();
+      downloadICP(state.icps.find(i=>i.id===id));
+    });
+  });
+}
+
+function downloadICP(icp){
+  const blob = new Blob([JSON.stringify(icp, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'icp_' + icp.name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'') + '.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+/* ============================ IMPORT ICP ============================ */
+
+document.getElementById('importInput').addEventListener('change', (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    try{
+      const icp = JSON.parse(reader.result);
+      if (!icp.objections || !Array.isArray(icp.objections)) {
+        throw new Error('Format invalide : le champ "objections" doit être un tableau.');
+      }
+      for (const obj of icp.objections) {
+        if (typeof obj.label !== 'string' || !Array.isArray(obj.responses)) {
+          throw new Error('Format invalide : chaque objection doit avoir un "label" (texte) et "responses" (tableau).');
+        }
+        for (const r of obj.responses) {
+          if (typeof r.method !== 'string' || typeof r.text !== 'string') {
+            throw new Error('Format invalide : chaque réponse doit avoir "method" et "text" en texte.');
+          }
+        }
+      }
+      icp.id = icp.id || ('icp_'+Date.now());
+      state.icps.push(icp);
+      renderICPsList();
+    }catch(err){
+      alert('Import impossible : '+err.message);
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+});
+
+/* ============================ FORMULAIRE NOUVEL ICP ============================ */
+
+document.getElementById('claudeModelSelect').addEventListener('change', (e)=>{
+  document.getElementById('claudeModelCustom').classList.toggle('hidden', e.target.value!=='__custom__');
+});
+document.getElementById('geminiModelSelect').addEventListener('change', (e)=>{
+  document.getElementById('geminiModelCustom').classList.toggle('hidden', e.target.value!=='__custom__');
+});
+
+function getClaudeModel(){
+  const sel = document.getElementById('claudeModelSelect').value;
+  return sel==='__custom__' ? document.getElementById('claudeModelCustom').value.trim() : sel;
+}
+function getGeminiModel(){
+  const sel = document.getElementById('geminiModelSelect').value;
+  return sel==='__custom__' ? document.getElementById('geminiModelCustom').value.trim() : sel;
+}
+
+const OBJECTION_ORDER = BASE_OBJECTIONS.map(o=>o.label);
+
+function buildPrompt(ctx){
+  return "Tu es un copywriter spécialisé en argumentaire commercial B2B francophone (vente par téléphone / cold calling).\n\n" +
+"CONTEXTE DE L'ICP À TRAITER :\n" +
+"- Nom / persona : " + ctx.name + "\n" +
+"- Problème(s) principal(aux) : " + (ctx.problem || "non précisé") + "\n" +
+"- Constat marché : " + (ctx.market || "non précisé") + "\n" +
+"- Notre solution : " + (ctx.solution || "non précisé") + "\n" +
+"- Avantages clés pour cet ICP : " + (ctx.advantages || "non précisé") + "\n\n" +
+"TÂCHE :\n" +
+"Génère des réponses aux objections commerciales pour CES 6 OBJECTIONS, dans cet ordre exact, en conservant leur sens mais en adaptant le vocabulaire au contexte ci-dessus :\n" +
+OBJECTION_ORDER.map((l,i)=>(i+1)+") "+l).join("\n") + "\n\n" +
+"Pour chaque objection, rédige entre 1 et 3 réponses, en t'inspirant des méthodes suivantes (n'utilise que celles qui ont du sens pour l'objection concernée, ce n'est pas obligatoire d'en mettre 4) :\n" +
+"- \"Power Script\" : une réplique directe, prête à l'emploi, qui désamorce avec un peu d'humour ou d'auto-dérision.\n" +
+"- \"Méthode ACE\" : Accept (accepter sans \"oui mais\"), Consent (demander un petit oui, ex: \"je peux vous poser une question ?\"), Explore (question fermée ou semi-directive qui souligne le caractère illogique de l'objection).\n" +
+"- \"Méthode Miyagi\" : Accepter l'objection, Inciter à la conversation (question ouverte sur la vraie cause), Vendre l'essai (proposer un test à faible engagement plutôt qu'un achat).\n" +
+"- \"Métaphore\" : une comparaison ou parabole concrète qui rend l'objection absurde, en lien avec le contexte de l'ICP.\n\n" +
+"CONVENTION DE MISE EN FORME À RESPECTER STRICTEMENT DANS LE TEXTE :\n" +
+"- Utilise **Label :** pour introduire chaque étape d'une méthode (ex: **Accept :**).\n" +
+"- Utilise une ligne commençant par → pour indiquer une branche conditionnelle selon la réaction du prospect (réaction réflexe vs objection réfléchie, objection sur le prix vs sur le temps, etc.), uniquement quand c'est pertinent.\n" +
+"- Vouvoie systématiquement le prospect dans les répliques.\n" +
+"- Ton direct, consultatif, jamais agressif.\n\n" +
+"FORMAT DE SORTIE OBLIGATOIRE :\n" +
+"Réponds UNIQUEMENT avec un objet JSON valide, sans texte avant ni après, sans balises markdown, exactement de cette forme :\n" +
+'{"objections":[{"label":"...","responses":[{"method":"Power Script","text":"..."},{"method":"Méthode ACE","text":"..."}]}]}';
+}
+
+/* ============================ APPELS API ============================ */
+
+async function callClaude(apiKey, model, prompt){
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method:'POST',
+    headers:{
+      'x-api-key': apiKey,
+      'anthropic-version':'2023-06-01',
+      'content-type':'application/json',
+      'anthropic-dangerous-direct-browser-access':'true'
+    },
+    body: JSON.stringify({
+      model: model,
+      max_tokens: 4096,
+      messages: [{role:'user', content: prompt}]
+    })
+  });
+  const data = await res.json();
+  if(!res.ok){
+    throw new Error((data.error && data.error.message) || ('Erreur HTTP '+res.status));
+  }
+  const textBlocks = (data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('\n');
+  const parsed = extractJsonFromResponse(textBlocks);
+  return validateObjectionsArray(parsed);
+}
+
+async function callGemini(apiKey, model, prompt){
+  const res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/'+model+':generateContent', {
+    method:'POST',
+    headers:{
+      'x-goog-api-key': apiKey,
+      'content-type':'application/json'
+    },
+    body: JSON.stringify({
+      contents: [{parts:[{text: prompt}]}],
+      generationConfig: { responseMimeType: 'application/json', maxOutputTokens: 8192 }
+    })
+  });
+  const data = await res.json();
+  if(!res.ok){
+    throw new Error((data.error && data.error.message) || ('Erreur HTTP '+res.status));
+  }
+  let text = '';
+  try {
+    const candidate = data.candidates && data.candidates[0];
+    if (!candidate || !candidate.content || !candidate.content.parts) {
+      throw new Error('Réponse Gemini sans contenu exploitable.');
+    }
+    text = candidate.content.parts.map(p=>p.text||'').join('\n');
+    if (!text.trim()) throw new Error('Réponse Gemini vide.');
+  } catch (e) {
+    throw new Error('Impossible d\'extraire le texte de la réponse Gemini : ' + e.message);
+  }
+  const parsed = extractJsonFromResponse(text);
+  return validateObjectionsArray(parsed);
+}
+
+/* ============================ SOUMISSION FORMULAIRE ICP ============================ */
+
+document.getElementById('icpForm').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+
+  const ctx = {
+    name: document.getElementById('icpName').value.trim(),
+    problem: document.getElementById('icpProblem').value.trim(),
+    market: document.getElementById('icpMarket').value.trim(),
+    solution: document.getElementById('icpSolution').value.trim(),
+    advantages: document.getElementById('icpAdvantages').value.trim()
+  };
+  if(!ctx.name){ alert('Merci de donner un nom à cet ICP.'); return; }
+
+  const claudeKey = document.getElementById('claudeKey').value.trim();
+  const geminiKey = document.getElementById('geminiKey').value.trim();
+  if(!claudeKey && !geminiKey){ alert('Renseignez au moins une clé API (Claude ou Gemini).'); return; }
+
+  const claudeModel = getClaudeModel();
+  const geminiModel = getGeminiModel();
+  const prompt = buildPrompt(ctx);
+
+  const resultsEl = document.getElementById('genResults');
+  const columnsEl = document.getElementById('genColumns');
+  const statusEl = document.getElementById('genStatus');
+  resultsEl.classList.remove('hidden');
+  columnsEl.innerHTML = '';
+  statusEl.classList.add('hidden');
+
+  const generateBtn = document.getElementById('generateBtn');
+  generateBtn.disabled = true;
+  generateBtn.textContent = 'Génération en cours...';
+
+  state.pendingGeneration = { context: ctx, claude:null, gemini:null, claudeError:null, geminiError:null };
+
+  const tasks = [];
+  if(claudeKey){
+    tasks.push(
+      callClaude(claudeKey, claudeModel, prompt)
+        .then(objections=>{ state.pendingGeneration.claude = objections; })
+        .catch(err=>{ state.pendingGeneration.claudeError = err.message; })
+    );
+  }
+  if(geminiKey){
+    tasks.push(
+      callGemini(geminiKey, geminiModel, prompt)
+        .then(objections=>{ state.pendingGeneration.gemini = objections; })
+        .catch(err=>{ state.pendingGeneration.geminiError = err.message; })
+    );
+  }
+
+  await Promise.all(tasks);
+
+  generateBtn.disabled = false;
+  generateBtn.textContent = 'Générer les objections';
+
+  let statusMsg = '';
+  const errors = [];
+  if (state.pendingGeneration.claudeError) errors.push('Claude : ' + state.pendingGeneration.claudeError);
+  if (state.pendingGeneration.geminiError) errors.push('Gemini : ' + state.pendingGeneration.geminiError);
+  if (errors.length === 0) {
+    statusMsg = '✅ Génération terminée avec succès.';
+  } else {
+    statusMsg = '⚠️ Génération terminée avec ' + errors.length + ' erreur(s) : ' + errors.join(' — ');
+  }
+  statusEl.textContent = statusMsg;
+  statusEl.classList.remove('hidden');
+
+  renderGenerationResults(claudeModel, geminiModel);
+});
+
+function renderGenObjectionsHtml(objections){
+  return objections.map(o=>
+    '<div class="gen-obj-block">' +
+      '<h5>'+escapeHtml(o.label)+'</h5>' +
+      o.responses.map(r=>
+        '<span class="tag '+tagClass(r.method)+'">'+escapeHtml(r.method)+'</span>' +
+        '<div class="response-body">'+formatText(r.text)+'</div>'
+      ).join('') +
+    '</div>'
+  ).join('');
+}
+
+function renderGenerationResults(claudeModel, geminiModel){
+  const columnsEl = document.getElementById('genColumns');
+  const pg = state.pendingGeneration;
+  let html = '';
+
+  if(document.getElementById('claudeKey').value.trim()){
+    html += '<div class="gen-col claude-col"><h4>Claude — '+escapeHtml(claudeModel)+'</h4>';
+    if(pg.claudeError){
+      html += '<div class="error-box">Erreur Claude : '+escapeHtml(pg.claudeError)+'</div>';
+    } else if(pg.claude){
+      html += renderGenObjectionsHtml(pg.claude);
+      html += '<button class="use-version-btn" data-source="claude" data-model="'+escapeHtml(claudeModel)+'">✓ Utiliser cette version pour cet ICP</button>';
+    } else {
+      html += '<div class="loader">En attente...</div>';
+    }
+    html += '</div>';
+  }
+
+  if(document.getElementById('geminiKey').value.trim()){
+    html += '<div class="gen-col gemini-col"><h4>Gemini — '+escapeHtml(geminiModel)+'</h4>';
+    if(pg.geminiError){
+      html += '<div class="error-box">Erreur Gemini : '+escapeHtml(pg.geminiError)+'</div>';
+    } else if(pg.gemini){
+      html += renderGenObjectionsHtml(pg.gemini);
+      html += '<button class="use-version-btn" data-source="gemini" data-model="'+escapeHtml(geminiModel)+'">✓ Utiliser cette version pour cet ICP</button>';
+    } else {
+      html += '<div class="loader">En attente...</div>';
+    }
+    html += '</div>';
+  }
+
+  columnsEl.innerHTML = html;
+
+  columnsEl.querySelectorAll('.use-version-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const source = btn.dataset.source;
+      const model = btn.dataset.model;
+      const objections = source==='claude' ? pg.claude : pg.gemini;
+      const icp = {
+        id: 'icp_'+Date.now(),
+        name: pg.context.name,
+        context: pg.context,
+        createdAt: new Date().toISOString(),
+        source: source,
+        sourceModel: model,
+        objections: objections
+      };
+      state.icps.push(icp);
+      state.currentICPId = icp.id;
+      state.selectedIndex = 0;
+      switchView('base');
+    });
+  });
+}
+
+/* ============================ SCRIPT VIEW — LECTEUR ============================ */
+
+// Tokenisation : on découpe la ligne en tokens (mots, espaces, ponctuation)
+function tokenizeLine(line) {
+  const tokens = [];
+  let current = '';
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+    if (char === ' ') {
+      if (current) { tokens.push({ text: current, type: 'word' }); current = ''; }
+      tokens.push({ text: ' ', type: 'space' });
+    } else {
+      current += char;
+    }
+  }
+  if (current) tokens.push({ text: current, type: 'word' });
+  return tokens;
+}
+
+function renderScript() {
+  const container = document.getElementById('scriptText');
+  const lines = BASE_SCRIPT.split('\n');
+  let allTokens = [];
+  let html = '';
+  for (let line of lines) {
+    if (line.trim() === '') {
+      html += '<div class="line"><br></div>';
+      continue;
+    }
+    const tokens = tokenizeLine(line);
+    allTokens = allTokens.concat(tokens);
+    let lineHtml = '';
+    for (let token of tokens) {
+      const clean = escapeHtml(token.text);
+      lineHtml += '<span class="token">'+clean+'</span>';
+    }
+    html += '<div class="line">'+lineHtml+'</div>';
+  }
+  container.innerHTML = html;
+  state.tokens = allTokens;
+  updateScriptState();
+}
+
+function updateScriptState() {
+  const container = document.getElementById('scriptText');
+  const allTokens = container.querySelectorAll('.token');
+  const idx = state.currentTokenIndex;
+  allTokens.forEach((el, i) => {
+    if (i <= idx) {
+      el.classList.add('highlight');
+    } else {
+      el.classList.remove('highlight');
+    }
+  });
+  updateProgress();
+  updatePhaseLabel();
+  saveScriptState();
+}
+
+function updateProgress() {
+  const total = state.tokens.length;
+  const done = Math.min(state.currentTokenIndex + 1, total);
+  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  document.getElementById('progressFill').style.width = Math.min(pct, 100) + '%';
+}
+
+function updatePhaseLabel() {
+  const idx = state.currentTokenIndex;
+  const total = state.tokens.length;
+  let phase = 'Phase 1/4';
+  if (idx < total) {
+    const text = state.tokens[idx].text.toLowerCase();
+    if (text.includes('bonjour') || text.includes('appel') || text.includes('annonce')) {
+      phase = 'Phase 1/4 · Accroche';
+    } else if (text.includes('directeurs') || text.includes('recrutement') || text.includes('problématique')) {
+      phase = 'Phase 2/4 · Pitch problème';
+    } else if (text.includes('application') || text.includes('IA') || text.includes('simulation')) {
+      phase = 'Phase 3/4 · Solution';
+    } else if (text.includes('engagement') || text.includes('rendez-vous') || text.includes('promis')) {
+      phase = 'Phase 4/4 · Closing';
+    } else {
+      const ratio = idx / total;
+      if (ratio < 0.25) phase = 'Phase 1/4 · Accroche';
+      else if (ratio < 0.5) phase = 'Phase 2/4 · Pitch problème';
+      else if (ratio < 0.75) phase = 'Phase 3/4 · Solution';
+      else phase = 'Phase 4/4 · Closing';
+    }
+  }
+  document.getElementById('phaseLabel').textContent = phase;
+}
+
+function updatePlayButton() {
+  const btn = document.getElementById('playBtn');
+  btn.textContent = state.isPlaying ? '⏸' : '▶';
+}
+
+function goToTokenIndex(idx) {
+  if (idx < 0) idx = 0;
+  if (idx >= state.tokens.length) idx = state.tokens.length - 1;
+  state.currentTokenIndex = idx;
+  state.tokenTimer = 0;
+  updateScriptState();
+  saveScriptState();
+}
+
+function nextToken() {
+  if (state.currentTokenIndex < state.tokens.length - 1) {
+    state.currentTokenIndex++;
+    state.tokenTimer = 0;
+    updateScriptState();
+    saveScriptState();
+    return true;
+  } else {
+    pauseScript();
+    return false;
+  }
+}
+
+function getTokenDuration(token, speed) {
+  const base = token.text.length > 0 ? token.text.length * 0.04 : 0.02;
+  return Math.max(0.04, base / speed);
+}
+
+function startTimer() {
+  if (state.timerInterval) clearInterval(state.timerInterval);
+  state.timerInterval = setInterval(() => {
+    if (!state.isPlaying) return;
+    if (state.openObjectionIdx !== null || state.openBarrageItemIdx !== null) {
+      pauseScript();
+      return;
+    }
+    const duration = getTokenDuration(state.tokens[state.currentTokenIndex], state.speed);
+    state.tokenTimer += 0.05;
+    if (state.tokenTimer >= duration) {
+      state.tokenTimer = 0;
+      const hasNext = nextToken();
+      if (!hasNext) pauseScript();
+    }
+  }, 50);
+}
+
+function playScript() {
+  if (state.currentTokenIndex >= state.tokens.length - 1) {
+    state.currentTokenIndex = 0;
+    state.tokenTimer = 0;
+    updateScriptState();
+  }
+  state.isPlaying = true;
+  state.tokenTimer = 0;
+  updatePlayButton();
+  saveScriptState();
+  if (!state.timerInterval) startTimer();
+}
+
+function pauseScript() {
+  state.isPlaying = false;
+  state.tokenTimer = 0;
+  updatePlayButton();
+  saveScriptState();
+  if (state.timerInterval) {
+    clearInterval(state.timerInterval);
+    state.timerInterval = null;
+  }
+}
+
+function togglePlay() {
+  if (state.isPlaying) {
+    pauseScript();
+  } else {
+    if (state.openObjectionIdx !== null || state.openBarrageItemIdx !== null) {
+      return;
+    }
+    playScript();
+  }
+}
+
+function setSpeed(newSpeed) {
+  newSpeed = Math.min(2.0, Math.max(0.5, Math.round(newSpeed * 10) / 10));
+  state.speed = newSpeed;
+  document.getElementById('speedDisplay').textContent = state.speed.toFixed(1)+'x';
+  const sel = document.getElementById('speedSelect');
+  const val = newSpeed.toFixed(1);
+  if (sel.querySelector('option[value="'+val+'"]')) {
+    sel.value = val;
+  } else {
+    const opt = document.createElement('option');
+    opt.value = val;
+    opt.textContent = val+'x';
+    sel.appendChild(opt);
+    sel.value = val;
+  }
+  saveScriptState();
+}
+
+function saveScriptState() {
+  try {
+    sessionStorage.setItem('scriptTokenIndex', String(state.currentTokenIndex));
+    sessionStorage.setItem('scriptSpeed', String(state.speed));
+    sessionStorage.setItem('scriptPlaying', state.isPlaying ? '1' : '0');
+  } catch(e) {}
+}
+
+function restoreScriptState() {
+  try {
+    const idx = sessionStorage.getItem('scriptTokenIndex');
+    if (idx !== null) {
+      const i = parseInt(idx, 10);
+      if (i >= 0 && i < state.tokens.length) {
+        state.currentTokenIndex = i;
+      }
+    }
+    const speed = sessionStorage.getItem('scriptSpeed');
+    if (speed !== null) {
+      const s = parseFloat(speed);
+      if (!isNaN(s) && s >= 0.5 && s <= 2.0) {
+        state.speed = s;
+      }
+    }
+    const playing = sessionStorage.getItem('scriptPlaying');
+    if (playing === '1') {
+      state.isPlaying = true;
+    } else {
+      state.isPlaying = false;
+    }
+    document.getElementById('speedDisplay').textContent = state.speed.toFixed(1)+'x';
+    const sel = document.getElementById('speedSelect');
+    const val = state.speed.toFixed(1);
+    if (sel.querySelector('option[value="'+val+'"]')) {
+      sel.value = val;
+    } else {
+      const opt = document.createElement('option');
+      opt.value = val;
+      opt.textContent = val+'x';
+      sel.appendChild(opt);
+      sel.value = val;
+    }
+    state.tokenTimer = 0;
+    updateScriptState();
+    updatePlayButton();
+    if (state.isPlaying) {
+      startTimer();
+    }
+  } catch(e) {}
+}
+
+/* ============================ SCRIPT OBJECTIONS / BARRAGE ============================ */
+
+// Rendu de la liste des objections ou des techniques de barrage (hiérarchisé)
+function renderScriptList() {
+  const container = document.getElementById('scriptObjections');
+  
+  // On construit les onglets
+  let tabsHtml = '<div class="list-tabs">' +
+    '<button class="ltab '+(state.listMode==='objections'?'active':'')+'" data-mode="objections">Objections</button>' +
+    '<button class="ltab '+(state.listMode==='barrage'?'active':'')+'" data-mode="barrage">Barrage secrétaire</button>' +
+    '</div>';
+  
+  let itemsHtml = '';
+  let title = '';
+  
+  if (state.listMode === 'objections') {
+    const objections = BASE_OBJECTIONS;
+    title = 'Objections';
+    itemsHtml = objections.map((o, idx) =>
+      '<button class="obj-btn" data-idx="'+idx+'" data-type="objection">'+escapeHtml(o.label)+'</button>'
+    ).join('');
+  } else {
+    // Mode barrage : affichage hiérarchisé
+    title = 'Barrage secrétaire';
+    let globalIdx = 0;
+    for (let cat of BARRAGE_CATEGORIES) {
+      // Titre de catégorie (niveau 1)
+      itemsHtml += '<div class="barrage-category">'+escapeHtml(cat.name.replace(/## /g,''))+'</div>';
+      for (let item of cat.items) {
+        // Sous-titre (niveau 2) + bouton
+        const cleanLabel = escapeHtml(item.label);
+        itemsHtml += '<button class="obj-btn barrage-item" data-cat="'+globalIdx+'" data-idx="'+globalIdx+'" data-type="barrage">'+cleanLabel+'</button>';
+        globalIdx++;
+      }
+    }
+  }
+  
+  container.innerHTML = tabsHtml + '<div class="obj-list-title">'+title+'</div>' + itemsHtml;
+  
+  // Écouteurs pour les onglets
+  container.querySelectorAll('.ltab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.listMode = btn.dataset.mode;
+      state.openObjectionIdx = null;
+      state.openBarrageItemIdx = null;
+      document.getElementById('responsePanel').classList.remove('open');
+      renderScriptList();
+      // Ouvrir automatiquement le premier élément
+      if (state.listMode === 'objections') {
+        openObjection(0);
+      } else {
+        openBarrage(0);
+      }
+    });
+  });
+  
+  // Écouteurs pour les boutons de la liste
+  container.querySelectorAll('.obj-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.dataset.idx, 10);
+      const type = btn.dataset.type;
+      if (type === 'objection') {
+        openObjection(idx);
+      } else if (type === 'barrage') {
+        openBarrage(idx);
+      }
+    });
+  });
+  
+  // Mettre en surbrillance l'élément actif
+  container.querySelectorAll('.obj-btn').forEach((btn) => {
+    const idx = parseInt(btn.dataset.idx, 10);
+    const type = btn.dataset.type;
+    let isActive = false;
+    if (type === 'objection') {
+      isActive = (state.openObjectionIdx === idx && state.openObjectionIdx !== null);
+    } else if (type === 'barrage') {
+      isActive = (state.openBarrageItemIdx === idx && state.openBarrageItemIdx !== null);
+    }
+    btn.classList.toggle('active', isActive);
+  });
+}
+
+// Ouvrir une objection
+function openObjection(idx) {
+  const objections = BASE_OBJECTIONS;
+  const obj = objections[idx];
+  if (!obj) return;
+
+  if (state.openObjectionIdx === idx && state.listMode === 'objections') {
+    closeResponse();
+    return;
+  }
+
+  state.wasPlayingBeforeObjection = state.isPlaying;
+  if (state.isPlaying) pauseScript();
+
+  state.openObjectionIdx = idx;
+  state.openBarrageItemIdx = null;
+  state.listMode = 'objections';
+
+  document.getElementById('responseTitle').textContent = 'Réponse à "'+obj.label+'"';
+  const content = document.getElementById('responseContent');
+  content.innerHTML = obj.responses.map(r=>
+    '<div class="response-card">' +
+      '<span class="tag '+tagClass(r.method)+'">'+escapeHtml(r.method)+'</span>' +
+      '<div class="response-body">'+formatText(r.text)+'</div>' +
+      '<div class="card-actions"><button class="copy-btn">Copier</button></div>' +
+    '</div>'
+  ).join('');
+  content.querySelectorAll('.copy-btn').forEach((btn, i) => {
+    btn.addEventListener('click', ()=> copyToClipboard(obj.responses[i].text, btn));
+  });
+
+  document.getElementById('responsePanel').classList.add('open');
+  renderScriptList();
+}
+
+// Ouvrir une technique de barrage (en trouvant la catégorie et l'item)
+function openBarrage(idx) {
+  // Trouver l'item correspondant à l'index global
+  let itemFound = null;
+  let catIdx = 0;
+  let itemIdx = 0;
+  let globalIdx = 0;
+  for (let c = 0; c < BARRAGE_CATEGORIES.length; c++) {
+    const cat = BARRAGE_CATEGORIES[c];
+    for (let i = 0; i < cat.items.length; i++) {
+      if (globalIdx === idx) {
+        itemFound = cat.items[i];
+        catIdx = c;
+        itemIdx = i;
+        break;
+      }
+      globalIdx++;
+    }
+    if (itemFound) break;
+  }
+  
+  if (!itemFound) return;
+
+  if (state.openBarrageItemIdx === idx && state.listMode === 'barrage') {
+    closeResponse();
+    return;
+  }
+
+  state.wasPlayingBeforeObjection = state.isPlaying;
+  if (state.isPlaying) pauseScript();
+
+  state.openBarrageItemIdx = idx;
+  state.openObjectionIdx = null;
+  state.listMode = 'barrage';
+
+  document.getElementById('responseTitle').textContent = itemFound.label;
+  const content = document.getElementById('responseContent');
+  content.innerHTML = itemFound.responses.map(r=>
+    '<div class="response-card">' +
+      '<span class="tag tag-Barrage">'+escapeHtml(r.method)+'</span>' +
+      '<div class="response-body">'+formatText(r.text)+'</div>' +
+      '<div class="card-actions"><button class="copy-btn">Copier</button></div>' +
+    '</div>'
+  ).join('');
+  content.querySelectorAll('.copy-btn').forEach((btn, i) => {
+    btn.addEventListener('click', ()=> copyToClipboard(itemFound.responses[i].text, btn));
+  });
+
+  document.getElementById('responsePanel').classList.add('open');
+  renderScriptList();
+}
+
+function closeResponse() {
+  state.openObjectionIdx = null;
+  state.openBarrageItemIdx = null;
+  document.getElementById('responsePanel').classList.remove('open');
+  if (state.wasPlayingBeforeObjection) {
+    state.wasPlayingBeforeObjection = false;
+    if (!state.isPlaying) {
+      playScript();
+    }
+  }
+  renderScriptList();
+}
+
+// Initialisation de la vue script
+function initScriptView() {
+  renderScript();
+  renderScriptList();
+  restoreScriptState();
+  
+  // Ouvrir le premier élément par défaut
+  if (state.listMode === 'objections') {
+    openObjection(0);
+  } else {
+    openBarrage(0);
+  }
+
+  document.getElementById('playBtn').addEventListener('click', togglePlay);
+  document.getElementById('speedSelect').addEventListener('change', (e) => {
+    const val = parseFloat(e.target.value);
+    if (!isNaN(val) && val >= 0.5 && val <= 2.0) {
+      setSpeed(val);
+    }
+  });
+  document.getElementById('closeResponseBtn').addEventListener('click', closeResponse);
+
+  document.addEventListener('keydown', (e) => {
+    if (state.currentView !== 'script') return;
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
+    if (e.key === ' ' || e.key === 'Space') {
+      e.preventDefault();
+      togglePlay();
+    }
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      const newSpeed = Math.min(2.0, state.speed + 0.1);
+      setSpeed(Math.round(newSpeed * 10) / 10);
+    }
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      const newSpeed = Math.max(0.5, state.speed - 0.1);
+      setSpeed(Math.round(newSpeed * 10) / 10);
+    }
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && state.isPlaying) {
+      pauseScript();
+    }
+  });
+}
+
+/* ============================ INIT ============================ */
+
+initScriptView();
+renderObjectionView();
+</script>
+
+</body>
+</html>
