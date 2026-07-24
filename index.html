@@ -472,6 +472,7 @@
                 <div class="tabs">
                     <button class="tab-btn active" data-tab="objections">Objections</button>
                     <button class="tab-btn" data-tab="barrage">Barrage secrétaire</button>
+                    <button class="tab-btn" data-tab="insights">Insights</button>
                 </div>
             </div>
 
@@ -486,6 +487,10 @@
                     <li data-id="obj6">6. Envoyez-moi un mail</li>
                     <li data-id="obj7">7. On verra plus tard</li>
                     <li data-id="obj8">8. MITRAILLETTE</li>
+                    <li data-id="obj9">9. Process d'entretien qui fonctionne</li>
+                    <li data-id="obj10">10. Faire fuir les candidats</li>
+                    <li data-id="obj11">11. Alourdir le travail / Usine à gaz / Manque de temps pour l'implementer</li>
+                    <li data-id="obj12">12. Candidat ne connait pas le produit</li>
                 </ul>
             </div>
 
@@ -502,6 +507,19 @@
                     <li data-id="bar6" class="sub-item">6. La technique du retour d'expérience</li>
                     <li data-id="bar7" class="sub-item">7. La technique de la surprise</li>
                     <li data-id="bar8" class="sub-item">8. La technique du rendez-vous fixé</li>
+                </ul>
+            </div>
+
+            <!-- Onglet Insights -->
+            <div class="tab-content" id="tab-insights">
+                <ul class="item-list" id="insights-list">
+                    <li data-id="ins1">84 % des commerciaux n'atteignent pas leurs objectifs, et 36% quittent leur poste dans l'année ou ils sont embauché</li>
+                    <li data-id="ins2">Les recruteurs mesurent souvent les mauvaises choses</li>
+                    <li data-id="ins3">le cout d'un sous performer</li>
+                    <li data-id="ins4">La coachabilité</li>
+                    <li data-id="ins5">Le double ROI (Recrutement + Formation)</li>
+                    <li data-id="ins6">Pour désamorcer la peur du test produit</li>
+                    <li data-id="ins7">Pour positionner l'outil comme un standard d'exigence</li>
                 </ul>
             </div>
         </div>
@@ -555,8 +573,7 @@ SI oui = La dernière fois que c'est arrivé? Qu'est-ce qui vous avait incité �
 
 Si non = A part votre intuition, est-ce que vous avez un process pour différencier les commerciaux qui savent vraiment vendre, de ceux qui sont uniquement doué pour se vendre en entretien d'embauche ?"
 
-- Si vous cumulez le coût en termes de temps perdu, de salaire versé, éventuellement du coût des leads ou des rdv fournis, et surtout d'opportunités manqués à cause des ventes qui n'ont pas été signée, vous avez déjà calculé ce que vous coute un sous performeur en comparaison d'un top performeur. Selon Salesforce, chaque mauvais recrutement c'est 100 et 150 000€ de manque à gagner ( et selon sales-assessment-testing.com, avril 2026) cela peut monter jusqu'à 1,3 million de différence sur 18 mois si vous conserver un sous performeur, juste parce qu'il fait des ventes et ne coûte pas de salaire fixe. ), Selon SHRM, le coût total d'un mauvais recrutement commercial peut atteindre 240 000 $
-
+- Si vous cumulez le coût en termes de temps perdu, de salaire versé, éventuellement du coût des leads ou des rdv fournis, et surtout d'opportunités manqués à cause des ventes qui n'ont pas été signée, vous avez déjà calculé ce que vous coute un sous performeur en comparaison d'un top performeur. Selon Salesforce, chaque mauvais recrutement c'est 100 et 150 000€ de manque à gagner ( et selon sales-assessment-testing.com, avril 2026) cela peut monter jusqu'à 1,3 million de différence sur 18 mois si vous conserver un sous performeur, juste parce qu'il fait des ventes et ne coûte pas de salaire fixe. ), Selon SHRM, le coût total d'un mauvais recrutement commercial peut atteindre 240 000 $ 
 - Vous avez combien de commerciaux dans votre entreprise actuellement ?
 Est-ce que vous savez quel % de vos commerciaux n'ont pas atteint leur objectifs l'an passé ? 51% selon Salesforce.
 
@@ -734,6 +751,41 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
         obj8: {
             title: "8. MITRAILLETTE",
             isMitraillette: true
+        },
+        obj9: {
+            title: "9. Process d'entretien qui fonctionne",
+            content: `<div class="simple-response">
+<h4>Métaphore :</h4>
+<p>« Votre process actuel est un excellent filtre de base. Mais recruter uniquement là-dessus, c'est comme regarder le CV d'un pilote de Formule 1 sans jamais le voir piloter sur un circuit. Notre IA, c'est le simulateur de course qui vous garantit qu'il sait tenir le volant sous la pression de vos pires prospects, avant même que vous ne lui confiiez les clés. »</p>
+<h4>Question</h4>
+<p>« Et les études sont formelles : à vitre avis, qu'est-ce qui predit le mieux la future réussit d'un candidat : entretien classique en face à face, ou un entretien qui combine en plus, test de compétences, test de personnalité et  simulation de vente ? </p>
+<p>Un entretien qui combine en plus, test de compétences, test de personnalité et  simulation de vente va  prédire 2 fois mieux la future réussite d'un candidat qu'un entretien classique en face à face. Notre outil ne va pas remplacer pas votre process, il va le sécuriser en vous faisant gagner du temps, car vous ne recevrez plus les candidats inadapté, de l'argent car vous allez remplacer les sous-performeurs par des tops performeurs. "</p>
+</div>`
+        },
+        obj10: {
+            title: "10. Faire fuir les candidats",
+            content: `<div class="simple-response">
+<p>S,i un commercial a peur d'interagir avec un outil moderne, est-ce vraiment le profil innovant et performant dont vous avez besoin aujourd'hui ? Si un candidat refuse de passer une simulation rapide ou ne suit pas votre process de recrutement, pensez-vous qu'il respectera vos consignes une fois sur le terrain ? Un commercial qu'on ne peut pas coacher est un danger. Est-ce vraiment le type de profil que vous souhaitez intégrer ? </p>
+<p>Ce n'est pas un frein pour les bons candidats, c'est un révélateur. Un vrai commercial aguerri voit tout de suite l'intérêt d'un outil qui valorise ses compétences plutôt qu'un énième CV lu en diagonale.</p>
+</div>`
+        },
+        obj11: {
+            title: "11. Alourdir le travail / Usine à gaz / Manque de temps pour l'implementer",
+            content: `<div class="simple-response">
+<h4>Métaphore :</h4>
+<p>« Au final, c'est exactement comme installer un télépéage au lieu de contrôler chaque voiture manuellement. L'installation ne prend 15 minutes. Est-ce que vous avez déjà calculé le temps que votre équipe perd chaque semaine à faire passer des entretiens à des profils qui n'en valent pas la peine ? »</p>
+<p>L'outil a volontairement été conçu pour être implémenté en moins de 15 minutes, et avec une interface  si intuitive qu'un adolescent de 15 ans pourrait l'utiliser. </p>
+<p>Concraitement, le système se branche directement à votre ATS. Dès qu'une candidature arrive, le lien de simulation part automatiquement sans action humaine. Vous ne recevez à la fin que le classement des candidats avec leurs notes, les audios et leur profil comportemental. Vous ne perdez plus de temps avec des candidats inadaptés, car vous ne contactez que le haut du panier. Ce n'est pas une charge supplémentaire, c'est un premier filtre automatisé qui va justement vous épargner les entretiens inutiles. »</p>
+</div>`
+        },
+        obj12: {
+            title: "12. Candidat ne connait pas le produit",
+            content: `<div class="simple-response">
+<p>Le candidat qui ne connaît pas le produit (Bloc 3)</p>
+<p>Objection : "Si je balance un candidat sur une IA qui joue le rôle d'un client pour vendre nos produits qu'il ne connaît même pas encore, il va se planter lamentablement."</p>
+<h4>- Réponse :</h4>
+<p>« Justement, le but quand on lui fait vendre vos produits, ce n'est pas de le voir réciter un argumentaire parfait qu'il ne connaît pas, c'est de voir comment il s'adapte et s'il a fait des recherches sur votre entreprise. Et pour évaluer sa véritable technique de vente, on lui fait ensuite vendre son ancien produit ou service : là, on est dans un contexte qu'il maîtrise et on analyse la pertinence de sa méthode. »</p>
+</div>`
         }
     };
 
@@ -822,6 +874,53 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
         }
     };
 
+    const insightsData = {
+        ins1: {
+            title: "84 % des commerciaux n'atteignent pas leurs objectifs, et 36% quittent leur poste dans l'année ou ils sont embauché",
+            content: `<div class="simple-response">
+<p>« Aujourd'hui, 84 % des commerciaux n'atteignent pas leurs objectifs et 36 % des contrats sont rompus dès la première année. Pourquoi un tel échec ? Parce que les études montrent que l'entretien de recrutement classique ne prédit la réussite future d'un candidat qu'à hauteur de 28 %. Il évalue uniquement sa capacité à se vendre lui-même devant un recruteur, et absolument pas sa capacité à vendre votre produit sur le terrain. »</p>
+</div>`
+        },
+        ins2: {
+            title: "Les recruteurs mesurent souvent les mauvaises choses",
+            content: `<div class="simple-response">
+<p>Le paradoxe de l'entretien classique : Les recruteurs mesurent souvent mal la compétence de vente réelle. Un commercial qui performe n'est pas celui qui argumente le mieux en entretien, mais celui qui sait poser les bonnes questions pour amener le prospect à trouver lui-même la solution.</p>
+</div>`
+        },
+        ins3: {
+            title: "le cout d'un sous performer",
+            content: `<div class="simple-response">
+<p>Selon sales force, un mauvais recrutement engendre un manque à gagner estimé entre 100 000 € et 150 000 € par sous-performer. À raison d'un mauvais recrutement par mois, cela représente près de 2 millions d'euros laissés sur la table chaque année.</p>
+</div>`
+        },
+        ins4: {
+            title: "La coachabilité",
+            content: `<div class="simple-response">
+<p>Le filtre de coachabilité : L'outil ne valide pas qu'une technique de vente, il valide l'attitude. Un candidat incapable de suivre les consignes de la simulation est un candidat qui ne suivra pas vos process internes.</p>
+</div>`
+        },
+        ins5: {
+            title: "Le double ROI (Recrutement + Formation)",
+            content: `<div class="simple-response">
+<p>Le simulateur rentabilise son investissement au-delà du recrutement. Il sert de plateforme d'entraînement continu pour l'équipe en place, permettant de transformer un bon vendeur en top performer en moins de 28 jours.</p>
+</div>`
+        },
+        ins6: {
+            title: "Pour désamorcer la peur du test produit",
+            content: `<div class="simple-response">
+<p>(à insérer lors de l'explication de la mise en situation) :</p>
+<p>"L'évaluation se fait en deux temps : d'abord sur vos services pour tester sa capacité d'adaptation et sa curiosité (est-ce qu'il s'est renseigné sur vous ?), puis sur son ancien domaine pour évaluer la pureté de sa méthodologie de vente là où il est censé exceller."</p>
+</div>`
+        },
+        ins7: {
+            title: "Pour positionner l'outil comme un standard d'exigence",
+            content: `<div class="simple-response">
+<p>(à placer si le sujet de la sélection des candidats revient) :</p>
+<p>"Ce n'est pas un frein pour les bons candidats, c'est un révélateur. Un vrai commercial aguerri voit tout de suite l'intérêt d'un outil qui valorise ses compétences plutôt qu'un énième CV lu en diagonale."</p>
+</div>`
+        }
+    };
+
     // ===== FONCTIONS =====
 
     function formatText(text) {
@@ -902,6 +1001,7 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
     const closeBtn = document.getElementById('close-btn');
     const objectionsList = document.getElementById('objections-list');
     const barrageList = document.getElementById('barrage-list');
+    const insightsList = document.getElementById('insights-list');
 
     // ===== TABS =====
     function switchTab(tabName) {
@@ -983,6 +1083,11 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
         li.addEventListener('click', () => handleItemClick(li, barrageData));
     });
 
+    // Insights
+    insightsList.querySelectorAll('li').forEach(li => {
+        li.addEventListener('click', () => handleItemClick(li, insightsData));
+    });
+
     // ===== SESSION STORAGE =====
     function saveState() {
         try {
@@ -1007,27 +1112,39 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
             }
 
             if (state.selected) {
-                const list = state.selected.startsWith('obj') ? objectionsList : barrageList;
-                const li = list.querySelector('[data-id="' + state.selected + '"]');
-                if (li) {
-                    const dataMap = state.selected.startsWith('obj') ? objectionsData : barrageData;
-                    li.classList.add('selected');
-                    selectedItem = state.selected;
+                let list, dataMap;
+                if (state.selected.startsWith('obj')) {
+                    list = objectionsList;
+                    dataMap = objectionsData;
+                } else if (state.selected.startsWith('bar')) {
+                    list = barrageList;
+                    dataMap = barrageData;
+                } else if (state.selected.startsWith('ins')) {
+                    list = insightsList;
+                    dataMap = insightsData;
+                }
 
-                    const data = dataMap[state.selected];
-                    let content;
-                    if (data.isMitraillette) {
-                        content = getMitrailletteHTML();
-                    } else {
-                        content = data.content;
-                    }
+                if (list && dataMap) {
+                    const li = list.querySelector('[data-id="' + state.selected + '"]');
+                    if (li) {
+                        const data = dataMap[state.selected];
+                        let content;
+                        if (data.isMitraillette) {
+                            content = getMitrailletteHTML();
+                        } else {
+                            content = data.content;
+                        }
 
-                    responseTitle.textContent = data.title;
-                    responseContent.innerHTML = content;
+                        li.classList.add('selected');
+                        selectedItem = state.selected;
 
-                    if (state.panelOpen) {
-                        responsePanel.classList.add('open');
-                        panelOpen = true;
+                        responseTitle.textContent = data.title;
+                        responseContent.innerHTML = content;
+
+                        if (state.panelOpen) {
+                            responsePanel.classList.add('open');
+                            panelOpen = true;
+                        }
                     }
                 }
             }
