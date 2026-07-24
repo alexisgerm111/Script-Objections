@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Palette de 8 couleurs avec opacité 0.12 */
             --c-orange: rgba(255, 152, 0, 0.12);
             --c-violet: rgba(156, 39, 176, 0.12);
             --c-rose: rgba(233, 30, 99, 0.12);
@@ -16,7 +15,6 @@
             --c-vert: rgba(76, 175, 80, 0.12);
             --c-rouge: rgba(244, 67, 54, 0.12);
             --c-gris: rgba(158, 158, 158, 0.12);
-
             --bg-body: #f5f6fa;
             --bg-panel: #ffffff;
             --text-primary: #1a1a2e;
@@ -28,9 +26,7 @@
             --shadow-raised: 0 4px 20px rgba(0,0,0,0.12);
             --radius: 12px;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Inter', sans-serif;
             background: var(--bg-body);
@@ -38,8 +34,6 @@
             height: 100vh;
             overflow: hidden;
         }
-
-        /* ===== LAYOUT PRINCIPAL ===== */
         .app-container {
             display: flex;
             height: 100vh;
@@ -47,8 +41,6 @@
             margin: 0 auto;
             background: var(--bg-body);
         }
-
-        /* ===== COLONNE GAUCHE ===== */
         .left-column {
             width: 360px;
             min-width: 360px;
@@ -59,11 +51,9 @@
             box-shadow: var(--shadow);
             z-index: 10;
         }
-
         .left-header {
             padding: 20px 24px 0;
         }
-
         .left-header h1 {
             font-size: 1.3rem;
             font-weight: 700;
@@ -71,14 +61,11 @@
             margin-bottom: 16px;
             letter-spacing: -0.5px;
         }
-
-        /* Onglets */
         .tabs {
             display: flex;
             gap: 4px;
             border-bottom: 2px solid var(--border);
         }
-
         .tab-btn {
             flex: 1;
             padding: 12px 8px;
@@ -94,35 +81,27 @@
             text-align: center;
             white-space: nowrap;
         }
-
         .tab-btn:hover {
             color: var(--accent);
             background: var(--accent-light);
         }
-
         .tab-btn.active {
             color: var(--accent);
             border-bottom-color: var(--accent);
             background: var(--accent-light);
         }
-
-        /* Contenu des onglets */
         .tab-content {
             display: none;
             flex: 1;
             overflow-y: auto;
             padding: 12px;
         }
-
         .tab-content.active {
             display: block;
         }
-
-        /* Liste d'items */
         .item-list {
             list-style: none;
         }
-
         .item-list li {
             padding: 14px 16px;
             margin-bottom: 6px;
@@ -137,26 +116,21 @@
             position: relative;
             overflow: hidden;
         }
-
         .item-list li:hover {
             background: var(--accent-light);
             border-color: var(--accent);
             transform: translateX(4px);
         }
-
         .item-list li.selected {
             background: var(--accent);
             color: #fff;
             border-color: var(--accent);
             box-shadow: var(--shadow);
         }
-
         .item-list li.selected:hover {
             background: var(--accent);
             transform: none;
         }
-
-        /* Catégories pour barrage */
         .category-title {
             font-size: 0.75rem;
             font-weight: 700;
@@ -167,29 +141,22 @@
             border-top: 1px solid var(--border);
             margin-top: 8px;
         }
-
         .category-title:first-child {
             border-top: none;
             margin-top: 0;
             padding-top: 8px;
         }
-
-        /* Sub-items barrage */
         .sub-item {
             padding-left: 12px !important;
             font-size: 0.85rem !important;
             font-weight: 400 !important;
         }
-
-        /* ===== COLONNE DROITE ===== */
         .right-column {
             flex: 1;
             display: flex;
             flex-direction: column;
             overflow: hidden;
         }
-
-        /* Zone script (haut) */
         .script-zone {
             flex: 1;
             overflow-y: auto;
@@ -199,7 +166,6 @@
             border-radius: var(--radius);
             box-shadow: var(--shadow);
         }
-
         .script-zone h2 {
             font-size: 1.1rem;
             font-weight: 700;
@@ -208,8 +174,6 @@
             padding-bottom: 12px;
             border-bottom: 2px solid var(--accent-light);
         }
-
-        /* Sections colorées du script */
         .script-section {
             padding: 20px 24px;
             margin-bottom: 8px;
@@ -218,24 +182,18 @@
             font-size: 0.95rem;
             color: var(--text-primary);
         }
-
         .script-section p { margin-bottom: 12px; }
         .script-section p:last-child { margin-bottom: 0; }
-
         .script-section ul, .script-section ol {
             margin: 12px 0 12px 24px;
         }
-
         .script-section li {
             margin-bottom: 8px;
             line-height: 1.7;
         }
-
         .script-section strong {
             font-weight: 700;
         }
-
-        /* Couleurs des sections */
         .sec-0 { background: var(--c-orange); }
         .sec-1 { background: var(--c-violet); }
         .sec-2 { background: var(--c-rose); }
@@ -244,16 +202,12 @@
         .sec-5 { background: var(--c-vert); }
         .sec-6 { background: var(--c-rouge); }
         .sec-7 { background: var(--c-gris); }
-
-        /* Mitraillette titre */
         .mitraillette-title {
             font-size: 1.15rem;
             font-weight: 700;
             margin-bottom: 12px;
             display: block;
         }
-
-        /* ===== PANNEAU DE RÉPONSE (bas) ===== */
         .response-panel {
             height: 0;
             overflow: hidden;
@@ -265,11 +219,9 @@
             display: flex;
             flex-direction: column;
         }
-
         .response-panel.open {
             height: 50%;
         }
-
         .response-header {
             display: flex;
             justify-content: space-between;
@@ -280,13 +232,11 @@
             border-radius: var(--radius) var(--radius) 0 0;
             flex-shrink: 0;
         }
-
         .response-header h3 {
             font-size: 1rem;
             font-weight: 700;
             color: var(--accent);
         }
-
         .close-btn {
             width: 32px;
             height: 32px;
@@ -301,28 +251,22 @@
             justify-content: center;
             transition: all 0.2s ease;
         }
-
         .close-btn:hover {
             background: rgba(0,0,0,0.08);
             color: var(--text-primary);
         }
-
         .response-content {
             flex: 1;
             overflow-y: auto;
             padding: 20px 24px;
         }
-
         .response-content .script-section {
             margin-bottom: 6px;
         }
-
-        /* Style pour les objections simples (1-7) */
         .simple-response {
             line-height: 1.8;
             font-size: 0.95rem;
         }
-
         .simple-response h4 {
             font-size: 1rem;
             font-weight: 700;
@@ -331,25 +275,19 @@
             padding-bottom: 6px;
             border-bottom: 2px solid var(--accent-light);
         }
-
         .simple-response h4:first-child {
             margin-top: 0;
         }
-
         .simple-response ul {
             margin: 12px 0 12px 24px;
         }
-
         .simple-response li {
             margin-bottom: 8px;
         }
-
-        /* Style pour le barrage secrétaire */
         .barrage-response {
             line-height: 1.8;
             font-size: 0.95rem;
         }
-
         .barrage-response h4 {
             font-size: 1rem;
             font-weight: 700;
@@ -358,11 +296,9 @@
             padding-bottom: 6px;
             border-bottom: 2px solid var(--accent-light);
         }
-
         .barrage-response h4:first-child {
             margin-top: 0;
         }
-
         .barrage-response .dialogue-line {
             margin-bottom: 10px;
             padding: 10px 14px;
@@ -370,18 +306,14 @@
             background: #f8f9fa;
             border-left: 3px solid var(--accent);
         }
-
         .barrage-response .dialogue-line strong {
             color: var(--accent);
             font-weight: 600;
         }
-
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 820px) {
             .app-container {
                 flex-direction: column;
             }
-
             .left-column {
                 width: 100%;
                 min-width: auto;
@@ -390,16 +322,13 @@
                 border-right: none;
                 border-bottom: 1px solid var(--border);
             }
-
             .left-header h1 {
                 font-size: 1.1rem;
                 margin-bottom: 10px;
             }
-
             .tab-content {
                 display: none;
             }
-
             .tab-content.active {
                 display: flex;
                 flex-direction: row;
@@ -409,54 +338,43 @@
                 overflow-x: auto;
                 overflow-y: hidden;
             }
-
             .item-list {
                 display: flex;
                 flex-wrap: wrap;
                 gap: 6px;
             }
-
             .item-list li {
                 padding: 8px 12px;
                 margin-bottom: 0;
                 font-size: 0.8rem;
                 white-space: nowrap;
             }
-
             .category-title {
                 width: 100%;
                 padding: 8px 4px 4px;
                 margin-top: 4px;
             }
-
             .script-zone {
                 margin: 8px;
                 padding: 16px;
             }
-
             .response-panel {
                 margin: 0 8px 8px;
             }
-
             .response-panel.open {
                 height: 40%;
             }
         }
-
-        /* Scrollbar custom */
         ::-webkit-scrollbar {
             width: 6px;
         }
-
         ::-webkit-scrollbar-track {
             background: transparent;
         }
-
         ::-webkit-scrollbar-thumb {
             background: #ccc;
             border-radius: 3px;
         }
-
         ::-webkit-scrollbar-thumb:hover {
             background: #aaa;
         }
@@ -465,7 +383,6 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- ===== COLONNE GAUCHE ===== -->
         <div class="left-column">
             <div class="left-header">
                 <h1>Boîte à Objections</h1>
@@ -474,22 +391,16 @@
                     <button class="tab-btn" data-tab="barrage">Barrage secrétaire</button>
                 </div>
             </div>
-
-            <!-- Onglet Objections -->
             <div class="tab-content active" id="tab-objections">
                 <ul class="item-list" id="objections-list">
-                    <li data-id="obj1">1. Ça coûte trop cher</li>
-                    <li data-id="obj2">2. On a déjà un outil similaire</li>
-                    <li data-id="obj3">3. On n'a pas le temps</li>
-                    <li data-id="obj4">4. On n'a pas besoin</li>
-                    <li data-id="obj5">5. Il faut en parler à mon associé</li>
-                    <li data-id="obj6">6. Envoyez-moi un mail</li>
-                    <li data-id="obj7">7. On verra plus tard</li>
-                    <li data-id="obj8">8. MITRAILLETTE</li>
+                    <li data-id="obj1">1. JE N'AI PAS LE TEMPS / JE SUIS OCCUPÉ</li>
+                    <li data-id="obj2">2. ENVOYEZ-MOI UN EMAIL</li>
+                    <li data-id="obj3">3. JE NE SUIS PAS INTÉRESSÉ / JE N'AI BESOIN DE RIEN</li>
+                    <li data-id="obj4">4. ON EST SATISFAIT DE NOTRE PROCESS</li>
+                    <li data-id="obj5">5. JE NE SUIS PAS CONVAINCU</li>
+                    <li data-id="obj6">Mitraillette</li>
                 </ul>
             </div>
-
-            <!-- Onglet Barrage secrétaire -->
             <div class="tab-content" id="tab-barrage">
                 <div class="category-title">Techniques d'ouverture</div>
                 <ul class="item-list" id="barrage-list">
@@ -505,30 +416,11 @@
                 </ul>
             </div>
         </div>
-
-        <!-- ===== COLONNE DROITE ===== -->
         <div class="right-column">
-            <!-- Zone Script -->
             <div class="script-zone" id="script-zone">
                 <h2>Script de prospection</h2>
                 <div id="script-content"></div>
             </div>
-
-            <!-- Panneau de réponse -->
-            <div class="response-panel" id="response-panel">
-                <div class="response-header">
-                    <h3 id="response-title">Réponse</h3>
-                    <button class="close-btn" id="close-btn">✕</button>
-                </div>
-                <div class="response-content" id="response-content"></div>
-            </div>
-        </div>
-    </div>
-
-            <div id="script-content"></div>
-            </div>
-
-            <!-- Panneau de réponse -->
             <div class="response-panel" id="response-panel">
                 <div class="response-header">
                     <h3 id="response-title">Réponse</h3>
@@ -539,7 +431,6 @@
         </div>
     </div>
 <script>
-    // ===== DONNÉES =====
     const scriptSections = [
         `Bonjour [Prénom-du-prospect] ? Je viens de voir l'annonce que vous avez publiée sur Indeed / France Travail pour recruter des commerciaux, c'est bien le cas ?
 Je vais être tout à fait honnête avec vous : vous ne vous attendiez pas du tout à mon appel, car c'est un appel de prospection, mais c'est un appel très ciblé et bien documenté
@@ -620,119 +511,74 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
 
     const objectionsData = {
         obj1: {
-            title: "1. Ça coûte trop cher",
+            title: "1. JE N'AI PAS LE TEMPS / JE SUIS OCCUPÉ",
             content: `<div class="simple-response">
 <h4>Comparaison :</h4>
 <ul>
-<li>Un mauvais recrutement commercial coûte entre 100 000 et 240 000 € de manque à gagner par an (Salesforce, SHRM).</li>
-<li>Notre outil coûte moins cher qu'un seul mauvais recrutement, et il vous en évite plusieurs par an.</li>
-<li>En transformant un bon vendeur en top performeur en 28 jours, le ROI est atteint dès le premier commercial formé.</li>
+<li>Continuer à recruter sans tester vos candidats en situation réelle parce que vous n'avez pas le temps, c'est comme continuer à conduire avec des freins usés parce que vous n'avez pas le temps de passer au garage. Vous gagnez du temps aujourd'hui, jusqu'au jour où vous ne pourrez plus freiner, et risquer de faire une sortie de route.</li>
 </ul>
 <h4>Question :</h4>
 <ul>
-<li>"Si cet outil vous permet d'éviter UN SEUL mauvais recrutement cette année, est-ce que ça ne vaut pas déjà l'investissement ?"</li>
-<li>"Avez-vous déjà calculé combien vous coûte réellement un commercial qui atteint 70% de son objectif au lieu de 120% ?"</li>
+<li>Si on additionne toutes les heures que vous avez investies cette année dans des recrutements qui n'ont pas tenu leurs objectifs, cela ne vaut pas la peine de regarder s'il est possible d'éviter de perdre tout ce temps à l'avenir ?</li>
 </ul>
 </div>`
         },
         obj2: {
-            title: "2. On a déjà un outil similaire",
+            title: "2. ENVOYEZ-MOI UN EMAIL",
             content: `<div class="simple-response">
 <h4>Comparaison :</h4>
 <ul>
-<li>La plupart des outils existants se contentent de tests écrits ou de QCM, qui ne reflètent pas la réalité du terrain.</li>
-<li>Notre simulateur met les candidats en situation réelle de vente avec des objections complexes, comme s'ils étaient déjà en rendez-vous.</li>
-<li>Vous recevez les enregistrements audio des simulations, pas juste des scores sur papier.</li>
+<li>Demander un email pour évaluer un simulateur de vente, c'est comme demander la photo d'un plat pour savoir s'il est bon. Vous pouvez regarder l'image aussi longtemps que vous voulez, vous ne saurez jamais ce que ça vaut avant de le goûter.</li>
+<li>Demander un email pour juger un outil immersif, c'est comme exiger la fiche technique d'une voiture au lieu de faire un essai sur route. Vous pouvez lire les chevaux fiscaux, vous ne saurez jamais comment elle tient la route avant d'avoir tourné le volant.</li>
 </ul>
 <h4>Question :</h4>
 <ul>
-<li>"Votre outil actuel vous permet-il d'écouter comment le candidat gère une objection en direct, avant de le recruter ?"</li>
-<li>"Pouvez-vous aujourd'hui tester les connaissances ET le profil comportemental d'un candidat en une seule session ?"</li>
+<li>Si je vous envoie un email maintenant, honnêtement, est-ce que vous le lirez aujourd'hui, ou est-ce qu'il finira dans le dossier "à regarder plus tard" avec les autres ?</li>
 </ul>
 </div>`
         },
         obj3: {
-            title: "3. On n'a pas le temps",
+            title: "3. JE NE SUIS PAS INTÉRESSÉ / JE N'AI BESOIN DE RIEN",
             content: `<div class="simple-response">
 <h4>Comparaison :</h4>
 <ul>
-<li>Un entretien de recrutement classique dure en moyenne 45 minutes, et vous n'avez aucune garantie sur la performance réelle du candidat.</li>
-<li>Notre simulateur fonctionne en autonomie : le candidat passe le test quand il veut, et vous recevez les résultats directement.</li>
-<li>Vous gagnez du temps sur les entretiens inutiles, car vous ne recevez que les candidats déjà validés par le simulateur.</li>
+<li>Affirmer que vous n'avez besoin de rien parce que votre processus suffit, c'est comme un pilote qui refuse de regarder ses instruments de bord parce qu'il a toujours atterri jusqu'ici. Il a raison, jusqu'au jour où la brume tombe et qu'il ne voit plus la piste.</li>
 </ul>
 <h4>Question :</h4>
 <ul>
-<li>"Combien d'heures avez-vous perdues cette année à recevoir des candidats qui n'ont finalement pas été retenus ?"</li>
-<li>"Si vous pouviez filtrer 80% des mauvais candidats avant de les rencontrer, combien de temps cela vous ferait gagner ?"</li>
+<li>Sur vos dix dernières recrues, est-ce que leurs résultats sur le terrain ont toujours correspondu exactement à ce que vous aviez perçu en entretien ?</li>
+<li>Si vous deviez noter sur dix la fiabilité de votre méthode actuelle pour prédire la performance réelle d'un candidat face à un client difficile, vous mettriez combien ? Et si ce n'est pas dix, qu'est-ce qui vous empêche de chercher ce qui comblerait l'écart ?</li>
 </ul>
 </div>`
         },
         obj4: {
-            title: "4. On n'a pas besoin",
+            title: "4. ON EST SATISFAIT DE NOTRE PROCESS",
             content: `<div class="simple-response">
 <h4>Comparaison :</h4>
 <ul>
-<li>51% des commerciaux n'atteignent pas leurs objectifs (Salesforce), même dans les entreprises qui pensent recruter correctement.</li>
-<li>Les entretiens classiques prédisent 2 fois moins bien la performance réelle qu'une simulation de travail (méta-étude Schmidt & Hunter).</li>
-<li>Si la moitié de vos commerciaux vous coûte entre 100 et 150 000 € de manque à gagner, le besoin existe, même s'il n'est pas encore identifié.</li>
+<li>Se contenter d'un process qui filtre les CV mais pas les mauvais vendeurs, c'est comme un médecin qui prescrit des antidouleurs pour une fracture du tibia. La douleur disparaît, la fracture est toujours là, et un jour l'os ne tient plus.</li>
 </ul>
 <h4>Question :</h4>
 <ul>
-<li>"Quel pourcentage de vos commerciaux a atteint 100% de ses objectifs l'année dernière ?"</li>
-<li>"Si vous pouviez améliorer de 20% les performances de votre équipe commerciale, quel impact sur votre chiffre d'affaires ?"</li>
+<li>Si votre process est parfait, comment expliquez-vous que certains commerciaux passent tous vos filtres pour plafonner une fois face à vos clients ?</li>
 </ul>
 </div>`
         },
         obj5: {
-            title: "5. Il faut en parler à mon associé",
+            title: "5. JE NE SUIS PAS CONVAINCU",
             content: `<div class="simple-response">
 <h4>Comparaison :</h4>
 <ul>
-<li>C'est une décision importante, et il est normal de vouloir la partager.</li>
-<li>Cependant, notre démo de 30 minutes est gratuite et sans engagement. Votre associé peut même y assister.</li>
-<li>Si l'outil n'est pas pertinent pour vous, vous n'avez rien perdu. Si c'est pertinent, vous aurez tous les éléments pour décider ensemble.</li>
+<li>Dire "je ne suis pas convaincu" avant d'avoir entendu un seul candidat réel échouer face à notre IA, c'est comme refuser d'acheter une voiture sans l'avoir essayée tout en affirmant qu'elle ne tient pas la route. Vous ne manquez pas d'arguments, vous manquez de données.</li>
 </ul>
 <h4>Question :</h4>
 <ul>
-<li>"Votre associé serait-il disponible pour assister à la démo de 30 minutes cette semaine ?"</li>
-<li>"Qu'est-ce qui bloquerait votre associé si vous lui présentiez un outil qui réduit les mauvais recrutements de 50% ?"</li>
+<li>Qu'est-ce qui vous a convaincu la dernière fois que vous avez changé d'outil ou de méthode : une promesse sur papier, ou une preuve que vous avez vue de vos propres yeux ?</li>
 </ul>
 </div>`
         },
         obj6: {
-            title: "6. Envoyez-moi un mail",
-            content: `<div class="simple-response">
-<h4>Comparaison :</h4>
-<ul>
-<li>Les mails de prospection ont un taux d'ouverture de moins de 20% et un taux de réponse inférieur à 3%.</li>
-<li>Une démo de 30 minutes vous permet de voir concrètement comment l'outil fonctionne, avec vos propres produits et objections.</li>
-<li>C'est un investissement de 30 minutes pour potentiellement économiser des centaines de milliers d'euros.</li>
-</ul>
-<h4>Question :</h4>
-<ul>
-<li>"Combien de mails de ce type avez-vous déjà reçus, et combien avez-vous vraiment lus en entier ?"</li>
-<li>"Ne préférez-vous pas voir l'outil en action plutôt que de lire une brochure ?"</li>
-</ul>
-</div>`
-        },
-        obj7: {
-            title: "7. On verra plus tard",
-            content: `<div class="simple-response">
-<h4>Comparaison :</h4>
-<ul>
-<li>Chaque mois où vous recrutez sans outil de simulation, vous prenez le risque d'embaucher un "champion de l'entretien" qui ne performe pas.</li>
-<li>Le coût d'un mauvais recrutement s'accumule chaque mois : salaire, leads perdus, opportunités manquées.</li>
-<li>Notre démo est sans engagement et ne prend que 30 minutes. Rien ne vous empêche de décider "plus tard" après avoir vu l'outil.</li>
-</ul>
-<h4>Question :</h4>
-<ul>
-<li>"Qu'est-ce qui changerait entre aujourd'hui et dans 3 mois pour que cela devienne une priorité ?"</li>
-<li>"Si vous continuez à recruter comme vous le faites aujourd'hui, combien de mauvais recrutements risquez-vous de faire d'ici la fin de l'année ?"</li>
-</ul>
-</div>`
-        },
-        obj8: {
-            title: "8. MITRAILLETTE",
+            title: "Mitraillette",
             isMitraillette: true
         }
     };
@@ -822,8 +668,6 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
         }
     };
 
-    // ===== FONCTIONS =====
-
     function formatText(text) {
         const lines = text.split('\n');
         let html = '';
@@ -841,32 +685,26 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
                 html += '<br>';
                 continue;
             }
-
             if (trimmed.startsWith('- ')) {
                 listItems.push(trimmed.substring(2));
                 inList = true;
                 continue;
             }
-
             if (/^[123]-/.test(trimmed)) {
                 listItems.push('<strong>' + trimmed.substring(0, 2) + '</strong>' + trimmed.substring(2));
                 inList = true;
                 continue;
             }
-
             if (inList) {
                 html += '<ul>' + listItems.map(item => '<li>' + item + '</li>').join('') + '</ul>';
                 listItems = [];
                 inList = false;
             }
-
             html += '<p>' + trimmed + '</p>';
         }
-
         if (inList) {
             html += '<ul>' + listItems.map(item => '<li>' + item + '</li>').join('') + '</ul>';
         }
-
         return html;
     }
 
@@ -880,7 +718,6 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
     }
 
     function getMitrailletteHTML() {
-        // Les sections 5, 6, 7 correspondent à la mitraillette
         let html = '';
         for (let i = 5; i <= 7; i++) {
             html += '<div class="script-section ' + sectionClasses[i] + '">' + formatText(scriptSections[i]) + '</div>';
@@ -888,12 +725,10 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
         return html;
     }
 
-    // ===== ÉTAT =====
     let currentTab = 'objections';
     let selectedItem = null;
     let panelOpen = false;
 
-    // ===== DOM =====
     const tabBtns = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
     const responsePanel = document.getElementById('response-panel');
@@ -903,19 +738,14 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
     const objectionsList = document.getElementById('objections-list');
     const barrageList = document.getElementById('barrage-list');
 
-    // ===== TABS =====
     function switchTab(tabName) {
         currentTab = tabName;
-
         tabBtns.forEach(btn => {
             btn.classList.toggle('active', btn.dataset.tab === tabName);
         });
-
         tabContents.forEach(content => {
             content.classList.toggle('active', content.id === 'tab-' + tabName);
         });
-
-        // Fermer le panneau si on change d'onglet
         closePanel();
         saveState();
     }
@@ -924,7 +754,6 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
         btn.addEventListener('click', () => switchTab(btn.dataset.tab));
     });
 
-    // ===== PANEL =====
     function openPanel(title, content) {
         responseTitle.textContent = title;
         responseContent.innerHTML = content;
@@ -935,8 +764,6 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
     function closePanel() {
         responsePanel.classList.remove('open');
         panelOpen = false;
-
-        // Désélectionner
         document.querySelectorAll('.item-list li').forEach(li => li.classList.remove('selected'));
         selectedItem = null;
         saveState();
@@ -944,46 +771,35 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
 
     closeBtn.addEventListener('click', closePanel);
 
-    // ===== ITEMS CLICK =====
     function handleItemClick(li, dataMap) {
         const id = li.dataset.id;
         const data = dataMap[id];
-
         if (!data) return;
-
-        // Toggle
         if (selectedItem === id) {
             closePanel();
             return;
         }
-
-        // Désélectionner tous
         document.querySelectorAll('.item-list li').forEach(item => item.classList.remove('selected'));
         li.classList.add('selected');
         selectedItem = id;
-
         let content;
         if (data.isMitraillette) {
             content = getMitrailletteHTML();
         } else {
             content = data.content;
         }
-
         openPanel(data.title, content);
         saveState();
     }
 
-    // Objections
     objectionsList.querySelectorAll('li').forEach(li => {
         li.addEventListener('click', () => handleItemClick(li, objectionsData));
     });
 
-    // Barrage
     barrageList.querySelectorAll('li').forEach(li => {
         li.addEventListener('click', () => handleItemClick(li, barrageData));
     });
 
-    // ===== SESSION STORAGE =====
     function saveState() {
         try {
             sessionStorage.setItem('boiteObjections', JSON.stringify({
@@ -991,21 +807,17 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
                 selected: selectedItem,
                 panelOpen: panelOpen
             }));
-        } catch (e) {
-            // sessionStorage non disponible
-        }
+        } catch (e) {}
     }
 
     function restoreState() {
         try {
             const saved = sessionStorage.getItem('boiteObjections');
             if (!saved) return;
-
             const state = JSON.parse(saved);
             if (state.tab) {
                 switchTab(state.tab);
             }
-
             if (state.selected) {
                 const list = state.selected.startsWith('obj') ? objectionsList : barrageList;
                 const li = list.querySelector('[data-id="' + state.selected + '"]');
@@ -1013,7 +825,6 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
                     const dataMap = state.selected.startsWith('obj') ? objectionsData : barrageData;
                     li.classList.add('selected');
                     selectedItem = state.selected;
-
                     const data = dataMap[state.selected];
                     let content;
                     if (data.isMitraillette) {
@@ -1021,22 +832,17 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
                     } else {
                         content = data.content;
                     }
-
                     responseTitle.textContent = data.title;
                     responseContent.innerHTML = content;
-
                     if (state.panelOpen) {
                         responsePanel.classList.add('open');
                         panelOpen = true;
                     }
                 }
             }
-        } catch (e) {
-            // Ignorer les erreurs de sessionStorage
-        }
+        } catch (e) {}
     }
 
-    // ===== INIT =====
     renderScript();
     restoreState();
 </script>
