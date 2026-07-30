@@ -198,6 +198,8 @@
             margin: 16px 16px 8px;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
         }
 
         .script-zone h2 {
@@ -209,6 +211,53 @@
             border-bottom: 2px solid var(--accent-light);
         }
 
+        /* Onglets Script (Milieu) */
+        .script-tabs {
+            display: flex;
+            gap: 4px;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .script-tab-btn {
+            padding: 10px 16px;
+            border: none;
+            background: transparent;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .script-tab-btn:hover {
+            color: var(--accent);
+        }
+
+        .script-tab-btn.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        /* Encadré Angle / Cible */
+        .pitch-header-box {
+            background: #f0f4ff;
+            border: 1px solid #c5cae9;
+            border-left: 5px solid var(--accent);
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
         /* Sections colorées du script */
         .script-section {
             padding: 20px 24px;
@@ -217,6 +266,7 @@
             line-height: 1.7;
             font-size: 0.95rem;
             color: var(--text-primary);
+            white-space: pre-wrap; /* Préserve les espaces et sauts de ligne */
         }
 
         .script-section p { margin-bottom: 12px; }
@@ -315,6 +365,7 @@
 
         .response-content .script-section {
             margin-bottom: 6px;
+            white-space: normal;
         }
 
         /* Style pour les objections simples (1-7) */
@@ -528,6 +579,16 @@
         <div class="right-column">
             <!-- Zone Script -->
             <div class="script-zone" id="script-zone">
+                <!-- Onglets Script -->
+                <div class="script-tabs">
+                    <button class="script-tab-btn active" data-script="long">Long</button>
+                    <button class="script-tab-btn" data-script="court">Court</button>
+                    <button class="script-tab-btn" data-script="remettez">Remettez ?</button>
+                    <button class="script-tab-btn" data-script="croissance">La croissance cachée</button>
+                    <button class="script-tab-btn" data-script="clone">Votre clone commercial</button>
+                    <button class="script-tab-btn" data-script="angle">L'angle mort du recrutement</button>
+                    <button class="script-tab-btn" data-script="etude">Etude</button>
+                </div>
                 <h2>Script de prospection</h2>
                 <div id="script-content"></div>
             </div>
@@ -543,22 +604,9 @@
         </div>
     </div>
 
-            <div id="script-content"></div>
-            </div>
-
-            <!-- Panneau de réponse -->
-            <div class="response-panel" id="response-panel">
-                <div class="response-header">
-                    <h3 id="response-title">Réponse</h3>
-                    <button class="close-btn" id="close-btn">✕</button>
-                </div>
-                <div class="response-content" id="response-content"></div>
-            </div>
-        </div>
-    </div>
 <script>
     // ===== DONNÉES =====
-    const scriptSections = [
+    const longScript = [
         `Bonjour [Prénom-du-prospect] ? Je viens de voir l'annonce que vous avez publiée sur Indeed / France Travail pour recruter des commerciaux, c'est bien le cas ?
 Je vais être tout à fait honnête avec vous : vous ne vous attendiez pas du tout à mon appel, car c'est un appel de prospection, mais c'est un appel très ciblé et bien documenté
 Est-ce que vous m'accordez 37 secondes pour vous expliquer pourquoi votre annonce m'a poussé à vous appeler vous spécifiquement ? Promis, je suis bref, et si ce n'est pas pertinent, vous n'entendrez plus parler de moi. Ça vous parait juste ?`,
@@ -608,13 +656,270 @@ Est-ce que cela vous parait juste ?
 Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un créneau commun, vous êtes plus du matin ou de l'apres midi pour ce type de rdv ?
 
 Est-ce que cela vous parait juste ?
-Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un créneau commun, vous êtes plus du matin ou de l'après midi pour ce type de rdv ?`,
+Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un créneau commun, vous êtes plus du matin ou de l'après midi pour ce type de rdv ?`
+    ];
 
+    const courtScript = [
+        `Bonjour [Prénom-du-prospect] ? Je viens de voir l'annonce que vous avez publiée sur Indeed / France Travail pour recruter des commerciaux, c'est bien le cas ?
+Je vais être tout à fait honnête avec vous : vous ne vous attendiez pas du tout à mon appel, car c'est un appel de prospection, mais c'est un appel très ciblé et bien documenté
+Est-ce que vous m'accordez 37 secondes pour vous expliquer pourquoi votre annonce m'a poussé à vous appeler vous spécifiquement ? Je serais bref, et si ce n'est pas pertinent, vous n'entendrez plus parler de moi. Ça vous parait juste ?`,
+
+        `Je vous appelle car vous êtes dans une phase importante pour le développement de votre entreprise : vous recrutez actuellement des commerciaux.
+Et la plupart des dirigeants / chefs d'entreprises / Directeurs Commerciaux avec qui j'échange tous les jours, m'expliquent qu'ils sont souvent “frustrés” par au moins un de ces 2 points :
+soit ils recrutent des profils qui savent très bien se vendre en entretien, mais qui, sur le terrain, rencontrent plus de difficultés pour vendre que ce qui était prévu.
+ou alors, entre 30 et 50% de leur équipe de vente n’arrive pas à briser le plafond de verre, et n'atteignent pas leurs objectifs annuels.
+Et quand ils font le compte en fin d’année, c’est un manque à gagner qui peut se chiffrer en centaines de milliers voir en millions d'euros. (à améliorer pour qu’ils prennent conscience que c’est ici qu' ils perde le plus d’argent et ici qu' ils peuvent le plus booster leur croissance)`,
+
+        `Pour récupérer cette manne financière,, on a aidé des entreprises comme Payfit, Qonto, ou des PME comme Premium Énergie, à  diviser de 36%  le temps passé à recruter, et à augmenter leur CA / commercial de 21% en moyenne dès le 2ème mois.
+On à utiliser une nouvelle technologie basée sur  l’IA et sur les enregistrements d’un million d'appels de vente provenant de  6000 commerciaux Cela nous ce qui nous a permis d’encapsuler les schémas et techniques utilisés par les meilleurs commerciaux. 
+Et Le but c’est que cette technologie vous éviter les coûteuses erreurs de recrutement et transforme vos commerciaux en tops performeurs, (sans avoir à recruter 6000 commerciaux pour découvrir ce que font les meilleurs de la profession)
+
+D’ailleurs, par curiosité, si vous aviez une baguette magique, ce serait quoi votre priorité : 
+d’ éviter les coûteuses erreurs de casting 
+ou transformer vos commerciaux actuels en tops performeurs ?`,
+
+        `(éviter les erreurs de casting  )  Si vous cumulez le coût en termes de temps perdu, de salaire versé, éventuellement du coût des leads ou des rdv fournis, et surtout d'opportunités manqués à cause des ventes qui n'ont pas été signée, vous avez déjà calculé ce que vous coûte un sous performeur en comparaison d'un top performeur ? En moyenne c’est 100 à 150k€, en grande partie à cause des ventes qui n’ont pas été signées. Est-ce que c’est une fourchette qui correspond à ce que vous rencontrez ? Si vous multipliez cette somme par le nombre de commerciaux que vous recrutez chaque année, c’est une somme assez importante que vous laissez aujourd'hui sur la table.
+
+
+(transformez vos bons vendeurs en tops performeurs) : vous avez déjà calculé la différence moyenne -lissée sur 1 an - entre  le CA générés par votre top commercial et le CA généré par vos commerciaux qui rencontrent plus de difficultés (en moyenne c’est entre 600k et 1,8 million par an) Est-ce que c’est une fourchette qui correspond à ce que vous rencontrez ? Si vous multipliez ça par le nombre de commerciaux, c’est une somme assez importante que vous laissez aujourd'hui sur la table.`,
+
+        `C’est très clair.
+Comme je vous ai dis je suis bref, l'idée n'est pas de vous vendre quoi que ce soit maintenant. Je vous demande si vous seriez ouvert à 30 minutes cette semaine pour échanger avec notre expert Olivier Decesse. C’est un ancien commercial qui a battu de nombreux records de France en 20 ans de carrière, il vous montrera comment cela fonctionne. 
+Vous jugerez par vous-même si ça vaut le coup d'aller plus loin. Et si ce n'est pas pertinent, vous n'entendrez plus jamais parler de nous.
+Est-ce que cela vous parait juste ?
+Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un créneau commun, vous êtes plus du matin ou de l'après midi pour ce type de rdv ? `
+    ];
+
+    const remettezScript = [
+        `Bonjour [Prénom-du-prospect] ? C’est Daniel de Dklik, vous me remettez ?
+si non : Je ne suis pas vexé, c’est le début / milieu / fin de semaine 
+si oui : Est-ce que vous, de votre côté, vous êtes toujours en phase de recrutement de commerciaux?`,
+
+        `Je vous appelle pour que vous puissiez échanger avec mon directeur commercial Olivier, c’est un ancien commercial qui a battu de nombreux records de France en 20 ans de carrière.
+Car nous, on a aidé des entreprises comme Payfit, Qonto, ou des PME comme Premium Énergie, à  diviser de 36%  le temps passé à recruter, et à augmenter leur CA / commercial de 21% en moyenne dès le 2ème mois.
+On à utiliser une nouvelle technologie basée sur  l’IA et sur les enregistrement d'un million d'appels de vente provenant de  6000 commerciaux Cela nous ce qui nous a permis d’encapsuler les schémas et techniques utilisés par les meilleurs commerciaux. 
+Et Le but c’est que cette technologie vous éviter les coûteuses erreurs de recrutement et transforme vos commerciaux en tops performeurs, (sans avoir à recruter 6000 commerciaux pour découvrir ce que font les meilleurs de la profession)
+
+D’ailleurs, par curiosité, si vous aviez une baguette magique, ce serait quoi votre priorité : 
+d’ éviter les coûteuses erreurs de casting 
+ou transformer vos commerciaux actuels en tops performeurs ?`,
+
+        `(éviter les erreurs de casting  )  Si vous cumulez le coût en termes de temps perdu, de salaire versé, éventuellement du coût des leads ou des rdv fournis, et surtout d'opportunités manqués à cause des ventes qui n'ont pas été signée, vous avez déjà calculé ce que vous coûte un sous performeur en comparaison d'un top performeur ? En moyenne c’est 100 à 150k€, en grande partie à cause des ventes qui n’ont pas été signées. Est-ce que c’est une fourchette qui correspond à ce que vous rencontrez ? Si vous multipliez cette somme par le nombre de commerciaux que vous recrutez chaque année, c’est une somme assez importante que vous laissez aujourd'hui sur la table.
+
+
+(transformez vos bons vendeurs en tops performeurs) : vous avez deja calculé la différence moyenne -lissée sur 1 an - entre  le CA générés par votre top commercial et le CA généré par vos commerciaux qui rencontrent plus de difficultés (en moyenne c’est entre 600k et 1,8 million par an) Est-ce que c’est une fourchette qui correspond à ce que vous rencontrez ? Si vous multipliez ça par le nombre de commerciaux, c’est une somme assez importante que vous laissez aujourd'hui sur la table.`,
+
+        `C’est très clair.
+Bon, l'idée n'est pas de vous vendre quoi que ce soit aujourd'hui. Je vous demande si vous seriez ouvert à prendre 20 minutes cette semaine pour échanger avec notre expert, il vous montrera comment cela fonctionne. 
+Vous jugerez par vous-même si ça vaut le coup d'aller plus loin. Et si ce n'est pas pertinent, vous n'entendrez plus parler de nous. Est-ce que cela vous parait juste ?
+
+
+Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un créneau commun, vous êtes plus du matin ou de l'après midi pour ce type de rdv ?`
+    ];
+
+    const croissanceScript = [
+`Bonjour [Prénom] ?
+
+[Attendre la confirmation]
+
+Je viens de voir l'annonce que vous avez publiée sur Indeed pour recruter des commerciaux — c'est bien le cas ?
+
+[Attendre]
+
+Je vais être complètement honnête avec vous : vous ne vous attendiez pas du tout à mon appel, parce que c'est un appel de prospection. Mais c'est un appel très ciblé et très documenté.
+
+Est-ce que vous m'accordez 37 secondes pour vous expliquer pourquoi votre annonce m'a poussé à vous appeler vous spécifiquement ? Je serai bref — et si ce n'est pas pertinent pour vous, vous n'entendrez plus parler de moi. Ça vous paraît juste ?
+
+[Attendre le "oui"]`,
+
+`Je vous appelle parce que vous êtes dans une phase importante pour votre développement : vous recrutez des commerciaux en ce moment.
+
+Et la plupart des dirigeants avec qui j'échange tous les jours me décrivent au moins un de ces deux problèmes :
+
+Soit ils recrutent des profils qui savent très bien se vendre en entretien — mais sur le terrain, ils peinent à vendre autant qu'ils l'avaient laissé entendre.
+
+Soit leur équipe fait des ventes — mais une grande partie des commerciaux n'arrive pas à briser leur plafond de verre, même avec de bons leads.
+
+En 2025 selon Salesforce, 44% des commerciaux n'ont pas atteint leurs objectifs. Et quand les dirigeants font vraiment les comptes, ce n'est pas quelques milliers d'euros perdus. J'ai rencontré une DRH la semaine dernière qui m'a dit que deux commerciaux gardés 3 mois leur avaient coûté chacun une somme à 6 chiffres — pas en salaire : en manque à gagner.
+
+D'ailleurs, par curiosité — si vous aviez une baguette magique, ce serait quoi votre priorité : éviter les coûteuses erreurs de casting, ou transformer vos commerciaux actuels en tops performeurs ?
+
+[Attendre et écouter]`,
+
+`[Quelle que soit la réponse, enchaîner :]
+
+Je comprends. Et voilà ce qui va vous surprendre : la plupart des dirigeants cherchent à résoudre ce problème en recrutant mieux. Alors qu'il y a un angle mort que quasiment personne ne regarde.
+
+Savez-vous quelle proportion de votre CA est générée par vos 20% de meilleurs commerciaux ?
+
+[Laisser répondre]
+
+C'est une constante dans tous les secteurs que j'observe : 20% des commerciaux font 80% du CA. Pas parce que les autres manquent de talent. Parce que personne n'a jamais su isoler exactement ce que font différemment ces 20% — au niveau micro : les formulations précises, le tempo des questions, la façon de désamorcer une objection avant même qu'elle arrive.
+
+C'est exactement le problème qu'on a résolu.`,
+
+`On a analysé 1 million d'appels de vente réalisés par 6 000 commerciaux dans des dizaines de secteurs. Et on a extrait — avec précision scientifique — ce que fait le top 1% de ces commerciaux. Les schémas exacts qui font la différence face aux prospects d'aujourd'hui, qui sont beaucoup plus sceptiques et beaucoup plus sollicités qu'il y a cinq ans. Les prospects ont changé. La vente doit s'adapter.
+
+Ce savoir-faire, on l'a embarqué dans une plateforme qui fait trois choses simultanément pour votre équipe : elle sélectionne les bons profils avant même de les recruter, elle forme chaque commercial sur ses lacunes spécifiques, et elle coache chacun en temps réel pendant ses vrais appels.
+
+Des PME comme Premium Énergie ont augmenté leur CA par commercial de 21% dès le 2ème mois. Des entreprises comme Payfit et Qonto ont réduit de 36% le temps passé à recruter.`,
+
+`Il y a un aspect de ce qu'on fait — qui concerne directement combien votre prochain recrutement va vous rapporter ou vous coûter — que je vous réserve pour notre échange.
+
+Est-ce que vous avez 20 minutes dans les 10 prochains jours pour qu'on calcule ensemble ce que votre équipe laisse sur la table chaque mois, et ce qu'un système comme le nôtre changerait concrètement pour vous ?`
+    ];
+
+    const cloneScript = [
+`Bonjour [Prénom] ?
+
+[Attendre la confirmation]
+
+Je viens de voir l'annonce publiée sur Indeed par votre entreprise pour recruter des commerciaux — c'est bien vous qui gérez ça ?
+
+[Attendre]
+
+Je vais être complètement honnête avec vous : vous ne vous attendiez pas du tout à mon appel, c'est de la prospection. Mais c'est un appel très ciblé.
+
+Est-ce que vous m'accordez 37 secondes pour vous expliquer pourquoi cette annonce m'a poussé à vous appeler vous spécifiquement ? Si ce n'est pas pertinent, vous n'entendrez plus parler de moi. Ça vous paraît juste ?
+
+[Attendre le "oui"]`,
+
+`Je vous appelle parce que votre annonce indique que vous êtes en phase de développement commercial — et les directeurs commerciaux avec qui j'échange tous les jours me décrivent tous au moins un de ces deux problèmes :
+
+Soit ils recrutent des profils qui brillent en entretien, mais qui sur le terrain peinent à vendre ce qu'ils avaient promis.
+
+Soit leur équipe fait des ventes — mais une partie des commerciaux n'arrive jamais à briser leur plafond de verre malgré les efforts de management.
+
+En 2025, 44% des commerciaux n'ont pas atteint leurs objectifs selon Salesforce. Et quand on fait vraiment les comptes, une DRH m'a dit la semaine dernière que deux commerciaux gardés 3 mois leur avaient coûté chacun une somme à 6 chiffres — uniquement en manque à gagner.
+
+D'ailleurs, par curiosité — si vous aviez une baguette magique, ce serait quoi votre priorité : éviter les erreurs de casting, ou transformer vos commerciaux actuels en tops performeurs ?
+
+[Attendre et écouter]`,
+
+`Je vais vous poser une question directe : parmi votre équipe, combien de commerciaux reçoivent au moins 30 minutes de coaching individuel de votre part chaque semaine ?
+
+[Laisser répondre]
+
+C'est ce que me répondent pratiquement tous les DC avec qui j'échange : un ou deux quand il y a un problème. Les autres, c'est les réunions collectives et leur propre instinct.
+
+Ce n'est pas un problème de volonté. Si vous avez 15 commerciaux, il vous faudrait 15 heures par semaine rien que pour les coacher individuellement — sans compter l'écoute des appels, les simulations, les bilans. C'est structurellement impossible.
+
+Résultat : un commercial non coaché individuellement plafonne à 40 à 60% de son potentiel réel. Dans votre secteur, où un bon commercial peut rapporter 50 à 100 000€ par mois... vous pouvez calculer ce que cet écart représente sur une année.
+
+Ce qu'on a construit résout exactement ça.`,
+
+`On a analysé 1 million d'appels de vente de 6 000 commerciaux — dont on a extrait le savoir-faire précis du top 1% des vendeurs. Ce savoir-faire est maintenant disponible pour chacun de vos commerciaux, individuellement, en temps réel, pendant leurs vrais appels. La plateforme analyse l'échange, détecte le type de prospect, et souffle au commercial la bonne question, le bon argument, la bonne réponse à l'objection — au bon moment — directement sur son écran.
+
+Mais ce qui surprend le plus les DC qu'on accompagne, c'est quelque chose qu'ils ne voient généralement pas venir.
+
+[Pause courte]
+
+Vos commerciaux reçoivent leurs retours personnalisés dans votre voix. On clone votre voix pour les feedbacks individuels quotidiens. Pour chacun d'eux, vous êtes présent. Personnellement. Tous les jours. Ce qu'il est évidemment impossible de faire autrement.
+
+Et vous, chaque matin, vous recevez un récapitulatif précis : ce que chacun a bien fait, où il a faibli, et — en fonction du profil psychologique du commercial — comment aborder le sujet si vous souhaitez intervenir. Parce qu'on ne parle pas de la même façon à quelqu'un de très compétiteur et à quelqu'un de très empathique.
+
+Des entreprises comme Premium Énergie ont augmenté leur CA par commercial de 21% dès le 2ème mois.
+
+Il y a une dimension supplémentaire du système — qui concerne directement votre propre crédibilité en tant que DC et votre capacité à montrer des résultats à votre direction — que je vous réserve pour notre échange.`,
+
+`Est-ce que vous avez 20 minutes dans les 10 prochains jours ? Je vous propose qu'on calcule ensemble ce que votre équipe actuelle laisse sur la table chaque mois, et je vous montre comment ça s'applique concrètement à votre configuration.`
+    ];
+
+    const angleScript = [
+`Bonjour [Prénom] ?
+
+[Attendre la confirmation]
+
+Je viens de voir l'annonce que vous avez publiée sur Indeed pour recruter des commerciaux — c'est bien le cas ?
+
+[Attendre]
+
+Je vais être complètement honnête avec vous : vous ne vous attendiez pas du tout à mon appel, c'est un appel de prospection. Mais très ciblé et très documenté.
+
+Est-ce que vous m'accordez 37 secondes pour vous expliquer pourquoi cette annonce m'a poussé à vous appeler vous spécifiquement ? Si ce n'est pas pertinent pour vous, vous n'entendrez plus parler de moi. Ça vous paraît juste ?
+
+[Attendre le "oui"]`,
+
+`Je vous appelle parce que vous êtes dans une phase critique : vous recrutez des commerciaux.
+
+Et la plupart des dirigeants avec qui j'échange tous les jours me décrivent l'un de ces deux problèmes :
+
+Soit ils recrutent des profils qui savent très bien se vendre en entretien — mais sur le terrain, ils peinent à vendre autant qu'ils l'avaient laissé entendre.
+
+Soit leur équipe fait des ventes — mais une partie des commerciaux ne passe jamais le plafond de verre, même avec de bons leads.
+
+En 2025, 44% des commerciaux n'ont pas atteint leurs objectifs selon Salesforce. Le coût moyen d'un mauvais recrutement : entre 150 et 200 000€ par commercial. Et 36% des nouvelles recrues quittent leur entreprise dans les 12 premiers mois — c'est le double du turn-over de toutes les autres professions. J'ai rencontré une DRH la semaine dernière qui m'a dit que deux commerciaux gardés 3 mois leur avaient coûté chacun une somme à 6 chiffres — uniquement en manque à gagner.
+
+D'ailleurs, si vous aviez une baguette magique, ce serait quoi votre priorité : éviter les coûteuses erreurs de casting, ou transformer vos commerciaux actuels en tops performeurs ?
+
+[Attendre et écouter]`,
+
+`[Quelle que soit la réponse, enchaîner :]
+
+Voilà ce que très peu de personnes vous diront : ces deux problèmes ont la même cause racine — et chercher à résoudre l'un sans l'autre, c'est remplir un tonneau percé.
+
+Le recrutement classique — entretiens, mises en situation théoriques, tests standards — est conçu pour être manipulé par les commerciaux qui savent se vendre. Un bon commercial peut vous vendre une version de lui-même qui n'existe pas encore. Peut-être jamais.
+
+Mais une fois que vous avez recruté le bon profil — honnête, coachable, avec un vrai potentiel — est-ce que votre système de formation et de coaching lui permet vraiment d'atteindre son niveau maximal ? Ou est-ce qu'il plafonne lui aussi au bout de quelques mois, faute de coaching individuel suffisant ?
+
+C'est le double problème qu'on résout, de façon systématique.`,
+
+`On a analysé 1 million d'appels de vente réalisés par 6 000 commerciaux dans des dizaines de secteurs. On en a extrait — avec précision scientifique — le savoir-faire exact du top 1% des vendeurs. Les patterns comportementaux, les séquences de questions, les micro-techniques face aux prospects sceptiques de 2026 — qui ne ressemblent plus du tout aux prospects d'il y a dix ans. Et on a construit un système en trois niveaux qui n'existait pas avant.
+
+Premier niveau — avant même d'embaucher : chaque candidat est évalué via un simulateur d'appel. Une IA vocale joue le prospect — et on voit exactement comment le candidat prend un rendez-vous, gère une objection, close une vente. Pas ce qu'il dit qu'il ferait. Ce qu'il fait vraiment, sous pression, face à un prospect qui résiste. Vous recrutez sur des faits, pas sur une promesse.
+
+Deuxième niveau — une fois recruté : le commercial est formé sur le savoir-faire des meilleurs, avec un programme qui s'adapte en temps réel à ses lacunes spécifiques. Pas une formation générique pour tout le monde — un programme qui cible exactement ce qui lui manque à lui, qui évolue en fonction de ses progrès, et qui lui est délivré dans la voix de son directeur commercial.
+
+Troisième niveau — pendant ses vrais appels : notre IA analyse l'échange en temps réel, détecte le profil du prospect, et souffle au commercial les bonnes questions, les bons arguments, les bonnes réponses aux objections — au bon moment — directement sur son écran. Après chaque appel, il reçoit un récapitulatif précis de ce qui a fonctionné et ce qui doit progresser.
+
+Ce qui change fondamentalement, c'est que vous arrêtez d'espérer que le prochain recrutement sera le bon. Vous le validez avant de l'embaucher. Et une fois qu'il est là, vous ne croisez plus les doigts — vous savez exactement où il en est et comment l'amener à son plein potentiel.
+
+Des entreprises comme Premium Énergie ont augmenté leur CA par commercial de 21% dès le 2ème mois. Qonto et Payfit ont réduit leur temps de recrutement de 36%.`,
+
+`Il y a une dimension supplémentaire du système — qui concerne directement ce que ça coûte réellement votre process actuel chaque trimestre — que je préfère vous montrer en visuel plutôt qu'en décrire au téléphone.
+
+Est-ce que vous avez 20 minutes dans les 10 prochains jours ? Je vous propose un échange où on calcule ensemble ce que votre prochain mauvais recrutement vous coûterait — et ce qu'un bon recrutement validé avant embauche changerait pour vous dès maintenant.`
+    ];
+
+    const etudeScript = [
+`« Bonjour [Prénom-du-prospect] ? C’est  [Prénom-du-commercial] Je vous rassure d'emblée, je n'ai rien à vous vendre aujourd’hui. Je vous contacte suite à l’annonce pour recruter des commerciaux que vous avez posté sur le site France Travail / Indeed.Nous menons actuellement une étude nationale sur l'évolution du recrutement commercial, et votre profil nous intéresse (pour notre pôle R&D). Soyez rassuré, c’est totalement anonyme, et cela ne prends que quelques minutes »
+« Si nous faisons cette étude, c'est parce qu'une étude de Salesforce montre que 44 % des commerciaux n'ont pas atteint leurs objectifs l’an passé, et que 36 % partent ou sont licenciés dès leur première année faute de résultats. Notre but est de comprendre où le process casse. »`,
+
+`Déja, est-ce que ces statistiques reflètent ce que vous vivez ?
+
+
+LA quasi totalité des dirigeants m’expliquent avoir embauché un candidat excellent en entretien mais dont les résultats ont été loin des attentes une fois, je suppose que vous avez également rencontré ce cas de figure? Quand cela vous est arrivé, sur quels critères vous étiez-vous reposé pendant l'éntretien ? 
+En dehors du classique échange de questions/réponses, comment testez-vous la vraie capacité de vente aujourd'hui ?
+Entre le salaire, l'onboarding et les leads brûlés, avez-vous une idée chiffrée de ce que vous coûte une de ces erreurs de casting ?
+Avez-vous pensé à utiliser un filtre automatisé, en amont des entretiens, pour éviter ces "beaux parleurs" et pour ne recevoir que des candidats vraiment prometteurs (pas ceux qui savent créer un cv attrayant et qui s’expriment bien pendant 3 minutes au téléphone)  `,
+
+`Et si vous aviez une baguette magique, ce serait quoi votre priorité : éviter les coûteuses erreurs de casting, ou transformer vos commerciaux actuels en tops performeurs ?  `,
+
+`[Attendre et écouter]
+[Quelle que soit la réponse, enchaîner :]
+Voilà ce que très peu de personnes vous diront : ces deux problèmes ont la même cause racine — et chercher à résoudre l'un sans l'autre, c'est remplir un tonneau percé.
+Le recrutement classique — entretiens, mises en situation théoriques, tests standards — est conçu pour être manipulé par les commerciaux qui savent se vendre. Un bon commercial peut vous vendre une version de lui-même qui n'existe pas.
+Mais une fois que vous avez recruté le bon profil — honnête, coachable, avec un vrai potentiel — est-ce que votre système de formation et de coaching lui permet vraiment d'atteindre son niveau maximal ? Ou est-ce qu'il plafonne lui aussi au bout de quelques mois, faute de coaching individuel suffisant ?
+C'est le double problème qu'on résout, de façon systématique.`,
+
+`On a analysé 1 million d'appels de vente réalisés par 6 000 commerciaux dans des dizaines de secteurs. On en a extrait — avec précision scientifique — le savoir-faire exact du top 1% des vendeurs. Les patterns comportementaux, les séquences de questions, les micro-techniques face aux prospects sceptiques de 2026 — qui ne ressemblent plus du tout aux prospects d'il y a dix ans. Et on a construit un système en trois niveaux qui n'existait pas avant.
+Premier niveau — avant même d'embaucher : chaque candidat est évalué via un simulateur d'appel. Une IA vocale joue le prospect — et on voit exactement comment le candidat prend un rendez-vous, gère une objection, close une vente. Pas ce qu'il dit qu'il ferait. Ce qu'il fait vraiment, sous pression, face à un prospect qui résiste. Vous recrutez sur des faits, pas sur une promesse.
+Deuxième niveau — une fois recruté : le commercial est formé sur le savoir-faire des meilleurs, avec un programme qui s'adapte en temps réel à ses lacunes spécifiques. Pas une formation générique pour tout le monde — un programme qui cible exactement ce qui lui manque à lui, qui évolue en fonction de ses progrès, et qui lui est délivré dans la voix de son directeur commercial.
+Troisième niveau — pendant ses vrais appels : notre IA analyse l'échange en temps réel, détecte le profil du prospect, et souffle au commercial les bonnes questions, les bons arguments, les bonnes réponses aux objections — au bon moment — directement sur son écran. Après chaque appel, il reçoit un récapitulatif précis de ce qui a fonctionné et ce qui doit progresser.
+Ce qui change fondamentalement, c'est que vous arrêtez d'espérer que le prochain recrutement sera le bon. Vous le validez avant de l'embaucher. Et une fois qu'il est là, vous ne croisez plus les doigts — vous savez exactement où il en est et comment l'amener à son plein potentiel.
+Des entreprises comme Premium Énergie ont augmenté leur CA par commercial de 21% dès le 2ème mois. Qonto et Payfit ont réduit leur temps de recrutement de 36%.`,
+
+`Il y a une dimension supplémentaire du système — qui concerne directement ce que ça coûte réellement votre process actuel chaque trimestre — que je préfère vous montrer en visuel plutôt qu'en décrire au téléphone.
+Est-ce que vous avez 20 minutes dans les 10 prochains jours ? Je vous propose un échange où on calcule ensemble ce que votre prochain mauvais recrutement vous coûterait — et ce qu'un bon recrutement validé avant embauche changerait pour vous dès maintenant.`
+    ];
+
+    // La mitraillette est identique pour tous les scripts
+    const mitrailletteSections = [
         `<span class="mitraillette-title">Mitraillette :</span>
 
-Cela ne vous intéresse pas de régler le problème de la sous-performance des commerciaux …
-Vous trouvez que ce n'est pas urgent de régler le problème de la sous-performance des commerciaux …
-Vous n'êtes pas convaincu de régler le problème de la sous-performance des commerciaux …`,
+Cela ne vous <strong>intéresse pas</strong> de régler le problème de la sous-performance des commerciaux …
+Vous trouvez que ce n'est <strong>pas urgent</strong> de régler le problème de la sous-performance des commerciaux …
+Vous n'êtes <strong>pas convaincu</strong> de régler le problème de la sous-performance des commerciaux …`,
 
         `Quand on sait que la moitié des commerciaux n'atteignent pas leurs objectifs ?
 Quand on sait que chaque sous performeur vous coûte entre 100 et 240 000€ de manque à gagner chaque année !
@@ -632,6 +937,31 @@ Soit vous déciderez de faire un premier test de notre outil, ce qui vous permet
 Est-ce que cela vous parait juste ?
 Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un créneau commun, vous êtes plus du matin ou de l'après midi pour vos rdv d'affaires ?`
     ];
+
+    const scriptsData = {
+        long: longScript,
+        court: courtScript,
+        remettez: remettezScript,
+        croissance: croissanceScript,
+        clone: cloneScript,
+        angle: angleScript,
+        etude: etudeScript
+    };
+
+    const scriptHeaders = {
+        croissance: `Angle : La perte n'est pas dans votre pipeline. Elle est dans l'écart entre ce que vos commerciaux génèrent et ce qu'ils pourraient générer.
+Cible : Fondateur / DG (énergie, patrimoine, immo neuf)
+Baguette magique : fonctionne sur les deux réponses, particulièrement "transformer mes commerciaux actuels"`,
+        clone: `Angle : Vous avez X commerciaux. Vous ne pouvez coacher vraiment que 2 ou 3. Les autres plafonnent à 40-60% de leur potentiel — et personne ne le voit parce que les ventes qui ont lieu masquent celles qui n'ont pas eu lieu.
+Cible : Directeur Commercial
+Baguette magique : orienté "transformer mes commerciaux actuels"`,
+        angle: `Angle : Vous cherchez de meilleurs commerciaux. Vous regardez dans la mauvaise direction. Le problème n'est pas de trouver les bons — c'est d'arrêter de recruter les mauvais ET de transformer ceux qui restent en tops performeurs. Les deux ensemble, en même temps.
+Cible : Fondateur / DC — contexte recrutement actif
+Baguette magique : orienté "éviter les erreurs de casting" mais couvre les deux`
+    };
+
+    let activeScriptType = 'long';
+    let scriptSections = scriptsData[activeScriptType];
 
     const sectionClasses = ['sec-0', 'sec-1', 'sec-2', 'sec-3', 'sec-4', 'sec-5', 'sec-6', 'sec-7'];
 
@@ -721,7 +1051,7 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
             content: `<div class="simple-response">
 <h4>Comparaison :</h4>
 <ul>
-<li>Les mails de prospection ont un taux d'ouverture de moins de 20% et un taux de réponse inférieur à 3%.</li>
+<li>Les mails de prospection ont un taux d'ouverture de moins que 20% et un taux de réponse inférieur à 3%.</li>
 <li>Une démo de 30 minutes vous permet de voir concrètement comment l'outil fonctionne, avec vos propres produits et objections.</li>
 <li>C'est un investissement de 30 minutes pour potentiellement économiser des centaines de milliers d'euros.</li>
 </ul>
@@ -827,7 +1157,7 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
             content: `<div class="barrage-response">
 <h4>Dialogue :</h4>
 <div class="dialogue-line"><strong>Secrétaire :</strong> "Il est en déplacement aujourd'hui."</div>
-<div class="dialogue-line"><strong>Vous :</strong> "C'est justement pour cela que j'appelle. Nous avons une opportunité limitée cette semaine concernant le recrutement de commerciaux, et je voulais m'assurer qu'il en soit informé avant que cela ne soit trop tard. C'est vraiment important."</div>
+<div class="dialogue-line"><strong>Vous :</strong> "C'est justement pour cela que j'appelle. Nous avons une opportunité limitée cette semaine concernant le recrutement de commerciaux, và je voulais m'assurer qu'il en soit informé avant que cela ne soit trop tard. C'est vraiment important."</div>
 <div class="dialogue-line"><strong>Secrétaire :</strong> "Quel type d'opportunité ?"</div>
 <div class="dialogue-line"><strong>Vous :</strong> "Cela concerne la sous-performance commerciale et comment y remédier. C'est une information à valeur ajoutée, pas une vente. Pouvez-vous me donner son mobile ou un meilleur créneau ?"</div>
 </div>`
@@ -923,67 +1253,34 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
 
     // ===== FONCTIONS =====
 
-    function formatText(text) {
-        const lines = text.split('\n');
-        let html = '';
-        let listItems = [];
-        let inList = false;
-
-        for (let line of lines) {
-            const trimmed = line.trim();
-            if (!trimmed) {
-                if (inList) {
-                    html += '<ul>' + listItems.map(item => '<li>' + item + '</li>').join('') + '</ul>';
-                    listItems = [];
-                    inList = false;
-                }
-                html += '<br>';
-                continue;
-            }
-
-            if (trimmed.startsWith('- ')) {
-                listItems.push(trimmed.substring(2));
-                inList = true;
-                continue;
-            }
-
-            if (/^[123]-/.test(trimmed)) {
-                listItems.push('<strong>' + trimmed.substring(0, 2) + '</strong>' + trimmed.substring(2));
-                inList = true;
-                continue;
-            }
-
-            if (inList) {
-                html += '<ul>' + listItems.map(item => '<li>' + item + '</li>').join('') + '</ul>';
-                listItems = [];
-                inList = false;
-            }
-
-            html += '<p>' + trimmed + '</p>';
-        }
-
-        if (inList) {
-            html += '<ul>' + listItems.map(item => '<li>' + item + '</li>').join('') + '</ul>';
-        }
-
-        return html;
-    }
-
     function renderScript() {
         const container = document.getElementById('script-content');
         let html = '';
+
+        // Afficher l'encadré si présent
+        if (scriptHeaders[activeScriptType]) {
+            html += '<div class="pitch-header-box">' + scriptHeaders[activeScriptType] + '</div>';
+        }
+
+        scriptSections = scriptsData[activeScriptType];
+        
         scriptSections.forEach((section, index) => {
-            html += '<div class="script-section ' + sectionClasses[index] + '">' + formatText(section) + '</div>';
+            html += '<div class="script-section ' + sectionClasses[index % sectionClasses.length] + '">' + section + '</div>';
         });
+        
+        // Ajout de la mitraillette à la fin du script
+        mitrailletteSections.forEach((section, index) => {
+            html += '<div class="script-section ' + sectionClasses[(scriptSections.length + index) % sectionClasses.length] + '">' + section + '</div>';
+        });
+        
         container.innerHTML = html;
     }
 
     function getMitrailletteHTML() {
-        // Les sections 5, 6, 7 correspondent à la mitraillette
         let html = '';
-        for (let i = 5; i <= 7; i++) {
-            html += '<div class="script-section ' + sectionClasses[i] + '">' + formatText(scriptSections[i]) + '</div>';
-        }
+        mitrailletteSections.forEach((section, index) => {
+            html += '<div class="script-section ' + sectionClasses[(scriptSections.length + index) % sectionClasses.length] + '">' + section + '</div>';
+        });
         return html;
     }
 
@@ -1003,7 +1300,10 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
     const barrageList = document.getElementById('barrage-list');
     const insightsList = document.getElementById('insights-list');
 
-    // ===== TABS =====
+    // Script Tabs DOM
+    const scriptTabBtns = document.querySelectorAll('.script-tab-btn');
+
+    // ===== TABS (Gauche) =====
     function switchTab(tabName) {
         currentTab = tabName;
 
@@ -1015,13 +1315,23 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
             content.classList.toggle('active', content.id === 'tab-' + tabName);
         });
 
-        // Fermer le panneau si on change d'onglet
         closePanel();
         saveState();
     }
 
     tabBtns.forEach(btn => {
         btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+    });
+
+    // ===== SCRIPT TABS (Milieu) =====
+    scriptTabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            scriptTabBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeScriptType = btn.dataset.script;
+            renderScript();
+            saveState();
+        });
     });
 
     // ===== PANEL =====
@@ -1036,7 +1346,6 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
         responsePanel.classList.remove('open');
         panelOpen = false;
 
-        // Désélectionner
         document.querySelectorAll('.item-list li').forEach(li => li.classList.remove('selected'));
         selectedItem = null;
         saveState();
@@ -1051,13 +1360,11 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
 
         if (!data) return;
 
-        // Toggle
         if (selectedItem === id) {
             closePanel();
             return;
         }
 
-        // Désélectionner tous
         document.querySelectorAll('.item-list li').forEach(item => item.classList.remove('selected'));
         li.classList.add('selected');
         selectedItem = id;
@@ -1073,17 +1380,14 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
         saveState();
     }
 
-    // Objections
     objectionsList.querySelectorAll('li').forEach(li => {
         li.addEventListener('click', () => handleItemClick(li, objectionsData));
     });
 
-    // Barrage
     barrageList.querySelectorAll('li').forEach(li => {
         li.addEventListener('click', () => handleItemClick(li, barrageData));
     });
 
-    // Insights
     insightsList.querySelectorAll('li').forEach(li => {
         li.addEventListener('click', () => handleItemClick(li, insightsData));
     });
@@ -1094,11 +1398,10 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
             sessionStorage.setItem('boiteObjections', JSON.stringify({
                 tab: currentTab,
                 selected: selectedItem,
-                panelOpen: panelOpen
+                panelOpen: panelOpen,
+                activeScript: activeScriptType
             }));
-        } catch (e) {
-            // sessionStorage non disponible
-        }
+        } catch (e) {}
     }
 
     function restoreState() {
@@ -1109,6 +1412,14 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
             const state = JSON.parse(saved);
             if (state.tab) {
                 switchTab(state.tab);
+            }
+
+            if (state.activeScript) {
+                activeScriptType = state.activeScript;
+                scriptTabBtns.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.script === activeScriptType);
+                });
+                renderScript();
             }
 
             if (state.selected) {
@@ -1148,9 +1459,7 @@ Très bien, je vous laisse ouvrir votre agenda afin que l'on puisse trouver un c
                     }
                 }
             }
-        } catch (e) {
-            // Ignorer les erreurs de sessionStorage
-        }
+        } catch (e) {}
     }
 
     // ===== INIT =====
