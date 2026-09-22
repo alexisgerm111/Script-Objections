@@ -530,18 +530,20 @@
             <!-- Onglet Objections -->
             <div class="tab-content active" id="tab-objections">
                 <ul class="item-list" id="objections-list">
-                    <li data-id="obj1">1. Ça coûte trop cher</li>
-                    <li data-id="obj2">2. On a déjà un outil similaire</li>
-                    <li data-id="obj3">3. On n'a pas le temps</li>
-                    <li data-id="obj4">4. On n'a pas besoin</li>
-                    <li data-id="obj5">5. Il faut en parler à mon associé</li>
-                    <li data-id="obj6">6. Envoyez-moi un mail</li>
-                    <li data-id="obj7">7. On verra plus tard</li>
+                    <li data-id="obj1">1. C'est trop cher</li>
+                    <li data-id="obj3">2. Je n'ai pas le temps / Je suis occupé</li>
+                    <li data-id="obj4">3. Je ne suis pas intéressé / Je n'ai besoin de rien</li>
+                    <li data-id="obj9">4. On est satisfait de notre process</li>
+                    <li data-id="obj13">5. Je ne suis pas convaincu</li>
+                    <li data-id="obj14">6. On travaille avec un cabinet de recrutement</li>
+                    <li data-id="obj6">7. Envoyez-moi un email</li>
                     <li data-id="obj8">8. MITRAILLETTE</li>
-                    <li data-id="obj9">9. Process d'entretien qui fonctionne</li>
-                    <li data-id="obj10">10. Faire fuir les candidats</li>
-                    <li data-id="obj11">11. Alourdir le travail / Usine à gaz / Manque de temps pour l'implementer</li>
-                    <li data-id="obj12">12. Candidat ne connait pas le produit</li>
+                    <li data-id="obj2">9. On a déjà un outil similaire</li>
+                    <li data-id="obj5">10. Il faut en parler à mon associé</li>
+                    <li data-id="obj7">11. On verra plus tard</li>
+                    <li data-id="obj10">12. Faire fuir les candidats</li>
+                    <li data-id="obj11">13. Alourdir le travail / Usine à gaz / Manque de temps pour l'implementer</li>
+                    <li data-id="obj12">14. Candidat ne connait pas le produit</li>
                 </ul>
             </div>
 
@@ -667,7 +669,7 @@ Est-ce que vous m'accordez 37 secondes pour vous expliquer pourquoi votre annonc
         `Je vous appelle car vous êtes dans une phase importante pour le développement de votre entreprise : vous recrutez actuellement des commerciaux.
 Et la plupart des dirigeants / chefs d'entreprises / Directeurs Commerciaux avec qui j'échange tous les jours, m'expliquent qu'ils sont souvent “frustrés” par au moins un de ces 2 points :
 soit ils recrutent des profils qui savent très bien se vendre en entretien, mais qui, sur le terrain, rencontrent plus de difficultés pour vendre que ce qui était prévu.
-ou alors, entre 30 et 50% de leur équipe de vente n’arrive pas à briser le plafond de verre, et n'atteignent pas leurs objectifs annuels.
+ou alors, entre 30 et 50% de leur équipe de vente n'arrive pas à briser le plafond de verre, et n'atteignent pas leurs objectifs annuels.
 Et quand ils font le compte en fin d’année, c’est un manque à gagner qui peut se chiffrer en centaines de milliers voir en millions d'euros. (à améliorer pour qu’ils prennent conscience que c’est ici qu' ils perde le plus d’argent et ici qu' ils peuvent le plus booster leur croissance)`,
 
         `Pour récupérer cette manne financière,, on a aidé des entreprises comme Payfit, Qonto, ou des PME comme Premium Énergie, à  diviser de 36%  le temps passé à recruter, et à augmenter leur CA / commercial de 21% en moyenne dès le 2ème mois.
@@ -918,6 +920,7 @@ Est-ce que vous avez 20 minutes dans les 10 prochains jours ? Je vous propose un
         `<span class="mitraillette-title">Mitraillette :</span>
 
 Cela ne vous <strong>intéresse pas</strong> de régler le problème de la sous-performance des commerciaux …
+Vous n'avez <strong>pas besoin</strong> de régler le problème de la sous-performance des commerciaux …
 Vous trouvez que ce n'est <strong>pas urgent</strong> de régler le problème de la sous-performance des commerciaux …
 Vous n'êtes <strong>pas convaincu</strong> de régler le problème de la sous-performance des commerciaux …`,
 
@@ -967,23 +970,24 @@ Baguette magique : orienté "éviter les erreurs de casting" mais couvre les deu
 
     const objectionsData = {
         obj1: {
-            title: "1. Ça coûte trop cher",
+            title: "1. C'est trop cher",
             content: `<div class="simple-response">
 <h4>Comparaison :</h4>
 <ul>
-<li>Un mauvais recrutement commercial coûte entre 100 000 et 240 000 € de manque à gagner par an (Salesforce, SHRM).</li>
-<li>Notre outil coûte moins cher qu'un seul mauvais recrutement, et il vous en évite plusieurs par an.</li>
-<li>En transformant un bon vendeur en top performeur en 28 jours, le ROI est atteint dès le premier commercial formé.</li>
+<li>Trouver que fiabiliser un recrutement est trop cher, c'est comme refuser de payer l'assurance de sa voiture de sport pour faire quelques économies. Le jour où l'accident arrive, l'économie du départ coûte 100 fois plus cher. Un mauvais recrutement, c'est un crash industriel pour votre pipeline.</li>
+<li>Économiser sur le filtre, c'est comme économiser sur les freins. Ça ne coûte rien... jusqu'au moment où l'accident arrive. Et là, l'économie du départ coûte 100 fois plus cher.</li>
+<li>Économiser sur la prévention d'un mauvais recrutement, c'est comme un propriétaire qui refuse d'installer une alarme parce que le coût mensuel est trop élevé, alors que le cambriolage qu'il prévient coûte 200 fois le prix de l'abonnement. Le problème n'est pas le prix. C'est qu'on ne voit pas le cambriolage avant qu'il n'arrive.</li>
 </ul>
 <h4>Question :</h4>
 <ul>
-<li>"Si cet outil vous permet d'éviter UN SEUL mauvais recrutement cette année, est-ce que ça ne vaut pas déjà l'investissement ?"</li>
-<li>"Avez-vous déjà calculé combien vous coûte réellement un commercial qui atteint 70% de son objectif au lieu de 120% ?"</li>
+<li>Trop cher par rapport à quoi ? Avez-vous déjà calculé le coût réel d'un "faux bon commercial" qui reste 8 mois dans votre équipe sans ramener de chiffre d'affaires, entre son salaire, le temps de formation et les leads qu'il a brûlés ?</li>
+<li>Quand vous dites "trop cher", c'est le prix absolu qui vous pose problème, ou le fait que vous n'avez jamais calculé ce que coûte réellement un recrutement qui ne fonctionne pas dans votre entreprise ?</li>
+<li>Si on faisait le calcul ensemble : un commercial qui reste 8 mois sans atteindre ses objectifs, entre salaire, formation et opportunités manquées, à quoi est-ce que vous arrivez ? Et si notre outil empêchait un seul de ces recrutements, est-ce que le coût serait encore supérieur ?</li>
 </ul>
 </div>`
         },
         obj2: {
-            title: "2. On a déjà un outil similaire",
+            title: "9. On a déjà un outil similaire",
             content: `<div class="simple-response">
 <h4>Comparaison :</h4>
 <ul>
@@ -999,39 +1003,34 @@ Baguette magique : orienté "éviter les erreurs de casting" mais couvre les deu
 </div>`
         },
         obj3: {
-            title: "3. On n'a pas le temps",
+            title: "2. Je n'ai pas le temps / Je suis occupé",
             content: `<div class="simple-response">
 <h4>Comparaison :</h4>
 <ul>
-<li>Un entretien de recrutement classique dure en moyenne 45 minutes, et vous n'avez aucune garantie sur la performance réelle du candidat.</li>
-<li>Notre simulateur fonctionne en autonomie : le candidat passe le test quand il veut, et vous recevez les résultats directement.</li>
-<li>Vous gagnez du temps sur les entretiens inutiles, car vous ne recevez que les candidats déjà validés par le simulateur.</li>
+<li>Continuer à recruter sans tester vos candidats en situation réelle parce que vous n'avez pas le temps, c'est comme continuer à conduire avec des freins usés parce que vous n'avez pas le temps de passer au garage. Vous gagnez du temps aujourd'hui, jusqu'au jour où vous ne pourrez plus freiner, et risquer de faire une sortie de route.</li>
 </ul>
 <h4>Question :</h4>
 <ul>
-<li>"Combien d'heures avez-vous perdues cette année à recevoir des candidats qui n'ont finalement pas été retenus ?"</li>
-<li>"Si vous pouviez filtrer 80% des mauvais candidats avant de les rencontrer, combien de temps cela vous ferait gagner ?"</li>
+<li>Si on additionne toutes les heures que vous avez investies cette année dans des recrutements qui n'ont pas tenu leurs objectifs, cela ne vaut pas la peine de regarder s'il est possible d'éviter de perdre tout ce temps à l'avenir ?</li>
 </ul>
 </div>`
         },
         obj4: {
-            title: "4. On n'a pas besoin",
+            title: "3. Je ne suis pas intéressé / Je n'ai besoin de rien",
             content: `<div class="simple-response">
 <h4>Comparaison :</h4>
 <ul>
-<li>51% des commerciaux n'atteignent pas leurs objectifs (Salesforce), même dans les entreprises qui pensent recruter correctement.</li>
-<li>Les entretiens classiques prédisent 2 fois moins bien la performance réelle qu'une simulation de travail (méta-étude Schmidt & Hunter).</li>
-<li>Si la moitié de vos commerciaux vous coûte entre 100 et 150 000 € de manque à gagner, le besoin existe, même s'il n'est pas encore identifié.</li>
+<li>Affirmer que vous n'avez besoin de rien parce que votre processus suffit, c'est comme un pilote qui refuse de regarder ses instruments de bord parce qu'il a toujours atterri jusqu'ici. Il a raison, jusqu'au jour où la brume tombe et qu'il ne voit plus la piste.</li>
 </ul>
 <h4>Question :</h4>
 <ul>
-<li>"Quel pourcentage de vos commerciaux a atteint 100% de ses objectifs l'année dernière ?"</li>
-<li>"Si vous pouviez améliorer de 20% les performances de votre équipe commerciale, quel impact sur votre chiffre d'affaires ?"</li>
+<li>Sur vos dix dernières recrues, est-ce que leurs résultats sur le terrain ont toujours correspondu exactement à ce que vous aviez perçu en entretien ?</li>
+<li>Si vous deviez noter sur dix la fiabilité de votre méthode actuelle pour prédire la performance réelle d'un candidat face à un client difficile, vous mettriez combien ? Et si ce n'est pas dix, qu'est-ce qui vous empêche de chercher ce qui comblerait l'écart ?</li>
 </ul>
 </div>`
         },
         obj5: {
-            title: "5. Il faut en parler à mon associé",
+            title: "10. Il faut en parler à mon associé",
             content: `<div class="simple-response">
 <h4>Comparaison :</h4>
 <ul>
@@ -1047,23 +1046,21 @@ Baguette magique : orienté "éviter les erreurs de casting" mais couvre les deu
 </div>`
         },
         obj6: {
-            title: "6. Envoyez-moi un mail",
+            title: "7. Envoyez-moi un email",
             content: `<div class="simple-response">
 <h4>Comparaison :</h4>
 <ul>
-<li>Les mails de prospection ont un taux d'ouverture de moins que 20% et un taux de réponse inférieur à 3%.</li>
-<li>Une démo de 30 minutes vous permet de voir concrètement comment l'outil fonctionne, avec vos propres produits et objections.</li>
-<li>C'est un investissement de 30 minutes pour potentiellement économiser des centaines de milliers d'euros.</li>
+<li>Demander un email pour évaluer un simulateur de vente, c'est comme demander la photo d'un plat pour savoir s'il est bon. Vous pouvez regarder l'image aussi longtemps que vous voulez, vous ne saurez jamais ce que ça vaut avant de le goûter.</li>
+<li>Demander un email pour juger un outil immersif, c'est comme exiger la fiche technique d'une voiture au lieu de faire un essai sur route. Vous pouvez lire les chevaux fiscaux, vous ne saurez jamais comment elle tient la route avant d'avoir tourné le volant.</li>
 </ul>
 <h4>Question :</h4>
 <ul>
-<li>"Combien de mails de ce type avez-vous déjà reçus, et combien avez-vous vraiment lus en entier ?"</li>
-<li>"Ne préférez-vous pas voir l'outil en action plutôt que de lire une brochure ?"</li>
+<li>Si je vous envoie un email maintenant, honnêtement, est-ce que vous le lirez aujourd'hui, ou est-ce qu'il finira dans le dossier "à regarder plus tard" avec les autres ?</li>
 </ul>
 </div>`
         },
         obj7: {
-            title: "7. On verra plus tard",
+            title: "11. On verra plus tard",
             content: `<div class="simple-response">
 <h4>Comparaison :</h4>
 <ul>
@@ -1083,24 +1080,27 @@ Baguette magique : orienté "éviter les erreurs de casting" mais couvre les deu
             isMitraillette: true
         },
         obj9: {
-            title: "9. Process d'entretien qui fonctionne",
+            title: "4. On est satisfait de notre process",
             content: `<div class="simple-response">
-<h4>Métaphore :</h4>
-<p>« Votre process actuel est un excellent filtre de base. Mais recruter uniquement là-dessus, c'est comme regarder le CV d'un pilote de Formule 1 sans jamais le voir piloter sur un circuit. Notre IA, c'est le simulateur de course qui vous garantit qu'il sait tenir le volant sous la pression de vos pires prospects, avant même que vous ne lui confiiez les clés. »</p>
-<h4>Question</h4>
-<p>« Et les études sont formelles : à vitre avis, qu'est-ce qui predit le mieux la future réussit d'un candidat : entretien classique en face à face, ou un entretien qui combine en plus, test de compétences, test de personnalité et  simulation de vente ? </p>
-<p>Un entretien qui combine en plus, test de compétences, test de personnalité et  simulation de vente va  prédire 2 fois mieux la future réussite d'un candidat qu'un entretien classique en face à face. Notre outil ne va pas remplacer pas votre process, il va le sécuriser en vous faisant gagner du temps, car vous ne recevrez plus les candidats inadapté, de l'argent car vous allez remplacer les sous-performeurs par des tops performeurs. "</p>
+<h4>Comparaison :</h4>
+<ul>
+<li>Se contenter d'un process qui filtre les CV mais pas les mauvais vendeurs, c'est comme un médecin qui prescrit des antidouleurs pour une fracture du tibia. La douleur disparaît, la fracture est toujours là, et un jour l'os ne tient plus.</li>
+</ul>
+<h4>Question :</h4>
+<ul>
+<li>Si votre process est parfait, comment expliquez-vous que certains commerciaux passent tous vos filtres pour plafonner une fois face à vos clients ?</li>
+</ul>
 </div>`
         },
         obj10: {
-            title: "10. Faire fuir les candidats",
+            title: "12. Faire fuir les candidats",
             content: `<div class="simple-response">
 <p>S,i un commercial a peur d'interagir avec un outil moderne, est-ce vraiment le profil innovant et performant dont vous avez besoin aujourd'hui ? Si un candidat refuse de passer une simulation rapide ou ne suit pas votre process de recrutement, pensez-vous qu'il respectera vos consignes une fois sur le terrain ? Un commercial qu'on ne peut pas coacher est un danger. Est-ce vraiment le type de profil que vous souhaitez intégrer ? </p>
 <p>Ce n'est pas un frein pour les bons candidats, c'est un révélateur. Un vrai commercial aguerri voit tout de suite l'intérêt d'un outil qui valorise ses compétences plutôt qu'un énième CV lu en diagonale.</p>
 </div>`
         },
         obj11: {
-            title: "11. Alourdir le travail / Usine à gaz / Manque de temps pour l'implementer",
+            title: "13. Alourdir le travail / Usine à gaz / Manque de temps pour l'implementer",
             content: `<div class="simple-response">
 <h4>Métaphore :</h4>
 <p>« Au final, c'est exactement comme installer un télépéage au lieu de contrôler chaque voiture manuellement. L'installation ne prend 15 minutes. Est-ce que vous avez déjà calculé le temps que votre équipe perd chaque semaine à faire passer des entretiens à des profils qui n'en valent pas la peine ? »</p>
@@ -1109,12 +1109,40 @@ Baguette magique : orienté "éviter les erreurs de casting" mais couvre les deu
 </div>`
         },
         obj12: {
-            title: "12. Candidat ne connait pas le produit",
+            title: "14. Candidat ne connait pas le produit",
             content: `<div class="simple-response">
 <p>Le candidat qui ne connaît pas le produit (Bloc 3)</p>
 <p>Objection : "Si je balance un candidat sur une IA qui joue le rôle d'un client pour vendre nos produits qu'il ne connaît même pas encore, il va se planter lamentablement."</p>
 <h4>- Réponse :</h4>
 <p>« Justement, le but quand on lui fait vendre vos produits, ce n'est pas de le voir réciter un argumentaire parfait qu'il ne connaît pas, c'est de voir comment il s'adapte et s'il a fait des recherches sur votre entreprise. Et pour évaluer sa véritable technique de vente, on lui fait ensuite vendre son ancien produit ou service : là, on est dans un contexte qu'il maîtrise et on analyse la pertinence de sa méthode. »</p>
+</div>`
+        },
+        obj13: {
+            title: "5. Je ne suis pas convaincu",
+            content: `<div class="simple-response">
+<h4>Comparaison :</h4>
+<ul>
+<li>Dire "je ne suis pas convaincu" avant d'avoir entendu un seul candidat réel échouer face à notre IA, c'est comme refuser d'acheter une voiture sans l'avoir essayée tout en affirmant qu'elle ne tient pas la route. Vous ne manquez pas d'arguments, vous manquez de données.</li>
+</ul>
+<h4>Question :</h4>
+<ul>
+<li>Qu'est-ce qui vous a convaincu la dernière fois que vous avez changé d'outil ou de méthode : une promesse sur papier, ou une preuve que vous avez vue de vos propres yeux ?</li>
+</ul>
+</div>`
+        },
+        obj14: {
+            title: "6. On travaille avec un cabinet de recrutement",
+            content: `<div class="simple-response">
+<h4>Comparaison :</h4>
+<ul>
+<li>Déléguer le recrutement à un cabinet sans tester les compétences pratiques des commerciaux, c'est comme confier la sélection de vos pilotes à une agence de placement sans leur faire passer un simulateur de vol. L'agence vérifie le CV, elle ne vérifie pas si le pilote sait atterrir par temps de brouillard.</li>
+</ul>
+<h4>Question :</h4>
+<ul>
+<li>Qu'est-ce que votre cabinet de recrutement vous garantit exactement : qu'il vous présente des candidats qui brillent en entretien, ou qu'il vous présente des candidats qui convertissent réellement face à vos clients ?</li>
+<li>Si votre cabinet résout vraiment le problème, pourquoi continuez-vous à recruter des commerciaux qui ne performent pas comme attendu une fois sur le terrain ?</li>
+<li>Quand votre cabinet vous présente un candidat, est-ce que vous savez concrètement comment il gère une objection complexe, ou est-ce que vous savez seulement qu'il a su vous convaincre dans un bureau ?</li>
+</ul>
 </div>`
         }
     };
